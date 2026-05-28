@@ -9,38 +9,258 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TermsRouteImport } from './routes/terms'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as ToolsWordToPdfRouteImport } from './routes/tools.word-to-pdf'
+import { Route as ToolsUnlockRouteImport } from './routes/tools.unlock'
+import { Route as ToolsSplitRouteImport } from './routes/tools.split'
+import { Route as ToolsProtectRouteImport } from './routes/tools.protect'
+import { Route as ToolsPdfToWordRouteImport } from './routes/tools.pdf-to-word'
+import { Route as ToolsPdfToJpgRouteImport } from './routes/tools.pdf-to-jpg'
+import { Route as ToolsOrganizeRouteImport } from './routes/tools.organize'
+import { Route as ToolsMergeRouteImport } from './routes/tools.merge'
+import { Route as ToolsJpgToPdfRouteImport } from './routes/tools.jpg-to-pdf'
+import { Route as ToolsCompressRouteImport } from './routes/tools.compress'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsWordToPdfRoute = ToolsWordToPdfRouteImport.update({
+  id: '/tools/word-to-pdf',
+  path: '/tools/word-to-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsUnlockRoute = ToolsUnlockRouteImport.update({
+  id: '/tools/unlock',
+  path: '/tools/unlock',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsSplitRoute = ToolsSplitRouteImport.update({
+  id: '/tools/split',
+  path: '/tools/split',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsProtectRoute = ToolsProtectRouteImport.update({
+  id: '/tools/protect',
+  path: '/tools/protect',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsPdfToWordRoute = ToolsPdfToWordRouteImport.update({
+  id: '/tools/pdf-to-word',
+  path: '/tools/pdf-to-word',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsPdfToJpgRoute = ToolsPdfToJpgRouteImport.update({
+  id: '/tools/pdf-to-jpg',
+  path: '/tools/pdf-to-jpg',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsOrganizeRoute = ToolsOrganizeRouteImport.update({
+  id: '/tools/organize',
+  path: '/tools/organize',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsMergeRoute = ToolsMergeRouteImport.update({
+  id: '/tools/merge',
+  path: '/tools/merge',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsJpgToPdfRoute = ToolsJpgToPdfRouteImport.update({
+  id: '/tools/jpg-to-pdf',
+  path: '/tools/jpg-to-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCompressRoute = ToolsCompressRouteImport.update({
+  id: '/tools/compress',
+  path: '/tools/compress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/tools/compress': typeof ToolsCompressRoute
+  '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
+  '/tools/merge': typeof ToolsMergeRoute
+  '/tools/organize': typeof ToolsOrganizeRoute
+  '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
+  '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
+  '/tools/protect': typeof ToolsProtectRoute
+  '/tools/split': typeof ToolsSplitRoute
+  '/tools/unlock': typeof ToolsUnlockRoute
+  '/tools/word-to-pdf': typeof ToolsWordToPdfRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/tools/compress': typeof ToolsCompressRoute
+  '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
+  '/tools/merge': typeof ToolsMergeRoute
+  '/tools/organize': typeof ToolsOrganizeRoute
+  '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
+  '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
+  '/tools/protect': typeof ToolsProtectRoute
+  '/tools/split': typeof ToolsSplitRoute
+  '/tools/unlock': typeof ToolsUnlockRoute
+  '/tools/word-to-pdf': typeof ToolsWordToPdfRoute
+  '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/contact': typeof ContactRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/tools/compress': typeof ToolsCompressRoute
+  '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
+  '/tools/merge': typeof ToolsMergeRoute
+  '/tools/organize': typeof ToolsOrganizeRoute
+  '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
+  '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
+  '/tools/protect': typeof ToolsProtectRoute
+  '/tools/split': typeof ToolsSplitRoute
+  '/tools/unlock': typeof ToolsUnlockRoute
+  '/tools/word-to-pdf': typeof ToolsWordToPdfRoute
+  '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/contact'
+    | '/privacy'
+    | '/terms'
+    | '/blog/$slug'
+    | '/tools/compress'
+    | '/tools/jpg-to-pdf'
+    | '/tools/merge'
+    | '/tools/organize'
+    | '/tools/pdf-to-jpg'
+    | '/tools/pdf-to-word'
+    | '/tools/protect'
+    | '/tools/split'
+    | '/tools/unlock'
+    | '/tools/word-to-pdf'
+    | '/blog/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/contact'
+    | '/privacy'
+    | '/terms'
+    | '/blog/$slug'
+    | '/tools/compress'
+    | '/tools/jpg-to-pdf'
+    | '/tools/merge'
+    | '/tools/organize'
+    | '/tools/pdf-to-jpg'
+    | '/tools/pdf-to-word'
+    | '/tools/protect'
+    | '/tools/split'
+    | '/tools/unlock'
+    | '/tools/word-to-pdf'
+    | '/blog'
+  id:
+    | '__root__'
+    | '/'
+    | '/contact'
+    | '/privacy'
+    | '/terms'
+    | '/blog/$slug'
+    | '/tools/compress'
+    | '/tools/jpg-to-pdf'
+    | '/tools/merge'
+    | '/tools/organize'
+    | '/tools/pdf-to-jpg'
+    | '/tools/pdf-to-word'
+    | '/tools/protect'
+    | '/tools/split'
+    | '/tools/unlock'
+    | '/tools/word-to-pdf'
+    | '/blog/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ContactRoute: typeof ContactRoute
+  PrivacyRoute: typeof PrivacyRoute
+  TermsRoute: typeof TermsRoute
+  BlogSlugRoute: typeof BlogSlugRoute
+  ToolsCompressRoute: typeof ToolsCompressRoute
+  ToolsJpgToPdfRoute: typeof ToolsJpgToPdfRoute
+  ToolsMergeRoute: typeof ToolsMergeRoute
+  ToolsOrganizeRoute: typeof ToolsOrganizeRoute
+  ToolsPdfToJpgRoute: typeof ToolsPdfToJpgRoute
+  ToolsPdfToWordRoute: typeof ToolsPdfToWordRoute
+  ToolsProtectRoute: typeof ToolsProtectRoute
+  ToolsSplitRoute: typeof ToolsSplitRoute
+  ToolsUnlockRoute: typeof ToolsUnlockRoute
+  ToolsWordToPdfRoute: typeof ToolsWordToPdfRoute
+  BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +268,121 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/word-to-pdf': {
+      id: '/tools/word-to-pdf'
+      path: '/tools/word-to-pdf'
+      fullPath: '/tools/word-to-pdf'
+      preLoaderRoute: typeof ToolsWordToPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/unlock': {
+      id: '/tools/unlock'
+      path: '/tools/unlock'
+      fullPath: '/tools/unlock'
+      preLoaderRoute: typeof ToolsUnlockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/split': {
+      id: '/tools/split'
+      path: '/tools/split'
+      fullPath: '/tools/split'
+      preLoaderRoute: typeof ToolsSplitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/protect': {
+      id: '/tools/protect'
+      path: '/tools/protect'
+      fullPath: '/tools/protect'
+      preLoaderRoute: typeof ToolsProtectRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/pdf-to-word': {
+      id: '/tools/pdf-to-word'
+      path: '/tools/pdf-to-word'
+      fullPath: '/tools/pdf-to-word'
+      preLoaderRoute: typeof ToolsPdfToWordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/pdf-to-jpg': {
+      id: '/tools/pdf-to-jpg'
+      path: '/tools/pdf-to-jpg'
+      fullPath: '/tools/pdf-to-jpg'
+      preLoaderRoute: typeof ToolsPdfToJpgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/organize': {
+      id: '/tools/organize'
+      path: '/tools/organize'
+      fullPath: '/tools/organize'
+      preLoaderRoute: typeof ToolsOrganizeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/merge': {
+      id: '/tools/merge'
+      path: '/tools/merge'
+      fullPath: '/tools/merge'
+      preLoaderRoute: typeof ToolsMergeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/jpg-to-pdf': {
+      id: '/tools/jpg-to-pdf'
+      path: '/tools/jpg-to-pdf'
+      fullPath: '/tools/jpg-to-pdf'
+      preLoaderRoute: typeof ToolsJpgToPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/compress': {
+      id: '/tools/compress'
+      path: '/tools/compress'
+      fullPath: '/tools/compress'
+      preLoaderRoute: typeof ToolsCompressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ContactRoute: ContactRoute,
+  PrivacyRoute: PrivacyRoute,
+  TermsRoute: TermsRoute,
+  BlogSlugRoute: BlogSlugRoute,
+  ToolsCompressRoute: ToolsCompressRoute,
+  ToolsJpgToPdfRoute: ToolsJpgToPdfRoute,
+  ToolsMergeRoute: ToolsMergeRoute,
+  ToolsOrganizeRoute: ToolsOrganizeRoute,
+  ToolsPdfToJpgRoute: ToolsPdfToJpgRoute,
+  ToolsPdfToWordRoute: ToolsPdfToWordRoute,
+  ToolsProtectRoute: ToolsProtectRoute,
+  ToolsSplitRoute: ToolsSplitRoute,
+  ToolsUnlockRoute: ToolsUnlockRoute,
+  ToolsWordToPdfRoute: ToolsWordToPdfRoute,
+  BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
