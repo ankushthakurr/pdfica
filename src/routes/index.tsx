@@ -6,8 +6,6 @@ import { ToolCard } from "@/components/ToolCard";
 
 export const Route = createFileRoute("/")({
   head: () => ({
-export const Route = createFileRoute("/")({
-  head: () => ({
     meta: [
       { title: "Pdfica — Free Online PDF Tools, 100% Private" },
       {
@@ -26,7 +24,6 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
-});
 
 function Home() {
   const grouped = toolsByCategory();
