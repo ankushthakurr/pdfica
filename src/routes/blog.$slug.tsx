@@ -59,7 +59,7 @@ function renderBody(body: string) {
           ) : (
             <Link
               key={j}
-              to={p.href}
+              to={p.href as "/"}
               className="font-semibold text-primary underline-offset-4 hover:underline"
             >
               {p.text}
