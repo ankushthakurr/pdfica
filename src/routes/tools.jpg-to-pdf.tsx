@@ -14,6 +14,8 @@ function JpgToPdfPage() {
       description={tool.description}
       accept={tool.accept}
       multi
+      maxFiles={20}
+      maxSizeBytes={10 * 1024 * 1024}
       cta="Build PDF"
       sidebar={
         <div className="space-y-3 text-sm">
