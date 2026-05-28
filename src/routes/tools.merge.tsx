@@ -20,6 +20,7 @@ export const Route = createFileRoute("/tools/merge")({
       description={tool.description}
       accept={tool.accept}
       multi
+      maxFiles={10}
       cta="Merge PDFs"
       emptyHint="Drop two or more PDFs to combine them in order."
       process={async (files) => {
