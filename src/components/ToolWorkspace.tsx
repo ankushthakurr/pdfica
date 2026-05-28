@@ -19,6 +19,20 @@ interface Props {
   process: (files: File[]) => Promise<ToolResult>;
 }
 
+const DEFAULT_MAX_SIZE = 25 * 1024 * 1024; // 25 MB
+
+function getFileTypeLabel(ext: string): string {
+  const map: Record<string, string> = {
+    ".pdf": "PDF",
+    ".docx": "Word document",
+    ".jpg": "JPEG image",
+    ".jpeg": "JPEG image",
+    ".png": "PNG image",
+    ".webp": "WebP image",
+  };
+  return map[ext.toLowerCase()] ?? ext.toUpperCase().replace(".", "") + " file";
+}
+
 export function ToolWorkspace({
   title,
   description,
@@ -27,6 +41,8 @@ export function ToolWorkspace({
   cta = "Process files",
   sidebar,
   emptyHint,
+  maxSizeBytes = DEFAULT_MAX_SIZE,
+  maxFiles,
   process,
 }: Props) {
   const [files, setFiles] = useState<File[]>([]);
@@ -37,23 +53,55 @@ export function ToolWorkspace({
   const inputRef = useRef<HTMLInputElement>(null);
 
   const accepted = accept.split(",").map((s) => s.trim());
+
   const isAccepted = (f: File) =>
     accepted.some((a) =>
       a.startsWith(".") ? f.name.toLowerCase().endsWith(a) : f.type === a || a === "*/*",
     );
 
+  const validateFiles = (list: File[]): { ok: File[]; errors: string[] } => {
+    const errors: string[] = [];
+    const ok: File[] = [];
+
+    for (const f of list) {
+      if (!isAccepted(f)) {
+        const ext = f.name.slice(f.name.lastIndexOf("."));
+        const label = getFileTypeLabel(ext);
+        errors.push(`"${f.name}" is a ${label} — only ${accepted.map(a => a.replace(/^\./, "").toUpperCase()).join(", ")} files are accepted here.`);
+        continue;
+      }
+      if (f.size > maxSizeBytes) {
+        errors.push(`"${f.name}" is ${formatBytes(f.size)} — the maximum is ${formatBytes(maxSizeBytes)} per file.`);
+        continue;
+      }
+      ok.push(f);
+    }
+
+    if (multi && maxFiles && ok.length > maxFiles) {
+      errors.push(`You can upload up to ${maxFiles} files. You selected ${ok.length}.`);
+      return { ok: [], errors };
+    }
+
+    return { ok, errors };
+  };
+
   const handleFiles = useCallback(
     (list: FileList | File[]) => {
-      const arr = Array.from(list).filter(isAccepted);
-      if (!arr.length) {
-        setError("That file type isn't supported here.");
-        return;
+      const { ok, errors } = validateFiles(Array.from(list));
+      if (errors.length) {
+        setError(errors.join(" "));
+        if (!ok.length) return;
+      } else {
+        setError(null);
       }
-      setError(null);
       setResult(null);
-      setFiles((prev) => (multi ? [...prev, ...arr] : arr.slice(0, 1)));
+      setFiles((prev) => {
+        const combined = multi ? [...prev, ...ok] : ok;
+        if (multi && maxFiles) return combined.slice(0, maxFiles);
+        return multi ? combined : combined.slice(0, 1);
+      });
     },
-    [multi],
+    [multi, maxFiles, maxSizeBytes, accept],
   );
 
   const onDrop = (e: React.DragEvent) => {
