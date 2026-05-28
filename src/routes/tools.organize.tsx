@@ -180,7 +180,17 @@ function OrganizePage() {
           onDrop={(e) => {
             e.preventDefault();
             const f = e.dataTransfer.files?.[0];
-            if (f && f.type === "application/pdf") setFile(f);
+            if (!f) return;
+            if (f.type !== "application/pdf" && !f.name.toLowerCase().endsWith(".pdf")) {
+              setError("Only PDF files are accepted.");
+              return;
+            }
+            if (f.size > 25 * 1024 * 1024) {
+              setError(`"${f.name}" is ${formatBytes(f.size)} — the maximum is 25 MB.`);
+              return;
+            }
+            setError(null);
+            setFile(f);
           }}
           className="rounded-3xl border-2 border-dashed bg-surface p-16 text-center"
         >
@@ -189,12 +199,22 @@ function OrganizePage() {
           </div>
           <h3 className="font-display text-2xl font-semibold">Drop a PDF</h3>
           <p className="mt-1 text-sm text-muted-foreground">Or click to browse</p>
+          <p className="mt-2 text-xs text-muted-foreground/70">Max 25 MB per file</p>
           <input
             ref={inputRef}
             type="file"
             accept="application/pdf"
             className="hidden"
-            onChange={(e) => e.target.files?.[0] && setFile(e.target.files[0])}
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (!f) return;
+              if (f.size > 25 * 1024 * 1024) {
+                setError(`"${f.name}" is ${formatBytes(f.size)} — the maximum is 25 MB.`);
+                return;
+              }
+              setError(null);
+              setFile(f);
+            }}
           />
           <button
             onClick={() => inputRef.current?.click()}
