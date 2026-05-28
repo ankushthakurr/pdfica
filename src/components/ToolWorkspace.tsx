@@ -13,6 +13,8 @@ interface Props {
   cta?: string;
   sidebar?: ReactNode;
   emptyHint?: string;
+  maxSizeBytes?: number; // per-file limit; default 25 MB
+  maxFiles?: number; // for multi tools
   // Returns a blob + filename (or null to keep state).
   process: (files: File[]) => Promise<ToolResult>;
 }
