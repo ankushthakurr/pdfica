@@ -6,6 +6,8 @@ import { ToolCard } from "@/components/ToolCard";
 
 export const Route = createFileRoute("/")({
   head: () => ({
+export const Route = createFileRoute("/")({
+  head: () => ({
     meta: [
       { title: "Pdfica — Free Online PDF Tools, 100% Private" },
       {
@@ -18,10 +20,12 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content: "Every PDF tool you need, working entirely in your browser.",
       },
-      { rel: "canonical", href: "/" } as never,
     ],
+    links: [{ rel: "canonical", href: "/" }],
   }),
   component: Home,
+});
+
 });
 
 function Home() {
