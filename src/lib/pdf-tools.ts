@@ -15,7 +15,7 @@ export async function mergePdfs(files: File[]): Promise<Blob> {
     const pages = await out.copyPages(src, src.getPageIndices());
     pages.forEach((p) => out.addPage(p));
   }
-  return new Blob([await out.save()], { type: "application/pdf" });
+  return new Blob([(await out.save()) as BlobPart], { type: "application/pdf" });
 }
 
 // ----- SPLIT -----
@@ -45,7 +45,7 @@ export async function splitPdf(
     const pages = await out.copyPages(src, groups[0]);
     pages.forEach((p) => out.addPage(p));
     return {
-      blob: new Blob([await out.save()], { type: "application/pdf" }),
+      blob: new Blob([(await out.save()) as BlobPart], { type: "application/pdf" }),
       filename: `${file.name.replace(/\.pdf$/i, "")}-split.pdf`,
     };
   }
@@ -77,7 +77,7 @@ export async function compressPdf(file: File): Promise<Blob> {
   src.setProducer("");
   src.setCreator("");
   const bytes = await src.save({ useObjectStreams: true, addDefaultPage: false });
-  return new Blob([bytes], { type: "application/pdf" });
+  return new Blob([bytes as BlobPart], { type: "application/pdf" });
 }
 
 // ----- PDF → JPG -----
@@ -141,7 +141,7 @@ export async function imagesToPdf(
     const page = doc.addPage([pageW, pageH]);
     page.drawImage(img, { x, y, width: drawW, height: drawH });
   }
-  return new Blob([await doc.save()], { type: "application/pdf" });
+  return new Blob([(await doc.save()) as BlobPart], { type: "application/pdf" });
 }
 
 // ----- PDF → WORD -----
@@ -232,7 +232,7 @@ export async function protectAsZip(file: File, password: string): Promise<{ blob
   src.addJavaScript("PdficaPasswordCheck", js);
   const bytes = await src.save();
   return {
-    blob: new Blob([bytes], { type: "application/pdf" }),
+    blob: new Blob([bytes as BlobPart], { type: "application/pdf" }),
     filename: file.name.replace(/\.pdf$/i, "") + "-protected.pdf",
   };
 }
@@ -248,7 +248,7 @@ export async function unlockPdf(file: File, password = ""): Promise<Blob> {
     });
     // Remove any open-action JS we added in protect step (best-effort).
     const bytes = await src.save();
-    return new Blob([bytes], { type: "application/pdf" });
+    return new Blob([bytes as BlobPart], { type: "application/pdf" });
   } catch {
     throw new Error(
       "This PDF uses strong encryption that can't be removed in-browser. Try unlocking it in your PDF reader first.",
@@ -271,7 +271,7 @@ export async function organizePdf(file: File, ops: OrganizeOp): Promise<Blob> {
     if (rot) p.setRotation(degrees(rot));
     out.addPage(p);
   });
-  return new Blob([await out.save()], { type: "application/pdf" });
+  return new Blob([(await out.save()) as BlobPart], { type: "application/pdf" });
 }
 
 // ----- THUMBNAILS (for organize view) -----
