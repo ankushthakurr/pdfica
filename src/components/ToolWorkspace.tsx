@@ -177,6 +177,11 @@ export function ToolWorkspace({
               <p className="mt-1 text-sm text-muted-foreground">
                 {emptyHint ?? `Or click to browse your device. ${multi ? "Multiple files allowed." : ""}`}
               </p>
+              <p className="mt-2 text-xs text-muted-foreground/70">
+                Max {formatBytes(maxSizeBytes)} per file
+                {multi && maxFiles ? ` · up to ${maxFiles} files` : ""}
+                {multi && !maxFiles ? " · multiple files allowed" : ""}
+              </p>
               <button
                 onClick={() => inputRef.current?.click()}
                 className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03]"
