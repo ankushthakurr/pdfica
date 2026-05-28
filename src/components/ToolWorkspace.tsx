@@ -112,11 +112,16 @@ export function ToolWorkspace({
 
   const run = async () => {
     if (!files.length) return;
+    const { ok, errors } = validateFiles(files);
+    if (errors.length || !ok.length) {
+      setError(errors.join(" ") || "One or more files failed validation.");
+      return;
+    }
     setBusy(true);
     setError(null);
     setResult(null);
     try {
-      const r = await process(files);
+      const r = await process(ok);
       if (r) setResult(r);
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : "Something went wrong.");
