@@ -15,15 +15,32 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as ToolsWordToPdfRouteImport } from './routes/tools.word-to-pdf'
+import { Route as ToolsWatermarkRouteImport } from './routes/tools.watermark'
 import { Route as ToolsUnlockRouteImport } from './routes/tools.unlock'
 import { Route as ToolsSplitRouteImport } from './routes/tools.split'
+import { Route as ToolsSignRouteImport } from './routes/tools.sign'
+import { Route as ToolsScanToPdfRouteImport } from './routes/tools.scan-to-pdf'
+import { Route as ToolsRotateRouteImport } from './routes/tools.rotate'
+import { Route as ToolsRepairRouteImport } from './routes/tools.repair'
+import { Route as ToolsRemovePagesRouteImport } from './routes/tools.remove-pages'
+import { Route as ToolsRedactRouteImport } from './routes/tools.redact'
 import { Route as ToolsProtectRouteImport } from './routes/tools.protect'
 import { Route as ToolsPdfToWordRouteImport } from './routes/tools.pdf-to-word'
+import { Route as ToolsPdfToPdfaRouteImport } from './routes/tools.pdf-to-pdfa'
 import { Route as ToolsPdfToJpgRouteImport } from './routes/tools.pdf-to-jpg'
+import { Route as ToolsPdfToExcelRouteImport } from './routes/tools.pdf-to-excel'
+import { Route as ToolsPageNumbersRouteImport } from './routes/tools.page-numbers'
 import { Route as ToolsOrganizeRouteImport } from './routes/tools.organize'
+import { Route as ToolsOcrRouteImport } from './routes/tools.ocr'
 import { Route as ToolsMergeRouteImport } from './routes/tools.merge'
 import { Route as ToolsJpgToPdfRouteImport } from './routes/tools.jpg-to-pdf'
+import { Route as ToolsHtmlToPdfRouteImport } from './routes/tools.html-to-pdf'
+import { Route as ToolsExtractPagesRouteImport } from './routes/tools.extract-pages'
+import { Route as ToolsExcelToPdfRouteImport } from './routes/tools.excel-to-pdf'
+import { Route as ToolsEditRouteImport } from './routes/tools.edit'
+import { Route as ToolsCropRouteImport } from './routes/tools.crop'
 import { Route as ToolsCompressRouteImport } from './routes/tools.compress'
+import { Route as ToolsCompareRouteImport } from './routes/tools.compare'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const TermsRoute = TermsRouteImport.update({
@@ -56,6 +73,11 @@ const ToolsWordToPdfRoute = ToolsWordToPdfRouteImport.update({
   path: '/tools/word-to-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsWatermarkRoute = ToolsWatermarkRouteImport.update({
+  id: '/tools/watermark',
+  path: '/tools/watermark',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsUnlockRoute = ToolsUnlockRouteImport.update({
   id: '/tools/unlock',
   path: '/tools/unlock',
@@ -64,6 +86,36 @@ const ToolsUnlockRoute = ToolsUnlockRouteImport.update({
 const ToolsSplitRoute = ToolsSplitRouteImport.update({
   id: '/tools/split',
   path: '/tools/split',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsSignRoute = ToolsSignRouteImport.update({
+  id: '/tools/sign',
+  path: '/tools/sign',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsScanToPdfRoute = ToolsScanToPdfRouteImport.update({
+  id: '/tools/scan-to-pdf',
+  path: '/tools/scan-to-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRotateRoute = ToolsRotateRouteImport.update({
+  id: '/tools/rotate',
+  path: '/tools/rotate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRepairRoute = ToolsRepairRouteImport.update({
+  id: '/tools/repair',
+  path: '/tools/repair',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRemovePagesRoute = ToolsRemovePagesRouteImport.update({
+  id: '/tools/remove-pages',
+  path: '/tools/remove-pages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRedactRoute = ToolsRedactRouteImport.update({
+  id: '/tools/redact',
+  path: '/tools/redact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsProtectRoute = ToolsProtectRouteImport.update({
@@ -76,14 +128,34 @@ const ToolsPdfToWordRoute = ToolsPdfToWordRouteImport.update({
   path: '/tools/pdf-to-word',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsPdfToPdfaRoute = ToolsPdfToPdfaRouteImport.update({
+  id: '/tools/pdf-to-pdfa',
+  path: '/tools/pdf-to-pdfa',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsPdfToJpgRoute = ToolsPdfToJpgRouteImport.update({
   id: '/tools/pdf-to-jpg',
   path: '/tools/pdf-to-jpg',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsPdfToExcelRoute = ToolsPdfToExcelRouteImport.update({
+  id: '/tools/pdf-to-excel',
+  path: '/tools/pdf-to-excel',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsPageNumbersRoute = ToolsPageNumbersRouteImport.update({
+  id: '/tools/page-numbers',
+  path: '/tools/page-numbers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsOrganizeRoute = ToolsOrganizeRouteImport.update({
   id: '/tools/organize',
   path: '/tools/organize',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsOcrRoute = ToolsOcrRouteImport.update({
+  id: '/tools/ocr',
+  path: '/tools/ocr',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsMergeRoute = ToolsMergeRouteImport.update({
@@ -96,9 +168,39 @@ const ToolsJpgToPdfRoute = ToolsJpgToPdfRouteImport.update({
   path: '/tools/jpg-to-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsHtmlToPdfRoute = ToolsHtmlToPdfRouteImport.update({
+  id: '/tools/html-to-pdf',
+  path: '/tools/html-to-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsExtractPagesRoute = ToolsExtractPagesRouteImport.update({
+  id: '/tools/extract-pages',
+  path: '/tools/extract-pages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsExcelToPdfRoute = ToolsExcelToPdfRouteImport.update({
+  id: '/tools/excel-to-pdf',
+  path: '/tools/excel-to-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsEditRoute = ToolsEditRouteImport.update({
+  id: '/tools/edit',
+  path: '/tools/edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCropRoute = ToolsCropRouteImport.update({
+  id: '/tools/crop',
+  path: '/tools/crop',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsCompressRoute = ToolsCompressRouteImport.update({
   id: '/tools/compress',
   path: '/tools/compress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCompareRoute = ToolsCompareRouteImport.update({
+  id: '/tools/compare',
+  path: '/tools/compare',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
@@ -113,15 +215,32 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
+  '/tools/crop': typeof ToolsCropRoute
+  '/tools/edit': typeof ToolsEditRoute
+  '/tools/excel-to-pdf': typeof ToolsExcelToPdfRoute
+  '/tools/extract-pages': typeof ToolsExtractPagesRoute
+  '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
   '/tools/merge': typeof ToolsMergeRoute
+  '/tools/ocr': typeof ToolsOcrRoute
   '/tools/organize': typeof ToolsOrganizeRoute
+  '/tools/page-numbers': typeof ToolsPageNumbersRoute
+  '/tools/pdf-to-excel': typeof ToolsPdfToExcelRoute
   '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
+  '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/protect': typeof ToolsProtectRoute
+  '/tools/redact': typeof ToolsRedactRoute
+  '/tools/remove-pages': typeof ToolsRemovePagesRoute
+  '/tools/repair': typeof ToolsRepairRoute
+  '/tools/rotate': typeof ToolsRotateRoute
+  '/tools/scan-to-pdf': typeof ToolsScanToPdfRoute
+  '/tools/sign': typeof ToolsSignRoute
   '/tools/split': typeof ToolsSplitRoute
   '/tools/unlock': typeof ToolsUnlockRoute
+  '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/word-to-pdf': typeof ToolsWordToPdfRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -131,15 +250,32 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
+  '/tools/crop': typeof ToolsCropRoute
+  '/tools/edit': typeof ToolsEditRoute
+  '/tools/excel-to-pdf': typeof ToolsExcelToPdfRoute
+  '/tools/extract-pages': typeof ToolsExtractPagesRoute
+  '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
   '/tools/merge': typeof ToolsMergeRoute
+  '/tools/ocr': typeof ToolsOcrRoute
   '/tools/organize': typeof ToolsOrganizeRoute
+  '/tools/page-numbers': typeof ToolsPageNumbersRoute
+  '/tools/pdf-to-excel': typeof ToolsPdfToExcelRoute
   '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
+  '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/protect': typeof ToolsProtectRoute
+  '/tools/redact': typeof ToolsRedactRoute
+  '/tools/remove-pages': typeof ToolsRemovePagesRoute
+  '/tools/repair': typeof ToolsRepairRoute
+  '/tools/rotate': typeof ToolsRotateRoute
+  '/tools/scan-to-pdf': typeof ToolsScanToPdfRoute
+  '/tools/sign': typeof ToolsSignRoute
   '/tools/split': typeof ToolsSplitRoute
   '/tools/unlock': typeof ToolsUnlockRoute
+  '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/word-to-pdf': typeof ToolsWordToPdfRoute
   '/blog': typeof BlogIndexRoute
 }
@@ -150,15 +286,32 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
+  '/tools/crop': typeof ToolsCropRoute
+  '/tools/edit': typeof ToolsEditRoute
+  '/tools/excel-to-pdf': typeof ToolsExcelToPdfRoute
+  '/tools/extract-pages': typeof ToolsExtractPagesRoute
+  '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
   '/tools/merge': typeof ToolsMergeRoute
+  '/tools/ocr': typeof ToolsOcrRoute
   '/tools/organize': typeof ToolsOrganizeRoute
+  '/tools/page-numbers': typeof ToolsPageNumbersRoute
+  '/tools/pdf-to-excel': typeof ToolsPdfToExcelRoute
   '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
+  '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/protect': typeof ToolsProtectRoute
+  '/tools/redact': typeof ToolsRedactRoute
+  '/tools/remove-pages': typeof ToolsRemovePagesRoute
+  '/tools/repair': typeof ToolsRepairRoute
+  '/tools/rotate': typeof ToolsRotateRoute
+  '/tools/scan-to-pdf': typeof ToolsScanToPdfRoute
+  '/tools/sign': typeof ToolsSignRoute
   '/tools/split': typeof ToolsSplitRoute
   '/tools/unlock': typeof ToolsUnlockRoute
+  '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/word-to-pdf': typeof ToolsWordToPdfRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -170,15 +323,32 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
+    | '/tools/compare'
     | '/tools/compress'
+    | '/tools/crop'
+    | '/tools/edit'
+    | '/tools/excel-to-pdf'
+    | '/tools/extract-pages'
+    | '/tools/html-to-pdf'
     | '/tools/jpg-to-pdf'
     | '/tools/merge'
+    | '/tools/ocr'
     | '/tools/organize'
+    | '/tools/page-numbers'
+    | '/tools/pdf-to-excel'
     | '/tools/pdf-to-jpg'
+    | '/tools/pdf-to-pdfa'
     | '/tools/pdf-to-word'
     | '/tools/protect'
+    | '/tools/redact'
+    | '/tools/remove-pages'
+    | '/tools/repair'
+    | '/tools/rotate'
+    | '/tools/scan-to-pdf'
+    | '/tools/sign'
     | '/tools/split'
     | '/tools/unlock'
+    | '/tools/watermark'
     | '/tools/word-to-pdf'
     | '/blog/'
   fileRoutesByTo: FileRoutesByTo
@@ -188,15 +358,32 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
+    | '/tools/compare'
     | '/tools/compress'
+    | '/tools/crop'
+    | '/tools/edit'
+    | '/tools/excel-to-pdf'
+    | '/tools/extract-pages'
+    | '/tools/html-to-pdf'
     | '/tools/jpg-to-pdf'
     | '/tools/merge'
+    | '/tools/ocr'
     | '/tools/organize'
+    | '/tools/page-numbers'
+    | '/tools/pdf-to-excel'
     | '/tools/pdf-to-jpg'
+    | '/tools/pdf-to-pdfa'
     | '/tools/pdf-to-word'
     | '/tools/protect'
+    | '/tools/redact'
+    | '/tools/remove-pages'
+    | '/tools/repair'
+    | '/tools/rotate'
+    | '/tools/scan-to-pdf'
+    | '/tools/sign'
     | '/tools/split'
     | '/tools/unlock'
+    | '/tools/watermark'
     | '/tools/word-to-pdf'
     | '/blog'
   id:
@@ -206,15 +393,32 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
+    | '/tools/compare'
     | '/tools/compress'
+    | '/tools/crop'
+    | '/tools/edit'
+    | '/tools/excel-to-pdf'
+    | '/tools/extract-pages'
+    | '/tools/html-to-pdf'
     | '/tools/jpg-to-pdf'
     | '/tools/merge'
+    | '/tools/ocr'
     | '/tools/organize'
+    | '/tools/page-numbers'
+    | '/tools/pdf-to-excel'
     | '/tools/pdf-to-jpg'
+    | '/tools/pdf-to-pdfa'
     | '/tools/pdf-to-word'
     | '/tools/protect'
+    | '/tools/redact'
+    | '/tools/remove-pages'
+    | '/tools/repair'
+    | '/tools/rotate'
+    | '/tools/scan-to-pdf'
+    | '/tools/sign'
     | '/tools/split'
     | '/tools/unlock'
+    | '/tools/watermark'
     | '/tools/word-to-pdf'
     | '/blog/'
   fileRoutesById: FileRoutesById
@@ -225,15 +429,32 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  ToolsCompareRoute: typeof ToolsCompareRoute
   ToolsCompressRoute: typeof ToolsCompressRoute
+  ToolsCropRoute: typeof ToolsCropRoute
+  ToolsEditRoute: typeof ToolsEditRoute
+  ToolsExcelToPdfRoute: typeof ToolsExcelToPdfRoute
+  ToolsExtractPagesRoute: typeof ToolsExtractPagesRoute
+  ToolsHtmlToPdfRoute: typeof ToolsHtmlToPdfRoute
   ToolsJpgToPdfRoute: typeof ToolsJpgToPdfRoute
   ToolsMergeRoute: typeof ToolsMergeRoute
+  ToolsOcrRoute: typeof ToolsOcrRoute
   ToolsOrganizeRoute: typeof ToolsOrganizeRoute
+  ToolsPageNumbersRoute: typeof ToolsPageNumbersRoute
+  ToolsPdfToExcelRoute: typeof ToolsPdfToExcelRoute
   ToolsPdfToJpgRoute: typeof ToolsPdfToJpgRoute
+  ToolsPdfToPdfaRoute: typeof ToolsPdfToPdfaRoute
   ToolsPdfToWordRoute: typeof ToolsPdfToWordRoute
   ToolsProtectRoute: typeof ToolsProtectRoute
+  ToolsRedactRoute: typeof ToolsRedactRoute
+  ToolsRemovePagesRoute: typeof ToolsRemovePagesRoute
+  ToolsRepairRoute: typeof ToolsRepairRoute
+  ToolsRotateRoute: typeof ToolsRotateRoute
+  ToolsScanToPdfRoute: typeof ToolsScanToPdfRoute
+  ToolsSignRoute: typeof ToolsSignRoute
   ToolsSplitRoute: typeof ToolsSplitRoute
   ToolsUnlockRoute: typeof ToolsUnlockRoute
+  ToolsWatermarkRoute: typeof ToolsWatermarkRoute
   ToolsWordToPdfRoute: typeof ToolsWordToPdfRoute
   BlogIndexRoute: typeof BlogIndexRoute
 }
@@ -282,6 +503,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsWordToPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/watermark': {
+      id: '/tools/watermark'
+      path: '/tools/watermark'
+      fullPath: '/tools/watermark'
+      preLoaderRoute: typeof ToolsWatermarkRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/unlock': {
       id: '/tools/unlock'
       path: '/tools/unlock'
@@ -294,6 +522,48 @@ declare module '@tanstack/react-router' {
       path: '/tools/split'
       fullPath: '/tools/split'
       preLoaderRoute: typeof ToolsSplitRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/sign': {
+      id: '/tools/sign'
+      path: '/tools/sign'
+      fullPath: '/tools/sign'
+      preLoaderRoute: typeof ToolsSignRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/scan-to-pdf': {
+      id: '/tools/scan-to-pdf'
+      path: '/tools/scan-to-pdf'
+      fullPath: '/tools/scan-to-pdf'
+      preLoaderRoute: typeof ToolsScanToPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/rotate': {
+      id: '/tools/rotate'
+      path: '/tools/rotate'
+      fullPath: '/tools/rotate'
+      preLoaderRoute: typeof ToolsRotateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/repair': {
+      id: '/tools/repair'
+      path: '/tools/repair'
+      fullPath: '/tools/repair'
+      preLoaderRoute: typeof ToolsRepairRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/remove-pages': {
+      id: '/tools/remove-pages'
+      path: '/tools/remove-pages'
+      fullPath: '/tools/remove-pages'
+      preLoaderRoute: typeof ToolsRemovePagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/redact': {
+      id: '/tools/redact'
+      path: '/tools/redact'
+      fullPath: '/tools/redact'
+      preLoaderRoute: typeof ToolsRedactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/protect': {
@@ -310,6 +580,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsPdfToWordRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/pdf-to-pdfa': {
+      id: '/tools/pdf-to-pdfa'
+      path: '/tools/pdf-to-pdfa'
+      fullPath: '/tools/pdf-to-pdfa'
+      preLoaderRoute: typeof ToolsPdfToPdfaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/pdf-to-jpg': {
       id: '/tools/pdf-to-jpg'
       path: '/tools/pdf-to-jpg'
@@ -317,11 +594,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsPdfToJpgRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/pdf-to-excel': {
+      id: '/tools/pdf-to-excel'
+      path: '/tools/pdf-to-excel'
+      fullPath: '/tools/pdf-to-excel'
+      preLoaderRoute: typeof ToolsPdfToExcelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/page-numbers': {
+      id: '/tools/page-numbers'
+      path: '/tools/page-numbers'
+      fullPath: '/tools/page-numbers'
+      preLoaderRoute: typeof ToolsPageNumbersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/organize': {
       id: '/tools/organize'
       path: '/tools/organize'
       fullPath: '/tools/organize'
       preLoaderRoute: typeof ToolsOrganizeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/ocr': {
+      id: '/tools/ocr'
+      path: '/tools/ocr'
+      fullPath: '/tools/ocr'
+      preLoaderRoute: typeof ToolsOcrRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/merge': {
@@ -338,11 +636,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsJpgToPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/html-to-pdf': {
+      id: '/tools/html-to-pdf'
+      path: '/tools/html-to-pdf'
+      fullPath: '/tools/html-to-pdf'
+      preLoaderRoute: typeof ToolsHtmlToPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/extract-pages': {
+      id: '/tools/extract-pages'
+      path: '/tools/extract-pages'
+      fullPath: '/tools/extract-pages'
+      preLoaderRoute: typeof ToolsExtractPagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/excel-to-pdf': {
+      id: '/tools/excel-to-pdf'
+      path: '/tools/excel-to-pdf'
+      fullPath: '/tools/excel-to-pdf'
+      preLoaderRoute: typeof ToolsExcelToPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/edit': {
+      id: '/tools/edit'
+      path: '/tools/edit'
+      fullPath: '/tools/edit'
+      preLoaderRoute: typeof ToolsEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/crop': {
+      id: '/tools/crop'
+      path: '/tools/crop'
+      fullPath: '/tools/crop'
+      preLoaderRoute: typeof ToolsCropRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/compress': {
       id: '/tools/compress'
       path: '/tools/compress'
       fullPath: '/tools/compress'
       preLoaderRoute: typeof ToolsCompressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/compare': {
+      id: '/tools/compare'
+      path: '/tools/compare'
+      fullPath: '/tools/compare'
+      preLoaderRoute: typeof ToolsCompareRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/$slug': {
@@ -361,28 +701,35 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
   BlogSlugRoute: BlogSlugRoute,
+  ToolsCompareRoute: ToolsCompareRoute,
   ToolsCompressRoute: ToolsCompressRoute,
+  ToolsCropRoute: ToolsCropRoute,
+  ToolsEditRoute: ToolsEditRoute,
+  ToolsExcelToPdfRoute: ToolsExcelToPdfRoute,
+  ToolsExtractPagesRoute: ToolsExtractPagesRoute,
+  ToolsHtmlToPdfRoute: ToolsHtmlToPdfRoute,
   ToolsJpgToPdfRoute: ToolsJpgToPdfRoute,
   ToolsMergeRoute: ToolsMergeRoute,
+  ToolsOcrRoute: ToolsOcrRoute,
   ToolsOrganizeRoute: ToolsOrganizeRoute,
+  ToolsPageNumbersRoute: ToolsPageNumbersRoute,
+  ToolsPdfToExcelRoute: ToolsPdfToExcelRoute,
   ToolsPdfToJpgRoute: ToolsPdfToJpgRoute,
+  ToolsPdfToPdfaRoute: ToolsPdfToPdfaRoute,
   ToolsPdfToWordRoute: ToolsPdfToWordRoute,
   ToolsProtectRoute: ToolsProtectRoute,
+  ToolsRedactRoute: ToolsRedactRoute,
+  ToolsRemovePagesRoute: ToolsRemovePagesRoute,
+  ToolsRepairRoute: ToolsRepairRoute,
+  ToolsRotateRoute: ToolsRotateRoute,
+  ToolsScanToPdfRoute: ToolsScanToPdfRoute,
+  ToolsSignRoute: ToolsSignRoute,
   ToolsSplitRoute: ToolsSplitRoute,
   ToolsUnlockRoute: ToolsUnlockRoute,
+  ToolsWatermarkRoute: ToolsWatermarkRoute,
   ToolsWordToPdfRoute: ToolsWordToPdfRoute,
   BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
