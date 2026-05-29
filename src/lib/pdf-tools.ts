@@ -1,4 +1,4 @@
-import { PDFDocument, degrees } from "pdf-lib";
+import { PDFDocument, degrees, rgb, StandardFonts } from "pdf-lib";
 import JSZip from "jszip";
 import { pdfjsLib } from "./pdfjs";
 import { Document, Packer, Paragraph, TextRun } from "docx";
@@ -6,6 +6,21 @@ import mammoth from "mammoth";
 import { jsPDF } from "jspdf";
 
 const readAB = (f: File) => f.arrayBuffer();
+
+// ----- Range parser shared -----
+function parseRanges(ranges: string, total: number): number[] {
+  const set = new Set<number>();
+  if (!ranges.trim()) return Array.from({ length: total }, (_, i) => i);
+  for (const part of ranges.split(",").map((s) => s.trim()).filter(Boolean)) {
+    const m = part.match(/^(\d+)(?:-(\d+))?$/);
+    if (!m) throw new Error(`Invalid range: ${part}`);
+    const a = parseInt(m[1], 10);
+    const b = m[2] ? parseInt(m[2], 10) : a;
+    if (a < 1 || b > total || a > b) throw new Error(`Out-of-range: ${part}`);
+    for (let i = a; i <= b; i++) set.add(i - 1);
+  }
+  return [...set].sort((x, y) => x - y);
+}
 
 // ----- MERGE -----
 export async function mergePdfs(files: File[]): Promise<Blob> {
@@ -19,7 +34,6 @@ export async function mergePdfs(files: File[]): Promise<Blob> {
 }
 
 // ----- SPLIT -----
-// Ranges like "1-3,5,7-9". If empty/null → every page becomes its own PDF.
 export async function splitPdf(
   file: File,
   ranges: string,
@@ -49,7 +63,6 @@ export async function splitPdf(
       filename: `${file.name.replace(/\.pdf$/i, "")}-split.pdf`,
     };
   }
-
   const zip = new JSZip();
   for (let i = 0; i < groups.length; i++) {
     const out = await PDFDocument.create();
@@ -64,7 +77,6 @@ export async function splitPdf(
 }
 
 // ----- COMPRESS -----
-// Light compression: strip metadata + object streams + use object streams.
 export async function compressPdf(file: File): Promise<Blob> {
   const src = await PDFDocument.load(await readAB(file), {
     ignoreEncryption: true,
@@ -167,14 +179,12 @@ export async function pdfToWord(file: File): Promise<Blob> {
     if (i < pdf.numPages) paragraphs.push(new Paragraph({ children: [new TextRun("")] }));
   }
   const doc = new Document({ sections: [{ children: paragraphs }] });
-  const blob = await Packer.toBlob(doc);
-  return blob;
+  return Packer.toBlob(doc);
 }
 
 // ----- WORD → PDF -----
 export async function wordToPdf(file: File): Promise<Blob> {
   const { value: html } = await mammoth.convertToHtml({ arrayBuffer: await readAB(file) });
-  // Parse plain text from html
   const tmp = document.createElement("div");
   tmp.innerHTML = html;
   const pdf = new jsPDF({ unit: "pt", format: "a4" });
@@ -183,7 +193,6 @@ export async function wordToPdf(file: File): Promise<Blob> {
   const pageH = pdf.internal.pageSize.getHeight() - margin * 2;
   let y = margin;
   const lineHeight = 16;
-
   const walk = (el: HTMLElement) => {
     for (const node of Array.from(el.childNodes)) {
       if (node.nodeType === Node.TEXT_NODE) continue;
@@ -197,10 +206,7 @@ export async function wordToPdf(file: File): Promise<Blob> {
       pdf.setFontSize(fontSize);
       const lines = pdf.splitTextToSize(text, pageW);
       for (const ln of lines) {
-        if (y > margin + pageH) {
-          pdf.addPage();
-          y = margin;
-        }
+        if (y > margin + pageH) { pdf.addPage(); y = margin; }
         pdf.text(ln, margin, y);
         y += lineHeight * (isHeading ? 1.3 : 1);
       }
@@ -211,21 +217,9 @@ export async function wordToPdf(file: File): Promise<Blob> {
   return pdf.output("blob");
 }
 
-// ----- PROTECT (pdf-lib lacks encryption; emulate by re-wrapping with userPassword via qpdf-wasm would
-// require a heavy dep. We implement password-prompt protection using PDF user permissions through pdf-lib's
-// experimental save options. As a workaround we provide a clear honest fallback using a simple encryption
-// wrapper PDF that contains the original PDF as an attachment, requiring the password to extract.) -----
-// To honor the user's request realistically and 100% client-side, we use the @cantoo/pdf-lib? Not installed.
-// We implement a pragmatic approach: re-save with owner-permissions metadata + a JS open-action prompting
-// for the password client-side viewers that support it. Since standard pdf-lib cannot do real encryption,
-// we package the PDF inside a password-protected ZIP — still a "protected file" the user can share.
+// ----- PROTECT (JS-prompt wrapper, honest fallback) -----
 export async function protectAsZip(file: File, password: string): Promise<{ blob: Blob; filename: string }> {
   if (!password || password.length < 4) throw new Error("Use a password of at least 4 characters.");
-  // JSZip native lacks AES; provide a clear honest output.
-  const zip = new JSZip();
-  zip.file(file.name, await readAB(file));
-  // generateAsync with password requires jszip-encryption; not in stock JSZip.
-  // We compose a password-prompt wrapper: re-save PDF with an embedded JS that checks the password.
   const src = await PDFDocument.load(await readAB(file), { ignoreEncryption: true });
   const js = `var p = app.response({cQuestion:"Enter password to open this PDF", cTitle:"Pdfica Protected", bPassword:true});` +
              `if (p !== ${JSON.stringify(password)}) { app.alert("Wrong password."); this.closeDoc(true); }`;
@@ -238,29 +232,18 @@ export async function protectAsZip(file: File, password: string): Promise<{ blob
 }
 
 // ----- UNLOCK -----
-export async function unlockPdf(file: File, password = ""): Promise<Blob> {
-  // pdf-lib can load encrypted PDFs when ignoreEncryption is true. We re-save without encryption.
+export async function unlockPdf(file: File, _password = ""): Promise<Blob> {
   try {
-    const src = await PDFDocument.load(await readAB(file), {
-      ignoreEncryption: true,
-      // Some encrypted PDFs require a password to decrypt content streams; pdf-lib doesn't fully decrypt.
-      // For PDFs with owner-password only (i.e., open is permitted), this works reliably.
-    });
-    // Remove any open-action JS we added in protect step (best-effort).
+    const src = await PDFDocument.load(await readAB(file), { ignoreEncryption: true });
     const bytes = await src.save();
     return new Blob([bytes as BlobPart], { type: "application/pdf" });
   } catch {
-    throw new Error(
-      "This PDF uses strong encryption that can't be removed in-browser. Try unlocking it in your PDF reader first.",
-    );
+    throw new Error("This PDF uses strong encryption that can't be removed in-browser.");
   }
 }
 
 // ----- ORGANIZE -----
-export interface OrganizeOp {
-  // Source page indices 0-based, in final desired order. Each entry has a rotation in degrees (0,90,180,270).
-  pages: { index: number; rotation: number }[];
-}
+export interface OrganizeOp { pages: { index: number; rotation: number }[] }
 export async function organizePdf(file: File, ops: OrganizeOp): Promise<Blob> {
   const src = await PDFDocument.load(await readAB(file), { ignoreEncryption: true });
   const out = await PDFDocument.create();
@@ -274,7 +257,7 @@ export async function organizePdf(file: File, ops: OrganizeOp): Promise<Blob> {
   return new Blob([(await out.save()) as BlobPart], { type: "application/pdf" });
 }
 
-// ----- THUMBNAILS (for organize view) -----
+// ----- THUMBNAILS -----
 export async function renderPageThumbs(file: File, maxW = 180): Promise<string[]> {
   const data = new Uint8Array(await readAB(file));
   const pdf = await pdfjsLib.getDocument({ data }).promise;
@@ -292,4 +275,387 @@ export async function renderPageThumbs(file: File, maxW = 180): Promise<string[]
     out.push(canvas.toDataURL("image/jpeg", 0.7));
   }
   return out;
+}
+
+// ===================== NEW TOOLS =====================
+
+// ----- ROTATE -----
+export async function rotatePdf(
+  file: File,
+  rotation: 90 | 180 | 270,
+  rangesStr = "",
+): Promise<Blob> {
+  const src = await PDFDocument.load(await readAB(file), { ignoreEncryption: true });
+  const total = src.getPageCount();
+  const idxs = parseRanges(rangesStr, total);
+  const targetSet = new Set(idxs);
+  src.getPages().forEach((p, i) => {
+    if (targetSet.has(i)) {
+      const current = p.getRotation().angle;
+      p.setRotation(degrees((current + rotation) % 360));
+    }
+  });
+  const bytes = await src.save();
+  return new Blob([bytes as BlobPart], { type: "application/pdf" });
+}
+
+// ----- EXTRACT PAGES -----
+export async function extractPages(file: File, rangesStr: string): Promise<Blob> {
+  if (!rangesStr.trim()) throw new Error("Enter page ranges to extract.");
+  const src = await PDFDocument.load(await readAB(file), { ignoreEncryption: true });
+  const idxs = parseRanges(rangesStr, src.getPageCount());
+  const out = await PDFDocument.create();
+  const pages = await out.copyPages(src, idxs);
+  pages.forEach((p) => out.addPage(p));
+  return new Blob([(await out.save()) as BlobPart], { type: "application/pdf" });
+}
+
+// ----- REMOVE PAGES -----
+export async function removePages(file: File, rangesStr: string): Promise<Blob> {
+  if (!rangesStr.trim()) throw new Error("Enter page ranges to remove.");
+  const src = await PDFDocument.load(await readAB(file), { ignoreEncryption: true });
+  const total = src.getPageCount();
+  const remove = new Set(parseRanges(rangesStr, total));
+  const keep = Array.from({ length: total }, (_, i) => i).filter((i) => !remove.has(i));
+  if (!keep.length) throw new Error("You can't remove every page.");
+  const out = await PDFDocument.create();
+  const pages = await out.copyPages(src, keep);
+  pages.forEach((p) => out.addPage(p));
+  return new Blob([(await out.save()) as BlobPart], { type: "application/pdf" });
+}
+
+// ----- PAGE NUMBERS -----
+export type NumberPosition = "bottom-center" | "bottom-right" | "bottom-left" | "top-center" | "top-right" | "top-left";
+export async function addPageNumbers(
+  file: File,
+  position: NumberPosition = "bottom-center",
+  format: "1" | "1/n" | "Page 1 of n" = "1",
+): Promise<Blob> {
+  const src = await PDFDocument.load(await readAB(file), { ignoreEncryption: true });
+  const font = await src.embedFont(StandardFonts.Helvetica);
+  const total = src.getPageCount();
+  src.getPages().forEach((p, i) => {
+    const { width, height } = p.getSize();
+    const label = format === "1" ? `${i + 1}` : format === "1/n" ? `${i + 1}/${total}` : `Page ${i + 1} of ${total}`;
+    const fs = 11;
+    const w = font.widthOfTextAtSize(label, fs);
+    const margin = 24;
+    let x = (width - w) / 2;
+    let y = margin;
+    if (position.includes("right")) x = width - w - margin;
+    if (position.includes("left")) x = margin;
+    if (position.includes("top")) y = height - margin - fs;
+    p.drawText(label, { x, y, size: fs, font, color: rgb(0.25, 0.25, 0.25) });
+  });
+  const bytes = await src.save();
+  return new Blob([bytes as BlobPart], { type: "application/pdf" });
+}
+
+// ----- WATERMARK -----
+export async function addWatermark(
+  file: File,
+  text: string,
+  opacity = 0.25,
+  angle = 45,
+  size = 64,
+): Promise<Blob> {
+  if (!text.trim()) throw new Error("Enter watermark text.");
+  const src = await PDFDocument.load(await readAB(file), { ignoreEncryption: true });
+  const font = await src.embedFont(StandardFonts.HelveticaBold);
+  src.getPages().forEach((p) => {
+    const { width, height } = p.getSize();
+    const tw = font.widthOfTextAtSize(text, size);
+    p.drawText(text, {
+      x: (width - tw) / 2,
+      y: height / 2,
+      font,
+      size,
+      color: rgb(0.85, 0.1, 0.1),
+      opacity,
+      rotate: degrees(angle),
+    });
+  });
+  const bytes = await src.save();
+  return new Blob([bytes as BlobPart], { type: "application/pdf" });
+}
+
+// ----- CROP -----
+export async function cropPdf(file: File, marginPct = 5): Promise<Blob> {
+  const src = await PDFDocument.load(await readAB(file), { ignoreEncryption: true });
+  src.getPages().forEach((p) => {
+    const { width, height } = p.getSize();
+    const dx = (width * marginPct) / 100;
+    const dy = (height * marginPct) / 100;
+    p.setCropBox(dx, dy, width - 2 * dx, height - 2 * dy);
+  });
+  const bytes = await src.save();
+  return new Blob([bytes as BlobPart], { type: "application/pdf" });
+}
+
+// ----- SIGN (place signature image on a page) -----
+export async function signPdf(
+  file: File,
+  signaturePng: string, // dataURL
+  page = 1,
+  position: "bottom-right" | "bottom-left" | "bottom-center" = "bottom-right",
+): Promise<Blob> {
+  const src = await PDFDocument.load(await readAB(file), { ignoreEncryption: true });
+  const pageIdx = Math.min(Math.max(page - 1, 0), src.getPageCount() - 1);
+  const target = src.getPages()[pageIdx];
+  const { width, height } = target.getSize();
+  const pngBytes = Uint8Array.from(atob(signaturePng.split(",")[1]), (c) => c.charCodeAt(0));
+  const img = await src.embedPng(pngBytes);
+  const sigW = Math.min(220, width * 0.35);
+  const sigH = (img.height / img.width) * sigW;
+  const margin = 36;
+  let x = width - sigW - margin;
+  if (position === "bottom-left") x = margin;
+  if (position === "bottom-center") x = (width - sigW) / 2;
+  target.drawImage(img, { x, y: margin, width: sigW, height: sigH });
+  const bytes = await src.save();
+  return new Blob([bytes as BlobPart], { type: "application/pdf" });
+}
+
+// ----- EDIT (add a text annotation) -----
+export async function editPdfAddText(
+  file: File,
+  text: string,
+  page: number,
+  xPct: number,
+  yPct: number,
+  size = 14,
+  color: [number, number, number] = [0, 0, 0],
+): Promise<Blob> {
+  const src = await PDFDocument.load(await readAB(file), { ignoreEncryption: true });
+  const pageIdx = Math.min(Math.max(page - 1, 0), src.getPageCount() - 1);
+  const target = src.getPages()[pageIdx];
+  const { width, height } = target.getSize();
+  const font = await src.embedFont(StandardFonts.Helvetica);
+  target.drawText(text, {
+    x: (xPct / 100) * width,
+    y: height - (yPct / 100) * height,
+    font,
+    size,
+    color: rgb(color[0], color[1], color[2]),
+  });
+  const bytes = await src.save();
+  return new Blob([bytes as BlobPart], { type: "application/pdf" });
+}
+
+// ----- REDACT (draw black rectangles) -----
+export interface RedactBox { page: number; xPct: number; yPct: number; wPct: number; hPct: number }
+export async function redactPdf(file: File, boxes: RedactBox[]): Promise<Blob> {
+  if (!boxes.length) throw new Error("Add at least one redaction box.");
+  const src = await PDFDocument.load(await readAB(file), { ignoreEncryption: true });
+  for (const b of boxes) {
+    const target = src.getPages()[b.page - 1];
+    if (!target) continue;
+    const { width, height } = target.getSize();
+    target.drawRectangle({
+      x: (b.xPct / 100) * width,
+      y: height - ((b.yPct + b.hPct) / 100) * height,
+      width: (b.wPct / 100) * width,
+      height: (b.hPct / 100) * height,
+      color: rgb(0, 0, 0),
+    });
+  }
+  const bytes = await src.save();
+  return new Blob([bytes as BlobPart], { type: "application/pdf" });
+}
+
+// ----- HTML → PDF -----
+export async function htmlToPdf(html: string): Promise<Blob> {
+  if (!html.trim()) throw new Error("Paste some HTML to convert.");
+  const tmp = document.createElement("div");
+  tmp.innerHTML = html;
+  const pdf = new jsPDF({ unit: "pt", format: "a4" });
+  const margin = 48;
+  const pageW = pdf.internal.pageSize.getWidth() - margin * 2;
+  const pageH = pdf.internal.pageSize.getHeight() - margin * 2;
+  let y = margin;
+  const walk = (el: HTMLElement) => {
+    for (const node of Array.from(el.childNodes)) {
+      if (node.nodeType === Node.TEXT_NODE) continue;
+      const e = node as HTMLElement;
+      const tag = e.tagName?.toLowerCase();
+      const text = (e.textContent || "").trim();
+      if (!text) continue;
+      const isHeading = tag && /^h[1-6]$/.test(tag);
+      const fs = isHeading ? 22 - (parseInt(tag![1], 10) - 1) * 2 : 11;
+      pdf.setFont("helvetica", isHeading ? "bold" : "normal");
+      pdf.setFontSize(fs);
+      const lines = pdf.splitTextToSize(text, pageW);
+      for (const ln of lines) {
+        if (y > margin + pageH) { pdf.addPage(); y = margin; }
+        pdf.text(ln, margin, y);
+        y += fs * 1.4;
+      }
+      y += isHeading ? 8 : 4;
+    }
+  };
+  walk(tmp);
+  return pdf.output("blob");
+}
+
+// ----- EXCEL → PDF -----
+export async function excelToPdf(file: File): Promise<Blob> {
+  const XLSX = await import("xlsx");
+  const wb = XLSX.read(await readAB(file), { type: "array" });
+  const pdf = new jsPDF({ unit: "pt", format: "a4", orientation: "landscape" });
+  const margin = 36;
+  const pageW = pdf.internal.pageSize.getWidth() - margin * 2;
+  const pageH = pdf.internal.pageSize.getHeight() - margin * 2;
+  let first = true;
+  for (const name of wb.SheetNames) {
+    if (!first) pdf.addPage();
+    first = false;
+    const sheet = wb.Sheets[name];
+    const rows: string[][] = XLSX.utils.sheet_to_json(sheet, { header: 1, raw: false }) as string[][];
+    pdf.setFont("helvetica", "bold");
+    pdf.setFontSize(14);
+    pdf.text(name, margin, margin);
+    pdf.setFont("helvetica", "normal");
+    pdf.setFontSize(9);
+    let y = margin + 22;
+    const colCount = Math.max(...rows.map((r) => r.length), 1);
+    const colW = pageW / colCount;
+    for (const row of rows) {
+      if (y > margin + pageH) { pdf.addPage(); y = margin; }
+      row.forEach((cell, i) => {
+        const txt = String(cell ?? "").slice(0, 80);
+        pdf.text(txt, margin + i * colW, y);
+      });
+      y += 14;
+    }
+  }
+  return pdf.output("blob");
+}
+
+// ----- PDF → EXCEL -----
+export async function pdfToExcel(file: File): Promise<Blob> {
+  const XLSX = await import("xlsx");
+  const data = new Uint8Array(await readAB(file));
+  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  const wb = XLSX.utils.book_new();
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const text = await page.getTextContent();
+    const lines: Record<number, { x: number; str: string }[]> = {};
+    for (const item of text.items as Array<{ str: string; transform: number[] }>) {
+      const y = Math.round(item.transform[5]);
+      lines[y] ??= [];
+      lines[y].push({ x: item.transform[4], str: item.str });
+    }
+    const rows = Object.keys(lines)
+      .map(Number)
+      .sort((a, b) => b - a)
+      .map((y) => lines[y].sort((a, b) => a.x - b.x).map((c) => c.str));
+    const sheet = XLSX.utils.aoa_to_sheet(rows);
+    XLSX.utils.book_append_sheet(wb, sheet, `Page ${i}`);
+  }
+  const out = XLSX.write(wb, { type: "array", bookType: "xlsx" });
+  return new Blob([out], { type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" });
+}
+
+// ----- OCR -----
+export async function ocrPdfToText(
+  file: File,
+  onProgress?: (p: number, status: string) => void,
+): Promise<Blob> {
+  const Tesseract = (await import("tesseract.js")).default;
+  const data = new Uint8Array(await readAB(file));
+  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  let combined = "";
+  for (let i = 1; i <= pdf.numPages; i++) {
+    onProgress?.(((i - 1) / pdf.numPages) * 100, `OCR page ${i} of ${pdf.numPages}…`);
+    const page = await pdf.getPage(i);
+    const viewport = page.getViewport({ scale: 2 });
+    const canvas = document.createElement("canvas");
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    const ctx = canvas.getContext("2d")!;
+    await page.render({ canvasContext: ctx, viewport, canvas }).promise;
+    const { data: { text } } = await Tesseract.recognize(canvas, "eng");
+    combined += `--- Page ${i} ---\n${text}\n\n`;
+  }
+  onProgress?.(100, "Done");
+  return new Blob([combined], { type: "text/plain" });
+}
+
+// ----- REPAIR (best effort: load + re-save) -----
+export async function repairPdf(file: File): Promise<Blob> {
+  try {
+    const src = await PDFDocument.load(await readAB(file), {
+      ignoreEncryption: true,
+      throwOnInvalidObject: false,
+      updateMetadata: false,
+    });
+    const bytes = await src.save({ useObjectStreams: false });
+    return new Blob([bytes as BlobPart], { type: "application/pdf" });
+  } catch (e) {
+    throw new Error("This PDF is too corrupted for an in-browser repair. Try a desktop tool like qpdf.");
+  }
+}
+
+// ----- PDF/A (basic conformance hint) -----
+export async function pdfToPdfA(file: File): Promise<Blob> {
+  const src = await PDFDocument.load(await readAB(file), { ignoreEncryption: true });
+  src.setProducer("Pdfica (PDF/A best-effort)");
+  src.setTitle(src.getTitle() || file.name);
+  const bytes = await src.save({ useObjectStreams: false });
+  return new Blob([bytes as BlobPart], { type: "application/pdf" });
+}
+
+// ----- COMPARE (text diff) -----
+async function extractAllText(file: File): Promise<string> {
+  const data = new Uint8Array(await readAB(file));
+  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  let out = "";
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const tc = await page.getTextContent();
+    out += (tc.items as Array<{ str: string }>).map((it) => it.str).join(" ") + "\n";
+  }
+  return out;
+}
+
+export interface DiffLine { type: "same" | "add" | "del"; text: string }
+export async function comparePdfs(a: File, b: File): Promise<DiffLine[]> {
+  const [ta, tb] = await Promise.all([extractAllText(a), extractAllText(b)]);
+  const la = ta.split(/\r?\n/);
+  const lb = tb.split(/\r?\n/);
+  // LCS diff
+  const m = la.length, n = lb.length;
+  const dp: number[][] = Array.from({ length: m + 1 }, () => new Array(n + 1).fill(0));
+  for (let i = m - 1; i >= 0; i--)
+    for (let j = n - 1; j >= 0; j--)
+      dp[i][j] = la[i] === lb[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1]);
+  const out: DiffLine[] = [];
+  let i = 0, j = 0;
+  while (i < m && j < n) {
+    if (la[i] === lb[j]) { out.push({ type: "same", text: la[i] }); i++; j++; }
+    else if (dp[i + 1][j] >= dp[i][j + 1]) { out.push({ type: "del", text: la[i++] }); }
+    else { out.push({ type: "add", text: lb[j++] }); }
+  }
+  while (i < m) out.push({ type: "del", text: la[i++] });
+  while (j < n) out.push({ type: "add", text: lb[j++] });
+  return out;
+}
+
+// ----- SCAN → PDF (from data URLs captured via camera) -----
+export async function scanToPdf(images: string[]): Promise<Blob> {
+  if (!images.length) throw new Error("Capture at least one page.");
+  const doc = await PDFDocument.create();
+  for (const dataUrl of images) {
+    const b64 = dataUrl.split(",")[1];
+    const bytes = Uint8Array.from(atob(b64), (c) => c.charCodeAt(0));
+    const img = dataUrl.startsWith("data:image/png")
+      ? await doc.embedPng(bytes)
+      : await doc.embedJpg(bytes);
+    const page = doc.addPage([595.28, 841.89]);
+    const scale = Math.min((page.getWidth() - 40) / img.width, (page.getHeight() - 40) / img.height);
+    const w = img.width * scale, h = img.height * scale;
+    page.drawImage(img, { x: (page.getWidth() - w) / 2, y: (page.getHeight() - h) / 2, width: w, height: h });
+  }
+  return new Blob([(await doc.save()) as BlobPart], { type: "application/pdf" });
 }
