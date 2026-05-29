@@ -28,7 +28,7 @@ export const TOOLS: Tool[] = [
   { slug: "ocr", name: "OCR PDF", tagline: "Extract text from scanned PDFs.", description: "Run optical character recognition right in your browser — slower, but free and private.", category: "optimize", accept: "application/pdf", multi: false, icon: "ScanText", to: "/tools/ocr" },
   { slug: "pdf-to-pdfa", name: "PDF to PDF/A", tagline: "Archive-ready PDF format.", description: "Re-save your PDF with PDF/A friendly metadata and structure (best-effort).", category: "optimize", accept: "application/pdf", multi: false, icon: "Archive", to: "/tools/pdf-to-pdfa" },
   { slug: "grayscale-pdf", name: "Grayscale PDF", tagline: "Convert to black & white.", description: "Desaturate every page of a PDF for printing in monochrome.", category: "optimize", accept: "application/pdf", multi: false, icon: "Contrast", to: "/tools/grayscale-pdf" },
-  { slug: "flatten-pdf", name: "Flatten PDF", tagline: "Rasterize every page.", description: "Flatten forms, annotations and layers by rasterizing each page.", category: "optimize", accept: "application/pdf", multi: false, icon: "LayersIcon", to: "/tools/flatten-pdf" },
+  { slug: "flatten-pdf", name: "Flatten PDF", tagline: "Rasterize every page.", description: "Flatten forms, annotations and layers by rasterizing each page.", category: "optimize", accept: "application/pdf", multi: false, icon: "Layers3", to: "/tools/flatten-pdf" },
   { slug: "pdf-metadata", name: "PDF Metadata", tagline: "View PDF info & properties.", description: "Inspect title, author, page count, creation date and other metadata.", category: "optimize", accept: "application/pdf", multi: false, icon: "Info", to: "/tools/pdf-metadata" },
 
   // CONVERT
