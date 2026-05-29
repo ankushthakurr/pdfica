@@ -23,21 +23,37 @@ import { Route as ToolsScanToPdfRouteImport } from './routes/tools.scan-to-pdf'
 import { Route as ToolsRotateRouteImport } from './routes/tools.rotate'
 import { Route as ToolsRepairRouteImport } from './routes/tools.repair'
 import { Route as ToolsRemovePagesRouteImport } from './routes/tools.remove-pages'
+import { Route as ToolsRemoveExifRouteImport } from './routes/tools.remove-exif'
 import { Route as ToolsRedactRouteImport } from './routes/tools.redact'
 import { Route as ToolsProtectRouteImport } from './routes/tools.protect'
 import { Route as ToolsPdfToWordRouteImport } from './routes/tools.pdf-to-word'
+import { Route as ToolsPdfToTextRouteImport } from './routes/tools.pdf-to-text'
 import { Route as ToolsPdfToPdfaRouteImport } from './routes/tools.pdf-to-pdfa'
 import { Route as ToolsPdfToJpgRouteImport } from './routes/tools.pdf-to-jpg'
 import { Route as ToolsPdfToExcelRouteImport } from './routes/tools.pdf-to-excel'
+import { Route as ToolsPdfMetadataRouteImport } from './routes/tools.pdf-metadata'
 import { Route as ToolsPageNumbersRouteImport } from './routes/tools.page-numbers'
 import { Route as ToolsOrganizeRouteImport } from './routes/tools.organize'
 import { Route as ToolsOcrRouteImport } from './routes/tools.ocr'
+import { Route as ToolsNUpRouteImport } from './routes/tools.n-up'
 import { Route as ToolsMergeRouteImport } from './routes/tools.merge'
+import { Route as ToolsJsonToCsvRouteImport } from './routes/tools.json-to-csv'
 import { Route as ToolsJpgToPdfRouteImport } from './routes/tools.jpg-to-pdf'
+import { Route as ToolsImageRotateRouteImport } from './routes/tools.image-rotate'
+import { Route as ToolsImageResizeRouteImport } from './routes/tools.image-resize'
+import { Route as ToolsImageGrayscaleRouteImport } from './routes/tools.image-grayscale'
+import { Route as ToolsImageCropRouteImport } from './routes/tools.image-crop'
+import { Route as ToolsImageConvertRouteImport } from './routes/tools.image-convert'
+import { Route as ToolsImageCompressRouteImport } from './routes/tools.image-compress'
 import { Route as ToolsHtmlToPdfRouteImport } from './routes/tools.html-to-pdf'
+import { Route as ToolsGrayscalePdfRouteImport } from './routes/tools.grayscale-pdf'
+import { Route as ToolsFlattenPdfRouteImport } from './routes/tools.flatten-pdf'
 import { Route as ToolsExtractPagesRouteImport } from './routes/tools.extract-pages'
 import { Route as ToolsExcelToPdfRouteImport } from './routes/tools.excel-to-pdf'
+import { Route as ToolsExcelToCsvRouteImport } from './routes/tools.excel-to-csv'
 import { Route as ToolsEditRouteImport } from './routes/tools.edit'
+import { Route as ToolsCsvToJsonRouteImport } from './routes/tools.csv-to-json'
+import { Route as ToolsCsvToExcelRouteImport } from './routes/tools.csv-to-excel'
 import { Route as ToolsCropRouteImport } from './routes/tools.crop'
 import { Route as ToolsCompressRouteImport } from './routes/tools.compress'
 import { Route as ToolsCompareRouteImport } from './routes/tools.compare'
@@ -113,6 +129,11 @@ const ToolsRemovePagesRoute = ToolsRemovePagesRouteImport.update({
   path: '/tools/remove-pages',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsRemoveExifRoute = ToolsRemoveExifRouteImport.update({
+  id: '/tools/remove-exif',
+  path: '/tools/remove-exif',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsRedactRoute = ToolsRedactRouteImport.update({
   id: '/tools/redact',
   path: '/tools/redact',
@@ -126,6 +147,11 @@ const ToolsProtectRoute = ToolsProtectRouteImport.update({
 const ToolsPdfToWordRoute = ToolsPdfToWordRouteImport.update({
   id: '/tools/pdf-to-word',
   path: '/tools/pdf-to-word',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsPdfToTextRoute = ToolsPdfToTextRouteImport.update({
+  id: '/tools/pdf-to-text',
+  path: '/tools/pdf-to-text',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsPdfToPdfaRoute = ToolsPdfToPdfaRouteImport.update({
@@ -143,6 +169,11 @@ const ToolsPdfToExcelRoute = ToolsPdfToExcelRouteImport.update({
   path: '/tools/pdf-to-excel',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsPdfMetadataRoute = ToolsPdfMetadataRouteImport.update({
+  id: '/tools/pdf-metadata',
+  path: '/tools/pdf-metadata',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsPageNumbersRoute = ToolsPageNumbersRouteImport.update({
   id: '/tools/page-numbers',
   path: '/tools/page-numbers',
@@ -158,9 +189,19 @@ const ToolsOcrRoute = ToolsOcrRouteImport.update({
   path: '/tools/ocr',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsNUpRoute = ToolsNUpRouteImport.update({
+  id: '/tools/n-up',
+  path: '/tools/n-up',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsMergeRoute = ToolsMergeRouteImport.update({
   id: '/tools/merge',
   path: '/tools/merge',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsJsonToCsvRoute = ToolsJsonToCsvRouteImport.update({
+  id: '/tools/json-to-csv',
+  path: '/tools/json-to-csv',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsJpgToPdfRoute = ToolsJpgToPdfRouteImport.update({
@@ -168,9 +209,49 @@ const ToolsJpgToPdfRoute = ToolsJpgToPdfRouteImport.update({
   path: '/tools/jpg-to-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsImageRotateRoute = ToolsImageRotateRouteImport.update({
+  id: '/tools/image-rotate',
+  path: '/tools/image-rotate',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsImageResizeRoute = ToolsImageResizeRouteImport.update({
+  id: '/tools/image-resize',
+  path: '/tools/image-resize',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsImageGrayscaleRoute = ToolsImageGrayscaleRouteImport.update({
+  id: '/tools/image-grayscale',
+  path: '/tools/image-grayscale',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsImageCropRoute = ToolsImageCropRouteImport.update({
+  id: '/tools/image-crop',
+  path: '/tools/image-crop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsImageConvertRoute = ToolsImageConvertRouteImport.update({
+  id: '/tools/image-convert',
+  path: '/tools/image-convert',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsImageCompressRoute = ToolsImageCompressRouteImport.update({
+  id: '/tools/image-compress',
+  path: '/tools/image-compress',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsHtmlToPdfRoute = ToolsHtmlToPdfRouteImport.update({
   id: '/tools/html-to-pdf',
   path: '/tools/html-to-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsGrayscalePdfRoute = ToolsGrayscalePdfRouteImport.update({
+  id: '/tools/grayscale-pdf',
+  path: '/tools/grayscale-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsFlattenPdfRoute = ToolsFlattenPdfRouteImport.update({
+  id: '/tools/flatten-pdf',
+  path: '/tools/flatten-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsExtractPagesRoute = ToolsExtractPagesRouteImport.update({
@@ -183,9 +264,24 @@ const ToolsExcelToPdfRoute = ToolsExcelToPdfRouteImport.update({
   path: '/tools/excel-to-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsExcelToCsvRoute = ToolsExcelToCsvRouteImport.update({
+  id: '/tools/excel-to-csv',
+  path: '/tools/excel-to-csv',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsEditRoute = ToolsEditRouteImport.update({
   id: '/tools/edit',
   path: '/tools/edit',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCsvToJsonRoute = ToolsCsvToJsonRouteImport.update({
+  id: '/tools/csv-to-json',
+  path: '/tools/csv-to-json',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsCsvToExcelRoute = ToolsCsvToExcelRouteImport.update({
+  id: '/tools/csv-to-excel',
+  path: '/tools/csv-to-excel',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsCropRoute = ToolsCropRouteImport.update({
@@ -218,21 +314,37 @@ export interface FileRoutesByFullPath {
   '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
   '/tools/crop': typeof ToolsCropRoute
+  '/tools/csv-to-excel': typeof ToolsCsvToExcelRoute
+  '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/edit': typeof ToolsEditRoute
+  '/tools/excel-to-csv': typeof ToolsExcelToCsvRoute
   '/tools/excel-to-pdf': typeof ToolsExcelToPdfRoute
   '/tools/extract-pages': typeof ToolsExtractPagesRoute
+  '/tools/flatten-pdf': typeof ToolsFlattenPdfRoute
+  '/tools/grayscale-pdf': typeof ToolsGrayscalePdfRoute
   '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
+  '/tools/image-compress': typeof ToolsImageCompressRoute
+  '/tools/image-convert': typeof ToolsImageConvertRoute
+  '/tools/image-crop': typeof ToolsImageCropRoute
+  '/tools/image-grayscale': typeof ToolsImageGrayscaleRoute
+  '/tools/image-resize': typeof ToolsImageResizeRoute
+  '/tools/image-rotate': typeof ToolsImageRotateRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
+  '/tools/json-to-csv': typeof ToolsJsonToCsvRoute
   '/tools/merge': typeof ToolsMergeRoute
+  '/tools/n-up': typeof ToolsNUpRoute
   '/tools/ocr': typeof ToolsOcrRoute
   '/tools/organize': typeof ToolsOrganizeRoute
   '/tools/page-numbers': typeof ToolsPageNumbersRoute
+  '/tools/pdf-metadata': typeof ToolsPdfMetadataRoute
   '/tools/pdf-to-excel': typeof ToolsPdfToExcelRoute
   '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
   '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
+  '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/protect': typeof ToolsProtectRoute
   '/tools/redact': typeof ToolsRedactRoute
+  '/tools/remove-exif': typeof ToolsRemoveExifRoute
   '/tools/remove-pages': typeof ToolsRemovePagesRoute
   '/tools/repair': typeof ToolsRepairRoute
   '/tools/rotate': typeof ToolsRotateRoute
@@ -253,21 +365,37 @@ export interface FileRoutesByTo {
   '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
   '/tools/crop': typeof ToolsCropRoute
+  '/tools/csv-to-excel': typeof ToolsCsvToExcelRoute
+  '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/edit': typeof ToolsEditRoute
+  '/tools/excel-to-csv': typeof ToolsExcelToCsvRoute
   '/tools/excel-to-pdf': typeof ToolsExcelToPdfRoute
   '/tools/extract-pages': typeof ToolsExtractPagesRoute
+  '/tools/flatten-pdf': typeof ToolsFlattenPdfRoute
+  '/tools/grayscale-pdf': typeof ToolsGrayscalePdfRoute
   '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
+  '/tools/image-compress': typeof ToolsImageCompressRoute
+  '/tools/image-convert': typeof ToolsImageConvertRoute
+  '/tools/image-crop': typeof ToolsImageCropRoute
+  '/tools/image-grayscale': typeof ToolsImageGrayscaleRoute
+  '/tools/image-resize': typeof ToolsImageResizeRoute
+  '/tools/image-rotate': typeof ToolsImageRotateRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
+  '/tools/json-to-csv': typeof ToolsJsonToCsvRoute
   '/tools/merge': typeof ToolsMergeRoute
+  '/tools/n-up': typeof ToolsNUpRoute
   '/tools/ocr': typeof ToolsOcrRoute
   '/tools/organize': typeof ToolsOrganizeRoute
   '/tools/page-numbers': typeof ToolsPageNumbersRoute
+  '/tools/pdf-metadata': typeof ToolsPdfMetadataRoute
   '/tools/pdf-to-excel': typeof ToolsPdfToExcelRoute
   '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
   '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
+  '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/protect': typeof ToolsProtectRoute
   '/tools/redact': typeof ToolsRedactRoute
+  '/tools/remove-exif': typeof ToolsRemoveExifRoute
   '/tools/remove-pages': typeof ToolsRemovePagesRoute
   '/tools/repair': typeof ToolsRepairRoute
   '/tools/rotate': typeof ToolsRotateRoute
@@ -289,21 +417,37 @@ export interface FileRoutesById {
   '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
   '/tools/crop': typeof ToolsCropRoute
+  '/tools/csv-to-excel': typeof ToolsCsvToExcelRoute
+  '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/edit': typeof ToolsEditRoute
+  '/tools/excel-to-csv': typeof ToolsExcelToCsvRoute
   '/tools/excel-to-pdf': typeof ToolsExcelToPdfRoute
   '/tools/extract-pages': typeof ToolsExtractPagesRoute
+  '/tools/flatten-pdf': typeof ToolsFlattenPdfRoute
+  '/tools/grayscale-pdf': typeof ToolsGrayscalePdfRoute
   '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
+  '/tools/image-compress': typeof ToolsImageCompressRoute
+  '/tools/image-convert': typeof ToolsImageConvertRoute
+  '/tools/image-crop': typeof ToolsImageCropRoute
+  '/tools/image-grayscale': typeof ToolsImageGrayscaleRoute
+  '/tools/image-resize': typeof ToolsImageResizeRoute
+  '/tools/image-rotate': typeof ToolsImageRotateRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
+  '/tools/json-to-csv': typeof ToolsJsonToCsvRoute
   '/tools/merge': typeof ToolsMergeRoute
+  '/tools/n-up': typeof ToolsNUpRoute
   '/tools/ocr': typeof ToolsOcrRoute
   '/tools/organize': typeof ToolsOrganizeRoute
   '/tools/page-numbers': typeof ToolsPageNumbersRoute
+  '/tools/pdf-metadata': typeof ToolsPdfMetadataRoute
   '/tools/pdf-to-excel': typeof ToolsPdfToExcelRoute
   '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
   '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
+  '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/protect': typeof ToolsProtectRoute
   '/tools/redact': typeof ToolsRedactRoute
+  '/tools/remove-exif': typeof ToolsRemoveExifRoute
   '/tools/remove-pages': typeof ToolsRemovePagesRoute
   '/tools/repair': typeof ToolsRepairRoute
   '/tools/rotate': typeof ToolsRotateRoute
@@ -326,21 +470,37 @@ export interface FileRouteTypes {
     | '/tools/compare'
     | '/tools/compress'
     | '/tools/crop'
+    | '/tools/csv-to-excel'
+    | '/tools/csv-to-json'
     | '/tools/edit'
+    | '/tools/excel-to-csv'
     | '/tools/excel-to-pdf'
     | '/tools/extract-pages'
+    | '/tools/flatten-pdf'
+    | '/tools/grayscale-pdf'
     | '/tools/html-to-pdf'
+    | '/tools/image-compress'
+    | '/tools/image-convert'
+    | '/tools/image-crop'
+    | '/tools/image-grayscale'
+    | '/tools/image-resize'
+    | '/tools/image-rotate'
     | '/tools/jpg-to-pdf'
+    | '/tools/json-to-csv'
     | '/tools/merge'
+    | '/tools/n-up'
     | '/tools/ocr'
     | '/tools/organize'
     | '/tools/page-numbers'
+    | '/tools/pdf-metadata'
     | '/tools/pdf-to-excel'
     | '/tools/pdf-to-jpg'
     | '/tools/pdf-to-pdfa'
+    | '/tools/pdf-to-text'
     | '/tools/pdf-to-word'
     | '/tools/protect'
     | '/tools/redact'
+    | '/tools/remove-exif'
     | '/tools/remove-pages'
     | '/tools/repair'
     | '/tools/rotate'
@@ -361,21 +521,37 @@ export interface FileRouteTypes {
     | '/tools/compare'
     | '/tools/compress'
     | '/tools/crop'
+    | '/tools/csv-to-excel'
+    | '/tools/csv-to-json'
     | '/tools/edit'
+    | '/tools/excel-to-csv'
     | '/tools/excel-to-pdf'
     | '/tools/extract-pages'
+    | '/tools/flatten-pdf'
+    | '/tools/grayscale-pdf'
     | '/tools/html-to-pdf'
+    | '/tools/image-compress'
+    | '/tools/image-convert'
+    | '/tools/image-crop'
+    | '/tools/image-grayscale'
+    | '/tools/image-resize'
+    | '/tools/image-rotate'
     | '/tools/jpg-to-pdf'
+    | '/tools/json-to-csv'
     | '/tools/merge'
+    | '/tools/n-up'
     | '/tools/ocr'
     | '/tools/organize'
     | '/tools/page-numbers'
+    | '/tools/pdf-metadata'
     | '/tools/pdf-to-excel'
     | '/tools/pdf-to-jpg'
     | '/tools/pdf-to-pdfa'
+    | '/tools/pdf-to-text'
     | '/tools/pdf-to-word'
     | '/tools/protect'
     | '/tools/redact'
+    | '/tools/remove-exif'
     | '/tools/remove-pages'
     | '/tools/repair'
     | '/tools/rotate'
@@ -396,21 +572,37 @@ export interface FileRouteTypes {
     | '/tools/compare'
     | '/tools/compress'
     | '/tools/crop'
+    | '/tools/csv-to-excel'
+    | '/tools/csv-to-json'
     | '/tools/edit'
+    | '/tools/excel-to-csv'
     | '/tools/excel-to-pdf'
     | '/tools/extract-pages'
+    | '/tools/flatten-pdf'
+    | '/tools/grayscale-pdf'
     | '/tools/html-to-pdf'
+    | '/tools/image-compress'
+    | '/tools/image-convert'
+    | '/tools/image-crop'
+    | '/tools/image-grayscale'
+    | '/tools/image-resize'
+    | '/tools/image-rotate'
     | '/tools/jpg-to-pdf'
+    | '/tools/json-to-csv'
     | '/tools/merge'
+    | '/tools/n-up'
     | '/tools/ocr'
     | '/tools/organize'
     | '/tools/page-numbers'
+    | '/tools/pdf-metadata'
     | '/tools/pdf-to-excel'
     | '/tools/pdf-to-jpg'
     | '/tools/pdf-to-pdfa'
+    | '/tools/pdf-to-text'
     | '/tools/pdf-to-word'
     | '/tools/protect'
     | '/tools/redact'
+    | '/tools/remove-exif'
     | '/tools/remove-pages'
     | '/tools/repair'
     | '/tools/rotate'
@@ -432,21 +624,37 @@ export interface RootRouteChildren {
   ToolsCompareRoute: typeof ToolsCompareRoute
   ToolsCompressRoute: typeof ToolsCompressRoute
   ToolsCropRoute: typeof ToolsCropRoute
+  ToolsCsvToExcelRoute: typeof ToolsCsvToExcelRoute
+  ToolsCsvToJsonRoute: typeof ToolsCsvToJsonRoute
   ToolsEditRoute: typeof ToolsEditRoute
+  ToolsExcelToCsvRoute: typeof ToolsExcelToCsvRoute
   ToolsExcelToPdfRoute: typeof ToolsExcelToPdfRoute
   ToolsExtractPagesRoute: typeof ToolsExtractPagesRoute
+  ToolsFlattenPdfRoute: typeof ToolsFlattenPdfRoute
+  ToolsGrayscalePdfRoute: typeof ToolsGrayscalePdfRoute
   ToolsHtmlToPdfRoute: typeof ToolsHtmlToPdfRoute
+  ToolsImageCompressRoute: typeof ToolsImageCompressRoute
+  ToolsImageConvertRoute: typeof ToolsImageConvertRoute
+  ToolsImageCropRoute: typeof ToolsImageCropRoute
+  ToolsImageGrayscaleRoute: typeof ToolsImageGrayscaleRoute
+  ToolsImageResizeRoute: typeof ToolsImageResizeRoute
+  ToolsImageRotateRoute: typeof ToolsImageRotateRoute
   ToolsJpgToPdfRoute: typeof ToolsJpgToPdfRoute
+  ToolsJsonToCsvRoute: typeof ToolsJsonToCsvRoute
   ToolsMergeRoute: typeof ToolsMergeRoute
+  ToolsNUpRoute: typeof ToolsNUpRoute
   ToolsOcrRoute: typeof ToolsOcrRoute
   ToolsOrganizeRoute: typeof ToolsOrganizeRoute
   ToolsPageNumbersRoute: typeof ToolsPageNumbersRoute
+  ToolsPdfMetadataRoute: typeof ToolsPdfMetadataRoute
   ToolsPdfToExcelRoute: typeof ToolsPdfToExcelRoute
   ToolsPdfToJpgRoute: typeof ToolsPdfToJpgRoute
   ToolsPdfToPdfaRoute: typeof ToolsPdfToPdfaRoute
+  ToolsPdfToTextRoute: typeof ToolsPdfToTextRoute
   ToolsPdfToWordRoute: typeof ToolsPdfToWordRoute
   ToolsProtectRoute: typeof ToolsProtectRoute
   ToolsRedactRoute: typeof ToolsRedactRoute
+  ToolsRemoveExifRoute: typeof ToolsRemoveExifRoute
   ToolsRemovePagesRoute: typeof ToolsRemovePagesRoute
   ToolsRepairRoute: typeof ToolsRepairRoute
   ToolsRotateRoute: typeof ToolsRotateRoute
@@ -559,6 +767,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsRemovePagesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/remove-exif': {
+      id: '/tools/remove-exif'
+      path: '/tools/remove-exif'
+      fullPath: '/tools/remove-exif'
+      preLoaderRoute: typeof ToolsRemoveExifRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/redact': {
       id: '/tools/redact'
       path: '/tools/redact'
@@ -578,6 +793,13 @@ declare module '@tanstack/react-router' {
       path: '/tools/pdf-to-word'
       fullPath: '/tools/pdf-to-word'
       preLoaderRoute: typeof ToolsPdfToWordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/pdf-to-text': {
+      id: '/tools/pdf-to-text'
+      path: '/tools/pdf-to-text'
+      fullPath: '/tools/pdf-to-text'
+      preLoaderRoute: typeof ToolsPdfToTextRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/pdf-to-pdfa': {
@@ -601,6 +823,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsPdfToExcelRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/pdf-metadata': {
+      id: '/tools/pdf-metadata'
+      path: '/tools/pdf-metadata'
+      fullPath: '/tools/pdf-metadata'
+      preLoaderRoute: typeof ToolsPdfMetadataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/page-numbers': {
       id: '/tools/page-numbers'
       path: '/tools/page-numbers'
@@ -622,11 +851,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsOcrRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/n-up': {
+      id: '/tools/n-up'
+      path: '/tools/n-up'
+      fullPath: '/tools/n-up'
+      preLoaderRoute: typeof ToolsNUpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/merge': {
       id: '/tools/merge'
       path: '/tools/merge'
       fullPath: '/tools/merge'
       preLoaderRoute: typeof ToolsMergeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/json-to-csv': {
+      id: '/tools/json-to-csv'
+      path: '/tools/json-to-csv'
+      fullPath: '/tools/json-to-csv'
+      preLoaderRoute: typeof ToolsJsonToCsvRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/jpg-to-pdf': {
@@ -636,11 +879,67 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsJpgToPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/image-rotate': {
+      id: '/tools/image-rotate'
+      path: '/tools/image-rotate'
+      fullPath: '/tools/image-rotate'
+      preLoaderRoute: typeof ToolsImageRotateRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/image-resize': {
+      id: '/tools/image-resize'
+      path: '/tools/image-resize'
+      fullPath: '/tools/image-resize'
+      preLoaderRoute: typeof ToolsImageResizeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/image-grayscale': {
+      id: '/tools/image-grayscale'
+      path: '/tools/image-grayscale'
+      fullPath: '/tools/image-grayscale'
+      preLoaderRoute: typeof ToolsImageGrayscaleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/image-crop': {
+      id: '/tools/image-crop'
+      path: '/tools/image-crop'
+      fullPath: '/tools/image-crop'
+      preLoaderRoute: typeof ToolsImageCropRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/image-convert': {
+      id: '/tools/image-convert'
+      path: '/tools/image-convert'
+      fullPath: '/tools/image-convert'
+      preLoaderRoute: typeof ToolsImageConvertRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/image-compress': {
+      id: '/tools/image-compress'
+      path: '/tools/image-compress'
+      fullPath: '/tools/image-compress'
+      preLoaderRoute: typeof ToolsImageCompressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/html-to-pdf': {
       id: '/tools/html-to-pdf'
       path: '/tools/html-to-pdf'
       fullPath: '/tools/html-to-pdf'
       preLoaderRoute: typeof ToolsHtmlToPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/grayscale-pdf': {
+      id: '/tools/grayscale-pdf'
+      path: '/tools/grayscale-pdf'
+      fullPath: '/tools/grayscale-pdf'
+      preLoaderRoute: typeof ToolsGrayscalePdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/flatten-pdf': {
+      id: '/tools/flatten-pdf'
+      path: '/tools/flatten-pdf'
+      fullPath: '/tools/flatten-pdf'
+      preLoaderRoute: typeof ToolsFlattenPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/extract-pages': {
@@ -657,11 +956,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsExcelToPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/excel-to-csv': {
+      id: '/tools/excel-to-csv'
+      path: '/tools/excel-to-csv'
+      fullPath: '/tools/excel-to-csv'
+      preLoaderRoute: typeof ToolsExcelToCsvRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/edit': {
       id: '/tools/edit'
       path: '/tools/edit'
       fullPath: '/tools/edit'
       preLoaderRoute: typeof ToolsEditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/csv-to-json': {
+      id: '/tools/csv-to-json'
+      path: '/tools/csv-to-json'
+      fullPath: '/tools/csv-to-json'
+      preLoaderRoute: typeof ToolsCsvToJsonRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/csv-to-excel': {
+      id: '/tools/csv-to-excel'
+      path: '/tools/csv-to-excel'
+      fullPath: '/tools/csv-to-excel'
+      preLoaderRoute: typeof ToolsCsvToExcelRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/crop': {
@@ -704,21 +1024,37 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsCompareRoute: ToolsCompareRoute,
   ToolsCompressRoute: ToolsCompressRoute,
   ToolsCropRoute: ToolsCropRoute,
+  ToolsCsvToExcelRoute: ToolsCsvToExcelRoute,
+  ToolsCsvToJsonRoute: ToolsCsvToJsonRoute,
   ToolsEditRoute: ToolsEditRoute,
+  ToolsExcelToCsvRoute: ToolsExcelToCsvRoute,
   ToolsExcelToPdfRoute: ToolsExcelToPdfRoute,
   ToolsExtractPagesRoute: ToolsExtractPagesRoute,
+  ToolsFlattenPdfRoute: ToolsFlattenPdfRoute,
+  ToolsGrayscalePdfRoute: ToolsGrayscalePdfRoute,
   ToolsHtmlToPdfRoute: ToolsHtmlToPdfRoute,
+  ToolsImageCompressRoute: ToolsImageCompressRoute,
+  ToolsImageConvertRoute: ToolsImageConvertRoute,
+  ToolsImageCropRoute: ToolsImageCropRoute,
+  ToolsImageGrayscaleRoute: ToolsImageGrayscaleRoute,
+  ToolsImageResizeRoute: ToolsImageResizeRoute,
+  ToolsImageRotateRoute: ToolsImageRotateRoute,
   ToolsJpgToPdfRoute: ToolsJpgToPdfRoute,
+  ToolsJsonToCsvRoute: ToolsJsonToCsvRoute,
   ToolsMergeRoute: ToolsMergeRoute,
+  ToolsNUpRoute: ToolsNUpRoute,
   ToolsOcrRoute: ToolsOcrRoute,
   ToolsOrganizeRoute: ToolsOrganizeRoute,
   ToolsPageNumbersRoute: ToolsPageNumbersRoute,
+  ToolsPdfMetadataRoute: ToolsPdfMetadataRoute,
   ToolsPdfToExcelRoute: ToolsPdfToExcelRoute,
   ToolsPdfToJpgRoute: ToolsPdfToJpgRoute,
   ToolsPdfToPdfaRoute: ToolsPdfToPdfaRoute,
+  ToolsPdfToTextRoute: ToolsPdfToTextRoute,
   ToolsPdfToWordRoute: ToolsPdfToWordRoute,
   ToolsProtectRoute: ToolsProtectRoute,
   ToolsRedactRoute: ToolsRedactRoute,
+  ToolsRemoveExifRoute: ToolsRemoveExifRoute,
   ToolsRemovePagesRoute: ToolsRemovePagesRoute,
   ToolsRepairRoute: ToolsRepairRoute,
   ToolsRotateRoute: ToolsRotateRoute,
