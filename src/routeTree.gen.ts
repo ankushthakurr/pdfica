@@ -18,9 +18,12 @@ import { Route as ToolsWordToPdfRouteImport } from './routes/tools.word-to-pdf'
 import { Route as ToolsWatermarkRouteImport } from './routes/tools.watermark'
 import { Route as ToolsUnlockRouteImport } from './routes/tools.unlock'
 import { Route as ToolsSplitRouteImport } from './routes/tools.split'
+import { Route as ToolsSignRouteImport } from './routes/tools.sign'
+import { Route as ToolsScanToPdfRouteImport } from './routes/tools.scan-to-pdf'
 import { Route as ToolsRotateRouteImport } from './routes/tools.rotate'
 import { Route as ToolsRepairRouteImport } from './routes/tools.repair'
 import { Route as ToolsRemovePagesRouteImport } from './routes/tools.remove-pages'
+import { Route as ToolsRedactRouteImport } from './routes/tools.redact'
 import { Route as ToolsProtectRouteImport } from './routes/tools.protect'
 import { Route as ToolsPdfToWordRouteImport } from './routes/tools.pdf-to-word'
 import { Route as ToolsPdfToPdfaRouteImport } from './routes/tools.pdf-to-pdfa'
@@ -37,6 +40,7 @@ import { Route as ToolsExcelToPdfRouteImport } from './routes/tools.excel-to-pdf
 import { Route as ToolsEditRouteImport } from './routes/tools.edit'
 import { Route as ToolsCropRouteImport } from './routes/tools.crop'
 import { Route as ToolsCompressRouteImport } from './routes/tools.compress'
+import { Route as ToolsCompareRouteImport } from './routes/tools.compare'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const TermsRoute = TermsRouteImport.update({
@@ -84,6 +88,16 @@ const ToolsSplitRoute = ToolsSplitRouteImport.update({
   path: '/tools/split',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsSignRoute = ToolsSignRouteImport.update({
+  id: '/tools/sign',
+  path: '/tools/sign',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsScanToPdfRoute = ToolsScanToPdfRouteImport.update({
+  id: '/tools/scan-to-pdf',
+  path: '/tools/scan-to-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsRotateRoute = ToolsRotateRouteImport.update({
   id: '/tools/rotate',
   path: '/tools/rotate',
@@ -97,6 +111,11 @@ const ToolsRepairRoute = ToolsRepairRouteImport.update({
 const ToolsRemovePagesRoute = ToolsRemovePagesRouteImport.update({
   id: '/tools/remove-pages',
   path: '/tools/remove-pages',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRedactRoute = ToolsRedactRouteImport.update({
+  id: '/tools/redact',
+  path: '/tools/redact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsProtectRoute = ToolsProtectRouteImport.update({
@@ -179,6 +198,11 @@ const ToolsCompressRoute = ToolsCompressRouteImport.update({
   path: '/tools/compress',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsCompareRoute = ToolsCompareRouteImport.update({
+  id: '/tools/compare',
+  path: '/tools/compare',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/blog/$slug',
   path: '/blog/$slug',
@@ -191,6 +215,7 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
   '/tools/crop': typeof ToolsCropRoute
   '/tools/edit': typeof ToolsEditRoute
@@ -207,9 +232,12 @@ export interface FileRoutesByFullPath {
   '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/protect': typeof ToolsProtectRoute
+  '/tools/redact': typeof ToolsRedactRoute
   '/tools/remove-pages': typeof ToolsRemovePagesRoute
   '/tools/repair': typeof ToolsRepairRoute
   '/tools/rotate': typeof ToolsRotateRoute
+  '/tools/scan-to-pdf': typeof ToolsScanToPdfRoute
+  '/tools/sign': typeof ToolsSignRoute
   '/tools/split': typeof ToolsSplitRoute
   '/tools/unlock': typeof ToolsUnlockRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
@@ -222,6 +250,7 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
   '/tools/crop': typeof ToolsCropRoute
   '/tools/edit': typeof ToolsEditRoute
@@ -238,9 +267,12 @@ export interface FileRoutesByTo {
   '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/protect': typeof ToolsProtectRoute
+  '/tools/redact': typeof ToolsRedactRoute
   '/tools/remove-pages': typeof ToolsRemovePagesRoute
   '/tools/repair': typeof ToolsRepairRoute
   '/tools/rotate': typeof ToolsRotateRoute
+  '/tools/scan-to-pdf': typeof ToolsScanToPdfRoute
+  '/tools/sign': typeof ToolsSignRoute
   '/tools/split': typeof ToolsSplitRoute
   '/tools/unlock': typeof ToolsUnlockRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
@@ -254,6 +286,7 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
   '/tools/crop': typeof ToolsCropRoute
   '/tools/edit': typeof ToolsEditRoute
@@ -270,9 +303,12 @@ export interface FileRoutesById {
   '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/protect': typeof ToolsProtectRoute
+  '/tools/redact': typeof ToolsRedactRoute
   '/tools/remove-pages': typeof ToolsRemovePagesRoute
   '/tools/repair': typeof ToolsRepairRoute
   '/tools/rotate': typeof ToolsRotateRoute
+  '/tools/scan-to-pdf': typeof ToolsScanToPdfRoute
+  '/tools/sign': typeof ToolsSignRoute
   '/tools/split': typeof ToolsSplitRoute
   '/tools/unlock': typeof ToolsUnlockRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
@@ -287,6 +323,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
+    | '/tools/compare'
     | '/tools/compress'
     | '/tools/crop'
     | '/tools/edit'
@@ -303,9 +340,12 @@ export interface FileRouteTypes {
     | '/tools/pdf-to-pdfa'
     | '/tools/pdf-to-word'
     | '/tools/protect'
+    | '/tools/redact'
     | '/tools/remove-pages'
     | '/tools/repair'
     | '/tools/rotate'
+    | '/tools/scan-to-pdf'
+    | '/tools/sign'
     | '/tools/split'
     | '/tools/unlock'
     | '/tools/watermark'
@@ -318,6 +358,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
+    | '/tools/compare'
     | '/tools/compress'
     | '/tools/crop'
     | '/tools/edit'
@@ -334,9 +375,12 @@ export interface FileRouteTypes {
     | '/tools/pdf-to-pdfa'
     | '/tools/pdf-to-word'
     | '/tools/protect'
+    | '/tools/redact'
     | '/tools/remove-pages'
     | '/tools/repair'
     | '/tools/rotate'
+    | '/tools/scan-to-pdf'
+    | '/tools/sign'
     | '/tools/split'
     | '/tools/unlock'
     | '/tools/watermark'
@@ -349,6 +393,7 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
+    | '/tools/compare'
     | '/tools/compress'
     | '/tools/crop'
     | '/tools/edit'
@@ -365,9 +410,12 @@ export interface FileRouteTypes {
     | '/tools/pdf-to-pdfa'
     | '/tools/pdf-to-word'
     | '/tools/protect'
+    | '/tools/redact'
     | '/tools/remove-pages'
     | '/tools/repair'
     | '/tools/rotate'
+    | '/tools/scan-to-pdf'
+    | '/tools/sign'
     | '/tools/split'
     | '/tools/unlock'
     | '/tools/watermark'
@@ -381,6 +429,7 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  ToolsCompareRoute: typeof ToolsCompareRoute
   ToolsCompressRoute: typeof ToolsCompressRoute
   ToolsCropRoute: typeof ToolsCropRoute
   ToolsEditRoute: typeof ToolsEditRoute
@@ -397,9 +446,12 @@ export interface RootRouteChildren {
   ToolsPdfToPdfaRoute: typeof ToolsPdfToPdfaRoute
   ToolsPdfToWordRoute: typeof ToolsPdfToWordRoute
   ToolsProtectRoute: typeof ToolsProtectRoute
+  ToolsRedactRoute: typeof ToolsRedactRoute
   ToolsRemovePagesRoute: typeof ToolsRemovePagesRoute
   ToolsRepairRoute: typeof ToolsRepairRoute
   ToolsRotateRoute: typeof ToolsRotateRoute
+  ToolsScanToPdfRoute: typeof ToolsScanToPdfRoute
+  ToolsSignRoute: typeof ToolsSignRoute
   ToolsSplitRoute: typeof ToolsSplitRoute
   ToolsUnlockRoute: typeof ToolsUnlockRoute
   ToolsWatermarkRoute: typeof ToolsWatermarkRoute
@@ -472,6 +524,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsSplitRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/sign': {
+      id: '/tools/sign'
+      path: '/tools/sign'
+      fullPath: '/tools/sign'
+      preLoaderRoute: typeof ToolsSignRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/scan-to-pdf': {
+      id: '/tools/scan-to-pdf'
+      path: '/tools/scan-to-pdf'
+      fullPath: '/tools/scan-to-pdf'
+      preLoaderRoute: typeof ToolsScanToPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/rotate': {
       id: '/tools/rotate'
       path: '/tools/rotate'
@@ -491,6 +557,13 @@ declare module '@tanstack/react-router' {
       path: '/tools/remove-pages'
       fullPath: '/tools/remove-pages'
       preLoaderRoute: typeof ToolsRemovePagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/redact': {
+      id: '/tools/redact'
+      path: '/tools/redact'
+      fullPath: '/tools/redact'
+      preLoaderRoute: typeof ToolsRedactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/protect': {
@@ -605,6 +678,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsCompressRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/compare': {
+      id: '/tools/compare'
+      path: '/tools/compare'
+      fullPath: '/tools/compare'
+      preLoaderRoute: typeof ToolsCompareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/blog/$slug'
@@ -621,6 +701,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
   BlogSlugRoute: BlogSlugRoute,
+  ToolsCompareRoute: ToolsCompareRoute,
   ToolsCompressRoute: ToolsCompressRoute,
   ToolsCropRoute: ToolsCropRoute,
   ToolsEditRoute: ToolsEditRoute,
@@ -637,9 +718,12 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsPdfToPdfaRoute: ToolsPdfToPdfaRoute,
   ToolsPdfToWordRoute: ToolsPdfToWordRoute,
   ToolsProtectRoute: ToolsProtectRoute,
+  ToolsRedactRoute: ToolsRedactRoute,
   ToolsRemovePagesRoute: ToolsRemovePagesRoute,
   ToolsRepairRoute: ToolsRepairRoute,
   ToolsRotateRoute: ToolsRotateRoute,
+  ToolsScanToPdfRoute: ToolsScanToPdfRoute,
+  ToolsSignRoute: ToolsSignRoute,
   ToolsSplitRoute: ToolsSplitRoute,
   ToolsUnlockRoute: ToolsUnlockRoute,
   ToolsWatermarkRoute: ToolsWatermarkRoute,
