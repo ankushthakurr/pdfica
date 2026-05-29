@@ -7,8 +7,8 @@ export function Footer() {
   return (
     <footer className="border-t bg-secondary text-secondary-foreground mt-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-14">
-        <div className="grid gap-10 md:grid-cols-6">
-          <div className="md:col-span-2">
+        <div className="grid gap-10 lg:grid-cols-[1.4fr_3fr]">
+          <div>
             <Link to="/" className="flex items-center gap-2">
               <div className="grid h-9 w-9 place-items-center rounded-xl bg-primary text-primary-foreground">
                 <FileText className="h-5 w-5" strokeWidth={2.4} />
@@ -18,7 +18,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="mt-4 max-w-xs text-sm text-secondary-foreground/70">
-              Free, fast, and private PDF tools. Every file is processed on your device —
+              Free, fast, and private document tools. Every file is processed on your device —
               nothing is ever uploaded to a server.
             </p>
             <div className="mt-5 flex gap-3">
@@ -33,23 +33,26 @@ export function Footer() {
               </Link>
             </div>
           </div>
-          {(Object.keys(grouped) as ToolCategory[]).map((cat) => (
-            <div key={cat}>
-              <div className="text-xs font-bold uppercase tracking-wider text-primary/90 mb-3">
-                {CATEGORIES[cat].label}
+          <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+            {(Object.keys(grouped) as ToolCategory[]).map((cat) => (
+              <div key={cat}>
+                <div className="text-xs font-bold uppercase tracking-wider text-primary/90 mb-3">
+                  {CATEGORIES[cat].label}
+                </div>
+                <ul className="space-y-2 text-sm">
+                  {grouped[cat].map((t) => (
+                    <li key={t.slug}>
+                      <Link to={t.to} className="text-secondary-foreground/80 hover:text-primary transition-colors">
+                        {t.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <ul className="space-y-2 text-sm">
-                {grouped[cat].map((t) => (
-                  <li key={t.slug}>
-                    <Link to={t.to} className="text-secondary-foreground/80 hover:text-primary transition-colors">
-                      {t.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
+
         <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between text-sm text-secondary-foreground/60">
           <p>© {new Date().getFullYear()} Pdfica · pdfica.in — Built with privacy in mind.</p>
           <div className="flex gap-5">

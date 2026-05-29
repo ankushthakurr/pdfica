@@ -15,8 +15,11 @@ import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as ToolsWordToPdfRouteImport } from './routes/tools.word-to-pdf'
+import { Route as ToolsWordCounterRouteImport } from './routes/tools.word-counter'
 import { Route as ToolsWatermarkRouteImport } from './routes/tools.watermark'
+import { Route as ToolsUrlEncoderRouteImport } from './routes/tools.url-encoder'
 import { Route as ToolsUnlockRouteImport } from './routes/tools.unlock'
+import { Route as ToolsTextToPdfRouteImport } from './routes/tools.text-to-pdf'
 import { Route as ToolsSplitRouteImport } from './routes/tools.split'
 import { Route as ToolsSignRouteImport } from './routes/tools.sign'
 import { Route as ToolsScanToPdfRouteImport } from './routes/tools.scan-to-pdf'
@@ -25,6 +28,7 @@ import { Route as ToolsRepairRouteImport } from './routes/tools.repair'
 import { Route as ToolsRemovePagesRouteImport } from './routes/tools.remove-pages'
 import { Route as ToolsRemoveExifRouteImport } from './routes/tools.remove-exif'
 import { Route as ToolsRedactRouteImport } from './routes/tools.redact'
+import { Route as ToolsQrGeneratorRouteImport } from './routes/tools.qr-generator'
 import { Route as ToolsProtectRouteImport } from './routes/tools.protect'
 import { Route as ToolsPdfToWordRouteImport } from './routes/tools.pdf-to-word'
 import { Route as ToolsPdfToTextRouteImport } from './routes/tools.pdf-to-text'
@@ -32,12 +36,16 @@ import { Route as ToolsPdfToPdfaRouteImport } from './routes/tools.pdf-to-pdfa'
 import { Route as ToolsPdfToJpgRouteImport } from './routes/tools.pdf-to-jpg'
 import { Route as ToolsPdfToExcelRouteImport } from './routes/tools.pdf-to-excel'
 import { Route as ToolsPdfMetadataRouteImport } from './routes/tools.pdf-metadata'
+import { Route as ToolsPasswordGeneratorRouteImport } from './routes/tools.password-generator'
 import { Route as ToolsPageNumbersRouteImport } from './routes/tools.page-numbers'
 import { Route as ToolsOrganizeRouteImport } from './routes/tools.organize'
 import { Route as ToolsOcrRouteImport } from './routes/tools.ocr'
 import { Route as ToolsNUpRouteImport } from './routes/tools.n-up'
 import { Route as ToolsMergeRouteImport } from './routes/tools.merge'
+import { Route as ToolsMarkdownToPdfRouteImport } from './routes/tools.markdown-to-pdf'
+import { Route as ToolsLoremIpsumRouteImport } from './routes/tools.lorem-ipsum'
 import { Route as ToolsJsonToCsvRouteImport } from './routes/tools.json-to-csv'
+import { Route as ToolsJsonFormatterRouteImport } from './routes/tools.json-formatter'
 import { Route as ToolsJpgToPdfRouteImport } from './routes/tools.jpg-to-pdf'
 import { Route as ToolsImageRotateRouteImport } from './routes/tools.image-rotate'
 import { Route as ToolsImageResizeRouteImport } from './routes/tools.image-resize'
@@ -46,6 +54,7 @@ import { Route as ToolsImageCropRouteImport } from './routes/tools.image-crop'
 import { Route as ToolsImageConvertRouteImport } from './routes/tools.image-convert'
 import { Route as ToolsImageCompressRouteImport } from './routes/tools.image-compress'
 import { Route as ToolsHtmlToPdfRouteImport } from './routes/tools.html-to-pdf'
+import { Route as ToolsHashGeneratorRouteImport } from './routes/tools.hash-generator'
 import { Route as ToolsGrayscalePdfRouteImport } from './routes/tools.grayscale-pdf'
 import { Route as ToolsFlattenPdfRouteImport } from './routes/tools.flatten-pdf'
 import { Route as ToolsExtractPagesRouteImport } from './routes/tools.extract-pages'
@@ -57,6 +66,8 @@ import { Route as ToolsCsvToExcelRouteImport } from './routes/tools.csv-to-excel
 import { Route as ToolsCropRouteImport } from './routes/tools.crop'
 import { Route as ToolsCompressRouteImport } from './routes/tools.compress'
 import { Route as ToolsCompareRouteImport } from './routes/tools.compare'
+import { Route as ToolsCaseConverterRouteImport } from './routes/tools.case-converter'
+import { Route as ToolsBase64RouteImport } from './routes/tools.base64'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const TermsRoute = TermsRouteImport.update({
@@ -89,14 +100,29 @@ const ToolsWordToPdfRoute = ToolsWordToPdfRouteImport.update({
   path: '/tools/word-to-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsWordCounterRoute = ToolsWordCounterRouteImport.update({
+  id: '/tools/word-counter',
+  path: '/tools/word-counter',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsWatermarkRoute = ToolsWatermarkRouteImport.update({
   id: '/tools/watermark',
   path: '/tools/watermark',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsUrlEncoderRoute = ToolsUrlEncoderRouteImport.update({
+  id: '/tools/url-encoder',
+  path: '/tools/url-encoder',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsUnlockRoute = ToolsUnlockRouteImport.update({
   id: '/tools/unlock',
   path: '/tools/unlock',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsTextToPdfRoute = ToolsTextToPdfRouteImport.update({
+  id: '/tools/text-to-pdf',
+  path: '/tools/text-to-pdf',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsSplitRoute = ToolsSplitRouteImport.update({
@@ -139,6 +165,11 @@ const ToolsRedactRoute = ToolsRedactRouteImport.update({
   path: '/tools/redact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsQrGeneratorRoute = ToolsQrGeneratorRouteImport.update({
+  id: '/tools/qr-generator',
+  path: '/tools/qr-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsProtectRoute = ToolsProtectRouteImport.update({
   id: '/tools/protect',
   path: '/tools/protect',
@@ -174,6 +205,11 @@ const ToolsPdfMetadataRoute = ToolsPdfMetadataRouteImport.update({
   path: '/tools/pdf-metadata',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsPasswordGeneratorRoute = ToolsPasswordGeneratorRouteImport.update({
+  id: '/tools/password-generator',
+  path: '/tools/password-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsPageNumbersRoute = ToolsPageNumbersRouteImport.update({
   id: '/tools/page-numbers',
   path: '/tools/page-numbers',
@@ -199,9 +235,24 @@ const ToolsMergeRoute = ToolsMergeRouteImport.update({
   path: '/tools/merge',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsMarkdownToPdfRoute = ToolsMarkdownToPdfRouteImport.update({
+  id: '/tools/markdown-to-pdf',
+  path: '/tools/markdown-to-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsLoremIpsumRoute = ToolsLoremIpsumRouteImport.update({
+  id: '/tools/lorem-ipsum',
+  path: '/tools/lorem-ipsum',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsJsonToCsvRoute = ToolsJsonToCsvRouteImport.update({
   id: '/tools/json-to-csv',
   path: '/tools/json-to-csv',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsJsonFormatterRoute = ToolsJsonFormatterRouteImport.update({
+  id: '/tools/json-formatter',
+  path: '/tools/json-formatter',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsJpgToPdfRoute = ToolsJpgToPdfRouteImport.update({
@@ -242,6 +293,11 @@ const ToolsImageCompressRoute = ToolsImageCompressRouteImport.update({
 const ToolsHtmlToPdfRoute = ToolsHtmlToPdfRouteImport.update({
   id: '/tools/html-to-pdf',
   path: '/tools/html-to-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsHashGeneratorRoute = ToolsHashGeneratorRouteImport.update({
+  id: '/tools/hash-generator',
+  path: '/tools/hash-generator',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsGrayscalePdfRoute = ToolsGrayscalePdfRouteImport.update({
@@ -299,6 +355,16 @@ const ToolsCompareRoute = ToolsCompareRouteImport.update({
   path: '/tools/compare',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsCaseConverterRoute = ToolsCaseConverterRouteImport.update({
+  id: '/tools/case-converter',
+  path: '/tools/case-converter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsBase64Route = ToolsBase64RouteImport.update({
+  id: '/tools/base64',
+  path: '/tools/base64',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/blog/$slug',
   path: '/blog/$slug',
@@ -311,6 +377,8 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/tools/base64': typeof ToolsBase64Route
+  '/tools/case-converter': typeof ToolsCaseConverterRoute
   '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
   '/tools/crop': typeof ToolsCropRoute
@@ -322,6 +390,7 @@ export interface FileRoutesByFullPath {
   '/tools/extract-pages': typeof ToolsExtractPagesRoute
   '/tools/flatten-pdf': typeof ToolsFlattenPdfRoute
   '/tools/grayscale-pdf': typeof ToolsGrayscalePdfRoute
+  '/tools/hash-generator': typeof ToolsHashGeneratorRoute
   '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
   '/tools/image-compress': typeof ToolsImageCompressRoute
   '/tools/image-convert': typeof ToolsImageConvertRoute
@@ -330,12 +399,16 @@ export interface FileRoutesByFullPath {
   '/tools/image-resize': typeof ToolsImageResizeRoute
   '/tools/image-rotate': typeof ToolsImageRotateRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
+  '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-to-csv': typeof ToolsJsonToCsvRoute
+  '/tools/lorem-ipsum': typeof ToolsLoremIpsumRoute
+  '/tools/markdown-to-pdf': typeof ToolsMarkdownToPdfRoute
   '/tools/merge': typeof ToolsMergeRoute
   '/tools/n-up': typeof ToolsNUpRoute
   '/tools/ocr': typeof ToolsOcrRoute
   '/tools/organize': typeof ToolsOrganizeRoute
   '/tools/page-numbers': typeof ToolsPageNumbersRoute
+  '/tools/password-generator': typeof ToolsPasswordGeneratorRoute
   '/tools/pdf-metadata': typeof ToolsPdfMetadataRoute
   '/tools/pdf-to-excel': typeof ToolsPdfToExcelRoute
   '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
@@ -343,6 +416,7 @@ export interface FileRoutesByFullPath {
   '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/protect': typeof ToolsProtectRoute
+  '/tools/qr-generator': typeof ToolsQrGeneratorRoute
   '/tools/redact': typeof ToolsRedactRoute
   '/tools/remove-exif': typeof ToolsRemoveExifRoute
   '/tools/remove-pages': typeof ToolsRemovePagesRoute
@@ -351,8 +425,11 @@ export interface FileRoutesByFullPath {
   '/tools/scan-to-pdf': typeof ToolsScanToPdfRoute
   '/tools/sign': typeof ToolsSignRoute
   '/tools/split': typeof ToolsSplitRoute
+  '/tools/text-to-pdf': typeof ToolsTextToPdfRoute
   '/tools/unlock': typeof ToolsUnlockRoute
+  '/tools/url-encoder': typeof ToolsUrlEncoderRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
+  '/tools/word-counter': typeof ToolsWordCounterRoute
   '/tools/word-to-pdf': typeof ToolsWordToPdfRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -362,6 +439,8 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/tools/base64': typeof ToolsBase64Route
+  '/tools/case-converter': typeof ToolsCaseConverterRoute
   '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
   '/tools/crop': typeof ToolsCropRoute
@@ -373,6 +452,7 @@ export interface FileRoutesByTo {
   '/tools/extract-pages': typeof ToolsExtractPagesRoute
   '/tools/flatten-pdf': typeof ToolsFlattenPdfRoute
   '/tools/grayscale-pdf': typeof ToolsGrayscalePdfRoute
+  '/tools/hash-generator': typeof ToolsHashGeneratorRoute
   '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
   '/tools/image-compress': typeof ToolsImageCompressRoute
   '/tools/image-convert': typeof ToolsImageConvertRoute
@@ -381,12 +461,16 @@ export interface FileRoutesByTo {
   '/tools/image-resize': typeof ToolsImageResizeRoute
   '/tools/image-rotate': typeof ToolsImageRotateRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
+  '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-to-csv': typeof ToolsJsonToCsvRoute
+  '/tools/lorem-ipsum': typeof ToolsLoremIpsumRoute
+  '/tools/markdown-to-pdf': typeof ToolsMarkdownToPdfRoute
   '/tools/merge': typeof ToolsMergeRoute
   '/tools/n-up': typeof ToolsNUpRoute
   '/tools/ocr': typeof ToolsOcrRoute
   '/tools/organize': typeof ToolsOrganizeRoute
   '/tools/page-numbers': typeof ToolsPageNumbersRoute
+  '/tools/password-generator': typeof ToolsPasswordGeneratorRoute
   '/tools/pdf-metadata': typeof ToolsPdfMetadataRoute
   '/tools/pdf-to-excel': typeof ToolsPdfToExcelRoute
   '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
@@ -394,6 +478,7 @@ export interface FileRoutesByTo {
   '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/protect': typeof ToolsProtectRoute
+  '/tools/qr-generator': typeof ToolsQrGeneratorRoute
   '/tools/redact': typeof ToolsRedactRoute
   '/tools/remove-exif': typeof ToolsRemoveExifRoute
   '/tools/remove-pages': typeof ToolsRemovePagesRoute
@@ -402,8 +487,11 @@ export interface FileRoutesByTo {
   '/tools/scan-to-pdf': typeof ToolsScanToPdfRoute
   '/tools/sign': typeof ToolsSignRoute
   '/tools/split': typeof ToolsSplitRoute
+  '/tools/text-to-pdf': typeof ToolsTextToPdfRoute
   '/tools/unlock': typeof ToolsUnlockRoute
+  '/tools/url-encoder': typeof ToolsUrlEncoderRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
+  '/tools/word-counter': typeof ToolsWordCounterRoute
   '/tools/word-to-pdf': typeof ToolsWordToPdfRoute
   '/blog': typeof BlogIndexRoute
 }
@@ -414,6 +502,8 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/tools/base64': typeof ToolsBase64Route
+  '/tools/case-converter': typeof ToolsCaseConverterRoute
   '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
   '/tools/crop': typeof ToolsCropRoute
@@ -425,6 +515,7 @@ export interface FileRoutesById {
   '/tools/extract-pages': typeof ToolsExtractPagesRoute
   '/tools/flatten-pdf': typeof ToolsFlattenPdfRoute
   '/tools/grayscale-pdf': typeof ToolsGrayscalePdfRoute
+  '/tools/hash-generator': typeof ToolsHashGeneratorRoute
   '/tools/html-to-pdf': typeof ToolsHtmlToPdfRoute
   '/tools/image-compress': typeof ToolsImageCompressRoute
   '/tools/image-convert': typeof ToolsImageConvertRoute
@@ -433,12 +524,16 @@ export interface FileRoutesById {
   '/tools/image-resize': typeof ToolsImageResizeRoute
   '/tools/image-rotate': typeof ToolsImageRotateRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
+  '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-to-csv': typeof ToolsJsonToCsvRoute
+  '/tools/lorem-ipsum': typeof ToolsLoremIpsumRoute
+  '/tools/markdown-to-pdf': typeof ToolsMarkdownToPdfRoute
   '/tools/merge': typeof ToolsMergeRoute
   '/tools/n-up': typeof ToolsNUpRoute
   '/tools/ocr': typeof ToolsOcrRoute
   '/tools/organize': typeof ToolsOrganizeRoute
   '/tools/page-numbers': typeof ToolsPageNumbersRoute
+  '/tools/password-generator': typeof ToolsPasswordGeneratorRoute
   '/tools/pdf-metadata': typeof ToolsPdfMetadataRoute
   '/tools/pdf-to-excel': typeof ToolsPdfToExcelRoute
   '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
@@ -446,6 +541,7 @@ export interface FileRoutesById {
   '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/protect': typeof ToolsProtectRoute
+  '/tools/qr-generator': typeof ToolsQrGeneratorRoute
   '/tools/redact': typeof ToolsRedactRoute
   '/tools/remove-exif': typeof ToolsRemoveExifRoute
   '/tools/remove-pages': typeof ToolsRemovePagesRoute
@@ -454,8 +550,11 @@ export interface FileRoutesById {
   '/tools/scan-to-pdf': typeof ToolsScanToPdfRoute
   '/tools/sign': typeof ToolsSignRoute
   '/tools/split': typeof ToolsSplitRoute
+  '/tools/text-to-pdf': typeof ToolsTextToPdfRoute
   '/tools/unlock': typeof ToolsUnlockRoute
+  '/tools/url-encoder': typeof ToolsUrlEncoderRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
+  '/tools/word-counter': typeof ToolsWordCounterRoute
   '/tools/word-to-pdf': typeof ToolsWordToPdfRoute
   '/blog/': typeof BlogIndexRoute
 }
@@ -467,6 +566,8 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
+    | '/tools/base64'
+    | '/tools/case-converter'
     | '/tools/compare'
     | '/tools/compress'
     | '/tools/crop'
@@ -478,6 +579,7 @@ export interface FileRouteTypes {
     | '/tools/extract-pages'
     | '/tools/flatten-pdf'
     | '/tools/grayscale-pdf'
+    | '/tools/hash-generator'
     | '/tools/html-to-pdf'
     | '/tools/image-compress'
     | '/tools/image-convert'
@@ -486,12 +588,16 @@ export interface FileRouteTypes {
     | '/tools/image-resize'
     | '/tools/image-rotate'
     | '/tools/jpg-to-pdf'
+    | '/tools/json-formatter'
     | '/tools/json-to-csv'
+    | '/tools/lorem-ipsum'
+    | '/tools/markdown-to-pdf'
     | '/tools/merge'
     | '/tools/n-up'
     | '/tools/ocr'
     | '/tools/organize'
     | '/tools/page-numbers'
+    | '/tools/password-generator'
     | '/tools/pdf-metadata'
     | '/tools/pdf-to-excel'
     | '/tools/pdf-to-jpg'
@@ -499,6 +605,7 @@ export interface FileRouteTypes {
     | '/tools/pdf-to-text'
     | '/tools/pdf-to-word'
     | '/tools/protect'
+    | '/tools/qr-generator'
     | '/tools/redact'
     | '/tools/remove-exif'
     | '/tools/remove-pages'
@@ -507,8 +614,11 @@ export interface FileRouteTypes {
     | '/tools/scan-to-pdf'
     | '/tools/sign'
     | '/tools/split'
+    | '/tools/text-to-pdf'
     | '/tools/unlock'
+    | '/tools/url-encoder'
     | '/tools/watermark'
+    | '/tools/word-counter'
     | '/tools/word-to-pdf'
     | '/blog/'
   fileRoutesByTo: FileRoutesByTo
@@ -518,6 +628,8 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
+    | '/tools/base64'
+    | '/tools/case-converter'
     | '/tools/compare'
     | '/tools/compress'
     | '/tools/crop'
@@ -529,6 +641,7 @@ export interface FileRouteTypes {
     | '/tools/extract-pages'
     | '/tools/flatten-pdf'
     | '/tools/grayscale-pdf'
+    | '/tools/hash-generator'
     | '/tools/html-to-pdf'
     | '/tools/image-compress'
     | '/tools/image-convert'
@@ -537,12 +650,16 @@ export interface FileRouteTypes {
     | '/tools/image-resize'
     | '/tools/image-rotate'
     | '/tools/jpg-to-pdf'
+    | '/tools/json-formatter'
     | '/tools/json-to-csv'
+    | '/tools/lorem-ipsum'
+    | '/tools/markdown-to-pdf'
     | '/tools/merge'
     | '/tools/n-up'
     | '/tools/ocr'
     | '/tools/organize'
     | '/tools/page-numbers'
+    | '/tools/password-generator'
     | '/tools/pdf-metadata'
     | '/tools/pdf-to-excel'
     | '/tools/pdf-to-jpg'
@@ -550,6 +667,7 @@ export interface FileRouteTypes {
     | '/tools/pdf-to-text'
     | '/tools/pdf-to-word'
     | '/tools/protect'
+    | '/tools/qr-generator'
     | '/tools/redact'
     | '/tools/remove-exif'
     | '/tools/remove-pages'
@@ -558,8 +676,11 @@ export interface FileRouteTypes {
     | '/tools/scan-to-pdf'
     | '/tools/sign'
     | '/tools/split'
+    | '/tools/text-to-pdf'
     | '/tools/unlock'
+    | '/tools/url-encoder'
     | '/tools/watermark'
+    | '/tools/word-counter'
     | '/tools/word-to-pdf'
     | '/blog'
   id:
@@ -569,6 +690,8 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
+    | '/tools/base64'
+    | '/tools/case-converter'
     | '/tools/compare'
     | '/tools/compress'
     | '/tools/crop'
@@ -580,6 +703,7 @@ export interface FileRouteTypes {
     | '/tools/extract-pages'
     | '/tools/flatten-pdf'
     | '/tools/grayscale-pdf'
+    | '/tools/hash-generator'
     | '/tools/html-to-pdf'
     | '/tools/image-compress'
     | '/tools/image-convert'
@@ -588,12 +712,16 @@ export interface FileRouteTypes {
     | '/tools/image-resize'
     | '/tools/image-rotate'
     | '/tools/jpg-to-pdf'
+    | '/tools/json-formatter'
     | '/tools/json-to-csv'
+    | '/tools/lorem-ipsum'
+    | '/tools/markdown-to-pdf'
     | '/tools/merge'
     | '/tools/n-up'
     | '/tools/ocr'
     | '/tools/organize'
     | '/tools/page-numbers'
+    | '/tools/password-generator'
     | '/tools/pdf-metadata'
     | '/tools/pdf-to-excel'
     | '/tools/pdf-to-jpg'
@@ -601,6 +729,7 @@ export interface FileRouteTypes {
     | '/tools/pdf-to-text'
     | '/tools/pdf-to-word'
     | '/tools/protect'
+    | '/tools/qr-generator'
     | '/tools/redact'
     | '/tools/remove-exif'
     | '/tools/remove-pages'
@@ -609,8 +738,11 @@ export interface FileRouteTypes {
     | '/tools/scan-to-pdf'
     | '/tools/sign'
     | '/tools/split'
+    | '/tools/text-to-pdf'
     | '/tools/unlock'
+    | '/tools/url-encoder'
     | '/tools/watermark'
+    | '/tools/word-counter'
     | '/tools/word-to-pdf'
     | '/blog/'
   fileRoutesById: FileRoutesById
@@ -621,6 +753,8 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  ToolsBase64Route: typeof ToolsBase64Route
+  ToolsCaseConverterRoute: typeof ToolsCaseConverterRoute
   ToolsCompareRoute: typeof ToolsCompareRoute
   ToolsCompressRoute: typeof ToolsCompressRoute
   ToolsCropRoute: typeof ToolsCropRoute
@@ -632,6 +766,7 @@ export interface RootRouteChildren {
   ToolsExtractPagesRoute: typeof ToolsExtractPagesRoute
   ToolsFlattenPdfRoute: typeof ToolsFlattenPdfRoute
   ToolsGrayscalePdfRoute: typeof ToolsGrayscalePdfRoute
+  ToolsHashGeneratorRoute: typeof ToolsHashGeneratorRoute
   ToolsHtmlToPdfRoute: typeof ToolsHtmlToPdfRoute
   ToolsImageCompressRoute: typeof ToolsImageCompressRoute
   ToolsImageConvertRoute: typeof ToolsImageConvertRoute
@@ -640,12 +775,16 @@ export interface RootRouteChildren {
   ToolsImageResizeRoute: typeof ToolsImageResizeRoute
   ToolsImageRotateRoute: typeof ToolsImageRotateRoute
   ToolsJpgToPdfRoute: typeof ToolsJpgToPdfRoute
+  ToolsJsonFormatterRoute: typeof ToolsJsonFormatterRoute
   ToolsJsonToCsvRoute: typeof ToolsJsonToCsvRoute
+  ToolsLoremIpsumRoute: typeof ToolsLoremIpsumRoute
+  ToolsMarkdownToPdfRoute: typeof ToolsMarkdownToPdfRoute
   ToolsMergeRoute: typeof ToolsMergeRoute
   ToolsNUpRoute: typeof ToolsNUpRoute
   ToolsOcrRoute: typeof ToolsOcrRoute
   ToolsOrganizeRoute: typeof ToolsOrganizeRoute
   ToolsPageNumbersRoute: typeof ToolsPageNumbersRoute
+  ToolsPasswordGeneratorRoute: typeof ToolsPasswordGeneratorRoute
   ToolsPdfMetadataRoute: typeof ToolsPdfMetadataRoute
   ToolsPdfToExcelRoute: typeof ToolsPdfToExcelRoute
   ToolsPdfToJpgRoute: typeof ToolsPdfToJpgRoute
@@ -653,6 +792,7 @@ export interface RootRouteChildren {
   ToolsPdfToTextRoute: typeof ToolsPdfToTextRoute
   ToolsPdfToWordRoute: typeof ToolsPdfToWordRoute
   ToolsProtectRoute: typeof ToolsProtectRoute
+  ToolsQrGeneratorRoute: typeof ToolsQrGeneratorRoute
   ToolsRedactRoute: typeof ToolsRedactRoute
   ToolsRemoveExifRoute: typeof ToolsRemoveExifRoute
   ToolsRemovePagesRoute: typeof ToolsRemovePagesRoute
@@ -661,8 +801,11 @@ export interface RootRouteChildren {
   ToolsScanToPdfRoute: typeof ToolsScanToPdfRoute
   ToolsSignRoute: typeof ToolsSignRoute
   ToolsSplitRoute: typeof ToolsSplitRoute
+  ToolsTextToPdfRoute: typeof ToolsTextToPdfRoute
   ToolsUnlockRoute: typeof ToolsUnlockRoute
+  ToolsUrlEncoderRoute: typeof ToolsUrlEncoderRoute
   ToolsWatermarkRoute: typeof ToolsWatermarkRoute
+  ToolsWordCounterRoute: typeof ToolsWordCounterRoute
   ToolsWordToPdfRoute: typeof ToolsWordToPdfRoute
   BlogIndexRoute: typeof BlogIndexRoute
 }
@@ -711,6 +854,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsWordToPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/word-counter': {
+      id: '/tools/word-counter'
+      path: '/tools/word-counter'
+      fullPath: '/tools/word-counter'
+      preLoaderRoute: typeof ToolsWordCounterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/watermark': {
       id: '/tools/watermark'
       path: '/tools/watermark'
@@ -718,11 +868,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsWatermarkRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/url-encoder': {
+      id: '/tools/url-encoder'
+      path: '/tools/url-encoder'
+      fullPath: '/tools/url-encoder'
+      preLoaderRoute: typeof ToolsUrlEncoderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/unlock': {
       id: '/tools/unlock'
       path: '/tools/unlock'
       fullPath: '/tools/unlock'
       preLoaderRoute: typeof ToolsUnlockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/text-to-pdf': {
+      id: '/tools/text-to-pdf'
+      path: '/tools/text-to-pdf'
+      fullPath: '/tools/text-to-pdf'
+      preLoaderRoute: typeof ToolsTextToPdfRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/split': {
@@ -781,6 +945,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsRedactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/qr-generator': {
+      id: '/tools/qr-generator'
+      path: '/tools/qr-generator'
+      fullPath: '/tools/qr-generator'
+      preLoaderRoute: typeof ToolsQrGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/protect': {
       id: '/tools/protect'
       path: '/tools/protect'
@@ -830,6 +1001,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsPdfMetadataRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/password-generator': {
+      id: '/tools/password-generator'
+      path: '/tools/password-generator'
+      fullPath: '/tools/password-generator'
+      preLoaderRoute: typeof ToolsPasswordGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/page-numbers': {
       id: '/tools/page-numbers'
       path: '/tools/page-numbers'
@@ -865,11 +1043,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsMergeRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/markdown-to-pdf': {
+      id: '/tools/markdown-to-pdf'
+      path: '/tools/markdown-to-pdf'
+      fullPath: '/tools/markdown-to-pdf'
+      preLoaderRoute: typeof ToolsMarkdownToPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/lorem-ipsum': {
+      id: '/tools/lorem-ipsum'
+      path: '/tools/lorem-ipsum'
+      fullPath: '/tools/lorem-ipsum'
+      preLoaderRoute: typeof ToolsLoremIpsumRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/json-to-csv': {
       id: '/tools/json-to-csv'
       path: '/tools/json-to-csv'
       fullPath: '/tools/json-to-csv'
       preLoaderRoute: typeof ToolsJsonToCsvRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/json-formatter': {
+      id: '/tools/json-formatter'
+      path: '/tools/json-formatter'
+      fullPath: '/tools/json-formatter'
+      preLoaderRoute: typeof ToolsJsonFormatterRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/jpg-to-pdf': {
@@ -926,6 +1125,13 @@ declare module '@tanstack/react-router' {
       path: '/tools/html-to-pdf'
       fullPath: '/tools/html-to-pdf'
       preLoaderRoute: typeof ToolsHtmlToPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/hash-generator': {
+      id: '/tools/hash-generator'
+      path: '/tools/hash-generator'
+      fullPath: '/tools/hash-generator'
+      preLoaderRoute: typeof ToolsHashGeneratorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/grayscale-pdf': {
@@ -1005,6 +1211,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsCompareRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/case-converter': {
+      id: '/tools/case-converter'
+      path: '/tools/case-converter'
+      fullPath: '/tools/case-converter'
+      preLoaderRoute: typeof ToolsCaseConverterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/base64': {
+      id: '/tools/base64'
+      path: '/tools/base64'
+      fullPath: '/tools/base64'
+      preLoaderRoute: typeof ToolsBase64RouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog/$slug': {
       id: '/blog/$slug'
       path: '/blog/$slug'
@@ -1021,6 +1241,8 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
   BlogSlugRoute: BlogSlugRoute,
+  ToolsBase64Route: ToolsBase64Route,
+  ToolsCaseConverterRoute: ToolsCaseConverterRoute,
   ToolsCompareRoute: ToolsCompareRoute,
   ToolsCompressRoute: ToolsCompressRoute,
   ToolsCropRoute: ToolsCropRoute,
@@ -1032,6 +1254,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsExtractPagesRoute: ToolsExtractPagesRoute,
   ToolsFlattenPdfRoute: ToolsFlattenPdfRoute,
   ToolsGrayscalePdfRoute: ToolsGrayscalePdfRoute,
+  ToolsHashGeneratorRoute: ToolsHashGeneratorRoute,
   ToolsHtmlToPdfRoute: ToolsHtmlToPdfRoute,
   ToolsImageCompressRoute: ToolsImageCompressRoute,
   ToolsImageConvertRoute: ToolsImageConvertRoute,
@@ -1040,12 +1263,16 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsImageResizeRoute: ToolsImageResizeRoute,
   ToolsImageRotateRoute: ToolsImageRotateRoute,
   ToolsJpgToPdfRoute: ToolsJpgToPdfRoute,
+  ToolsJsonFormatterRoute: ToolsJsonFormatterRoute,
   ToolsJsonToCsvRoute: ToolsJsonToCsvRoute,
+  ToolsLoremIpsumRoute: ToolsLoremIpsumRoute,
+  ToolsMarkdownToPdfRoute: ToolsMarkdownToPdfRoute,
   ToolsMergeRoute: ToolsMergeRoute,
   ToolsNUpRoute: ToolsNUpRoute,
   ToolsOcrRoute: ToolsOcrRoute,
   ToolsOrganizeRoute: ToolsOrganizeRoute,
   ToolsPageNumbersRoute: ToolsPageNumbersRoute,
+  ToolsPasswordGeneratorRoute: ToolsPasswordGeneratorRoute,
   ToolsPdfMetadataRoute: ToolsPdfMetadataRoute,
   ToolsPdfToExcelRoute: ToolsPdfToExcelRoute,
   ToolsPdfToJpgRoute: ToolsPdfToJpgRoute,
@@ -1053,6 +1280,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsPdfToTextRoute: ToolsPdfToTextRoute,
   ToolsPdfToWordRoute: ToolsPdfToWordRoute,
   ToolsProtectRoute: ToolsProtectRoute,
+  ToolsQrGeneratorRoute: ToolsQrGeneratorRoute,
   ToolsRedactRoute: ToolsRedactRoute,
   ToolsRemoveExifRoute: ToolsRemoveExifRoute,
   ToolsRemovePagesRoute: ToolsRemovePagesRoute,
@@ -1061,8 +1289,11 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsScanToPdfRoute: ToolsScanToPdfRoute,
   ToolsSignRoute: ToolsSignRoute,
   ToolsSplitRoute: ToolsSplitRoute,
+  ToolsTextToPdfRoute: ToolsTextToPdfRoute,
   ToolsUnlockRoute: ToolsUnlockRoute,
+  ToolsUrlEncoderRoute: ToolsUrlEncoderRoute,
   ToolsWatermarkRoute: ToolsWatermarkRoute,
+  ToolsWordCounterRoute: ToolsWordCounterRoute,
   ToolsWordToPdfRoute: ToolsWordToPdfRoute,
   BlogIndexRoute: BlogIndexRoute,
 }
