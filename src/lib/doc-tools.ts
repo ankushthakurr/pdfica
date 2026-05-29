@@ -152,29 +152,36 @@ export async function grayscalePdf(file: File): Promise<Blob> {
     canvas.height = vp.height;
     const ctx = canvas.getContext("2d")!;
     await page.render({ canvasContext: ctx, viewport: vp, canvas }).promise;
-    const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
-    for (let p = 0; p < img.data.length; p += 4) {
-      const g = img.data[p] * 0.299 + img.data[p + 1] * 0.587 + img.data[p + 2] * 0.114;
-      img.data[p] = img.data[p + 1] = img.data[p + 2] = g;
-    }
-    ctx.putImageData(img, 0, 0);
-    const jpg = canvas.toDataURL("image/jpeg", 0.85);
-    const bytes = Uint8Array.from(atob(jpg.split(",")[1]), (c) => c.charCodeAt(0));
-    const embed = await out.embedJpg(bytes);
-    const p = out.addPage([vp.width / 2, vp.height / 2]);
-    p.drawImage(embed, { x: 0, y: 0, width: p.getWidth(), height: p.getHeight() });
-  }
-  return new Blob([(await out.save()) as BlobPart], { type: "application/pdf" });
-}
-
-// ---------- N-UP PDF (multiple source pages on one sheet) ----------
 export async function nUpPdf(file: File, perSheet: 2 | 4): Promise<Blob> {
-  const src = await PDFDocument.load(await file.arrayBuffer(), { ignoreEncryption: true });
+  const srcBytes = await file.arrayBuffer();
+  const src = await PDFDocument.load(srcBytes, { ignoreEncryption: true });
   const out = await PDFDocument.create();
   const total = src.getPageCount();
   const A4 = [595.28, 841.89] as const;
   const cols = perSheet === 2 ? 1 : 2;
   const rows = perSheet === 2 ? 2 : 2;
+  for (let i = 0; i < total; i += perSheet) {
+    const page = out.addPage([A4[0], A4[1]]);
+    const cellW = A4[0] / cols;
+    const cellH = A4[1] / rows;
+    const indices = [];
+    for (let j = 0; j < perSheet && i + j < total; j++) indices.push(i + j);
+    const embedded = await out.embedPdf(srcBytes, indices);
+    for (let j = 0; j < embedded.length; j++) {
+      const ep = embedded[j];
+      const scale = Math.min(cellW / ep.width, cellH / ep.height) * 0.95;
+      const w = ep.width * scale;
+      const h = ep.height * scale;
+      const col = j % cols;
+      const row = perSheet === 2 ? 1 - j : 1 - Math.floor(j / cols);
+      const x = col * cellW + (cellW - w) / 2;
+      const y = row * cellH + (cellH - h) / 2;
+      page.drawPage(ep, { x, y, width: w, height: h });
+    }
+  }
+  return new Blob([(await out.save()) as BlobPart], { type: "application/pdf" });
+}
+
   for (let i = 0; i < total; i += perSheet) {
     const page = out.addPage([A4[0], A4[1]]);
     const cellW = A4[0] / cols;
