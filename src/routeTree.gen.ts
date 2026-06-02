@@ -43,6 +43,7 @@ import { Route as ToolsPdfToWordRouteImport } from './routes/tools.pdf-to-word'
 import { Route as ToolsPdfToTextRouteImport } from './routes/tools.pdf-to-text'
 import { Route as ToolsPdfToPdfaRouteImport } from './routes/tools.pdf-to-pdfa'
 import { Route as ToolsPdfToJpgRouteImport } from './routes/tools.pdf-to-jpg'
+import { Route as ToolsPdfToImageRouteImport } from './routes/tools.pdf-to-image'
 import { Route as ToolsPdfToExcelRouteImport } from './routes/tools.pdf-to-excel'
 import { Route as ToolsPdfMetadataRouteImport } from './routes/tools.pdf-metadata'
 import { Route as ToolsPasswordGeneratorRouteImport } from './routes/tools.password-generator'
@@ -259,6 +260,11 @@ const ToolsPdfToPdfaRoute = ToolsPdfToPdfaRouteImport.update({
 const ToolsPdfToJpgRoute = ToolsPdfToJpgRouteImport.update({
   id: '/tools/pdf-to-jpg',
   path: '/tools/pdf-to-jpg',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsPdfToImageRoute = ToolsPdfToImageRouteImport.update({
+  id: '/tools/pdf-to-image',
+  path: '/tools/pdf-to-image',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsPdfToExcelRoute = ToolsPdfToExcelRouteImport.update({
@@ -543,6 +549,7 @@ export interface FileRoutesByFullPath {
   '/tools/password-generator': typeof ToolsPasswordGeneratorRoute
   '/tools/pdf-metadata': typeof ToolsPdfMetadataRoute
   '/tools/pdf-to-excel': typeof ToolsPdfToExcelRoute
+  '/tools/pdf-to-image': typeof ToolsPdfToImageRoute
   '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
   '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
   '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
@@ -625,6 +632,7 @@ export interface FileRoutesByTo {
   '/tools/password-generator': typeof ToolsPasswordGeneratorRoute
   '/tools/pdf-metadata': typeof ToolsPdfMetadataRoute
   '/tools/pdf-to-excel': typeof ToolsPdfToExcelRoute
+  '/tools/pdf-to-image': typeof ToolsPdfToImageRoute
   '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
   '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
   '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
@@ -708,6 +716,7 @@ export interface FileRoutesById {
   '/tools/password-generator': typeof ToolsPasswordGeneratorRoute
   '/tools/pdf-metadata': typeof ToolsPdfMetadataRoute
   '/tools/pdf-to-excel': typeof ToolsPdfToExcelRoute
+  '/tools/pdf-to-image': typeof ToolsPdfToImageRoute
   '/tools/pdf-to-jpg': typeof ToolsPdfToJpgRoute
   '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
   '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
@@ -792,6 +801,7 @@ export interface FileRouteTypes {
     | '/tools/password-generator'
     | '/tools/pdf-metadata'
     | '/tools/pdf-to-excel'
+    | '/tools/pdf-to-image'
     | '/tools/pdf-to-jpg'
     | '/tools/pdf-to-pdfa'
     | '/tools/pdf-to-text'
@@ -874,6 +884,7 @@ export interface FileRouteTypes {
     | '/tools/password-generator'
     | '/tools/pdf-metadata'
     | '/tools/pdf-to-excel'
+    | '/tools/pdf-to-image'
     | '/tools/pdf-to-jpg'
     | '/tools/pdf-to-pdfa'
     | '/tools/pdf-to-text'
@@ -956,6 +967,7 @@ export interface FileRouteTypes {
     | '/tools/password-generator'
     | '/tools/pdf-metadata'
     | '/tools/pdf-to-excel'
+    | '/tools/pdf-to-image'
     | '/tools/pdf-to-jpg'
     | '/tools/pdf-to-pdfa'
     | '/tools/pdf-to-text'
@@ -1039,6 +1051,7 @@ export interface RootRouteChildren {
   ToolsPasswordGeneratorRoute: typeof ToolsPasswordGeneratorRoute
   ToolsPdfMetadataRoute: typeof ToolsPdfMetadataRoute
   ToolsPdfToExcelRoute: typeof ToolsPdfToExcelRoute
+  ToolsPdfToImageRoute: typeof ToolsPdfToImageRoute
   ToolsPdfToJpgRoute: typeof ToolsPdfToJpgRoute
   ToolsPdfToPdfaRoute: typeof ToolsPdfToPdfaRoute
   ToolsPdfToTextRoute: typeof ToolsPdfToTextRoute
@@ -1309,6 +1322,13 @@ declare module '@tanstack/react-router' {
       path: '/tools/pdf-to-jpg'
       fullPath: '/tools/pdf-to-jpg'
       preLoaderRoute: typeof ToolsPdfToJpgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/pdf-to-image': {
+      id: '/tools/pdf-to-image'
+      path: '/tools/pdf-to-image'
+      fullPath: '/tools/pdf-to-image'
+      preLoaderRoute: typeof ToolsPdfToImageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/pdf-to-excel': {
@@ -1687,6 +1707,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsPasswordGeneratorRoute: ToolsPasswordGeneratorRoute,
   ToolsPdfMetadataRoute: ToolsPdfMetadataRoute,
   ToolsPdfToExcelRoute: ToolsPdfToExcelRoute,
+  ToolsPdfToImageRoute: ToolsPdfToImageRoute,
   ToolsPdfToJpgRoute: ToolsPdfToJpgRoute,
   ToolsPdfToPdfaRoute: ToolsPdfToPdfaRoute,
   ToolsPdfToTextRoute: ToolsPdfToTextRoute,
