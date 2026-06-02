@@ -23,12 +23,18 @@ function parseRanges(ranges: string, total: number): number[] {
 }
 
 // ----- MERGE -----
-export async function mergePdfs(files: File[]): Promise<Blob> {
+export type FileProgress = (index: number, phase: string, pct?: number) => void;
+
+export async function mergePdfs(files: File[], report?: FileProgress): Promise<Blob> {
   const out = await PDFDocument.create();
-  for (const f of files) {
+  for (let i = 0; i < files.length; i++) {
+    const f = files[i];
+    report?.(i, "Reading", 10);
     const src = await PDFDocument.load(await readAB(f), { ignoreEncryption: true });
+    report?.(i, "Copying pages", 55);
     const pages = await out.copyPages(src, src.getPageIndices());
     pages.forEach((p) => out.addPage(p));
+    report?.(i, "Done", 100);
   }
   return new Blob([(await out.save()) as BlobPart], { type: "application/pdf" });
 }
