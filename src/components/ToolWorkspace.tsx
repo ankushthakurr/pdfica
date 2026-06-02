@@ -19,7 +19,7 @@ interface Props {
   process: (files: File[]) => Promise<ToolResult>;
 }
 
-const DEFAULT_MAX_SIZE = 25 * 1024 * 1024; // 25 MB
+const DEFAULT_MAX_SIZE = 100 * 1024 * 1024; // 100 MB
 
 function getFileTypeLabel(ext: string): string {
   const map: Record<string, string> = {
