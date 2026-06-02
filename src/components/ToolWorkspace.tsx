@@ -55,6 +55,7 @@ export function ToolWorkspace({
   const [busy, setBusy] = useState(false);
   const [phase, setPhase] = useState<string>("");
   const [elapsed, setElapsed] = useState(0);
+  const [fileProgress, setFileProgress] = useState<Array<{ phase: string; pct: number }>>([]);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ToolResult>(null);
   const inputRef = useRef<HTMLInputElement>(null);
