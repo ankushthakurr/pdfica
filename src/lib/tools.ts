@@ -1,4 +1,4 @@
-export type ToolCategory = "organize" | "optimize" | "convert" | "edit" | "security" | "image" | "document" | "generator";
+export type ToolCategory = "organize" | "optimize" | "convert" | "edit" | "security" | "image" | "document" | "generator" | "ai" | "calculator" | "web" | "business";
 
 export interface Tool {
   slug: string;
@@ -82,21 +82,50 @@ export const TOOLS: Tool[] = [
   { slug: "base64", name: "Base64 Encode/Decode", tagline: "Encode or decode Base64.", description: "Encode any text to Base64 or decode a Base64 string back to plain text.", category: "generator", accept: "*/*", multi: false, icon: "Binary", to: "/tools/base64" },
   { slug: "url-encoder", name: "URL Encoder", tagline: "Encode or decode URLs.", description: "Percent-encode or decode strings for use in URLs and query parameters.", category: "generator", accept: "*/*", multi: false, icon: "Link2", to: "/tools/url-encoder" },
   { slug: "hash-generator", name: "Hash Generator", tagline: "SHA-1, SHA-256, SHA-512.", description: "Compute cryptographic hashes of text using the Web Crypto API.", category: "generator", accept: "*/*", multi: false, icon: "Fingerprint", to: "/tools/hash-generator" },
+
+  // AI TOOLS (trending 2026, no API)
+  { slug: "ai-summarizer", name: "AI Text Summarizer", tagline: "Summarize long text instantly.", description: "Extractive summarization that picks the most important sentences from any article or document.", category: "ai", accept: "*/*", multi: false, icon: "Sparkles", to: "/tools/ai-summarizer" },
+  { slug: "text-to-speech", name: "Text to Speech", tagline: "Listen to any text.", description: "Convert text into natural speech using your browser's built-in voices. No upload needed.", category: "ai", accept: "*/*", multi: false, icon: "Volume2", to: "/tools/text-to-speech" },
+  { slug: "image-to-base64", name: "Image to Base64", tagline: "Convert images to data URIs.", description: "Drop an image and instantly get a Base64 data URI for inlining in HTML, CSS or JSON.", category: "ai", accept: "image/*", multi: false, icon: "Binary", to: "/tools/image-to-base64" },
+  { slug: "yt-thumbnail", name: "YouTube Thumbnail", tagline: "Download any video's thumbnail.", description: "Paste a YouTube URL and download the maximum-resolution thumbnail in one click.", category: "ai", accept: "*/*", multi: false, icon: "Youtube", to: "/tools/yt-thumbnail" },
+
+  // BUSINESS
+  { slug: "invoice-generator", name: "Invoice Generator", tagline: "Free professional invoices.", description: "Fill out the form, preview, and download a clean PDF invoice for your clients.", category: "business", accept: "*/*", multi: false, icon: "FileSpreadsheet", to: "/tools/invoice-generator" },
+  { slug: "resume-builder", name: "Resume Builder", tagline: "Build a PDF resume in minutes.", description: "Fill in your experience and download a clean ATS-friendly PDF resume.", category: "business", accept: "*/*", multi: false, icon: "FileBadge", to: "/tools/resume-builder" },
+
+  // CALCULATORS
+  { slug: "age-calculator", name: "Age Calculator", tagline: "Years, months and days.", description: "Calculate your exact age in years, months, days, hours, and minutes from your date of birth.", category: "calculator", accept: "*/*", multi: false, icon: "Cake", to: "/tools/age-calculator" },
+  { slug: "bmi-calculator", name: "BMI Calculator", tagline: "Body mass index in seconds.", description: "Compute your BMI and see which category you fall into using metric or imperial units.", category: "calculator", accept: "*/*", multi: false, icon: "Activity", to: "/tools/bmi-calculator" },
+  { slug: "emi-calculator", name: "EMI / Loan Calculator", tagline: "Monthly loan payments.", description: "Calculate monthly EMI, total interest and full amortization for any loan.", category: "calculator", accept: "*/*", multi: false, icon: "Landmark", to: "/tools/emi-calculator" },
+  { slug: "tip-calculator", name: "Tip Calculator", tagline: "Split bills and tips.", description: "Quickly calculate tip amounts and split the bill between any number of people.", category: "calculator", accept: "*/*", multi: false, icon: "Receipt", to: "/tools/tip-calculator" },
+  { slug: "percentage-calculator", name: "Percentage Calculator", tagline: "Percentages, increases, decreases.", description: "Three calculators in one: what is X% of Y, X is what % of Y, and percent change.", category: "calculator", accept: "*/*", multi: false, icon: "Percent", to: "/tools/percentage-calculator" },
+
+  // WEB & DEV
+  { slug: "regex-tester", name: "Regex Tester", tagline: "Test patterns live.", description: "Test JavaScript regex patterns against any input with live match highlighting.", category: "web", accept: "*/*", multi: false, icon: "Regex", to: "/tools/regex-tester" },
+  { slug: "jwt-decoder", name: "JWT Decoder", tagline: "Inspect any JWT.", description: "Decode the header and payload of any JWT token instantly. Tokens never leave your browser.", category: "web", accept: "*/*", multi: false, icon: "KeyRound", to: "/tools/jwt-decoder" },
+  { slug: "uuid-generator", name: "UUID Generator", tagline: "Generate v4 UUIDs.", description: "Generate one or many cryptographically-random v4 UUIDs in one click.", category: "web", accept: "*/*", multi: false, icon: "Hash", to: "/tools/uuid-generator" },
+  { slug: "timestamp-converter", name: "Timestamp Converter", tagline: "Unix ↔ human date.", description: "Convert between Unix timestamps and human-readable dates in your local time zone.", category: "web", accept: "*/*", multi: false, icon: "Clock", to: "/tools/timestamp-converter" },
+  { slug: "meta-tag-generator", name: "Meta Tag Generator", tagline: "SEO + Open Graph tags.", description: "Generate ready-to-paste meta tags for SEO, Twitter cards and Open Graph previews.", category: "web", accept: "*/*", multi: false, icon: "Tags", to: "/tools/meta-tag-generator" },
+  { slug: "color-picker", name: "Color Picker from Image", tagline: "Click any pixel for its color.", description: "Drop an image, click anywhere on it and copy the HEX, RGB or HSL value instantly.", category: "web", accept: "image/*", multi: false, icon: "Pipette", to: "/tools/color-picker" },
 ];
 
 export const CATEGORIES: Record<ToolCategory, { label: string; description: string; tone: string }> = {
   organize: { label: "Organize PDF", description: "Merge, split, and arrange pages", tone: "text-tool-organize" },
   optimize: { label: "Optimize PDF", description: "Compress, repair, and OCR", tone: "text-tool-optimize" },
-  convert: { label: "Convert PDF", description: "Between PDF, Word, Excel, images and more", tone: "text-tool-convert" },
-  edit: { label: "Edit PDF", description: "Annotate, sign, watermark, redact and crop", tone: "text-tool-organize" },
-  security: { label: "Security", description: "Protect, unlock and compare documents", tone: "text-tool-security" },
-  image: { label: "Image Tools", description: "Compress, convert, resize and clean images", tone: "text-tool-convert" },
-  document: { label: "Documents & Data", description: "CSV, JSON, Excel and Markdown utilities", tone: "text-tool-optimize" },
-  generator: { label: "Generators", description: "QR codes, passwords, hashes and text utilities", tone: "text-tool-security" },
+  convert: { label: "Convert PDF", description: "Between PDF, Word, Excel, images", tone: "text-tool-convert" },
+  edit: { label: "Edit PDF", description: "Annotate, sign, watermark, crop", tone: "text-tool-organize" },
+  security: { label: "Security", description: "Protect, unlock and compare", tone: "text-tool-security" },
+  image: { label: "Image Tools", description: "Compress, convert, resize, clean", tone: "text-tool-convert" },
+  document: { label: "Documents & Data", description: "CSV, JSON, Excel, Markdown", tone: "text-tool-optimize" },
+  generator: { label: "Generators", description: "QR, passwords, hashes, text", tone: "text-tool-security" },
+  ai: { label: "AI & Media", description: "Summarize, speak, download media", tone: "text-tool-convert" },
+  business: { label: "Business", description: "Invoices, resumes and more", tone: "text-tool-organize" },
+  calculator: { label: "Calculators", description: "Finance, health and math", tone: "text-tool-optimize" },
+  web: { label: "Web & Dev", description: "Regex, JWT, SEO, dev utilities", tone: "text-tool-security" },
 };
 
 export const toolsByCategory = (): Record<ToolCategory, Tool[]> => {
-  const out = { organize: [], optimize: [], convert: [], edit: [], security: [], image: [], document: [], generator: [] } as Record<ToolCategory, Tool[]>;
+  const out = { organize: [], optimize: [], convert: [], edit: [], security: [], image: [], document: [], generator: [], ai: [], business: [], calculator: [], web: [] } as Record<ToolCategory, Tool[]>;
   for (const t of TOOLS) out[t.category].push(t);
   return out;
 };
