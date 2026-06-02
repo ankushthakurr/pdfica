@@ -101,11 +101,20 @@ export function ToolWorkspace({
       setResult(null);
       setPhase("Reading file…");
       setElapsed(0);
+      setFileProgress(toRun.map(() => ({ phase: "Queued", pct: 0 })));
       const t0 = performance.now();
       const tick = window.setInterval(() => setElapsed(performance.now() - t0), 100);
       const phaseTimer = window.setTimeout(() => setPhase("Processing…"), 350);
+      const report: FileReporter = (index, p, pct) => {
+        setFileProgress((prev) => {
+          if (index < 0 || index >= prev.length) return prev;
+          const next = prev.slice();
+          next[index] = { phase: p, pct: pct ?? next[index].pct };
+          return next;
+        });
+      };
       try {
-        const r = await process(toRun);
+        const r = await process(toRun, report);
         if (r) {
           setPhase("Finalizing…");
           setResult(r);
