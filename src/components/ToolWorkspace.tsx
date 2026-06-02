@@ -1,6 +1,6 @@
-import { useCallback, useRef, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { UploadCloud, FileText, X, Loader2, CheckCircle2, Download, AlertTriangle } from "lucide-react";
+import { UploadCloud, FileText, X, Loader2, CheckCircle2, Download, AlertTriangle, Sparkles } from "lucide-react";
 import { formatBytes, downloadBlob } from "@/lib/format";
 
 export type ToolResult = { blob: Blob; filename: string } | null;
@@ -11,6 +11,8 @@ interface Props {
   accept: string;
   multi: boolean;
   cta?: string;
+  /** Auto-start processing as soon as valid files are dropped/selected. Defaults to true for single-file tools. */
+  autoProcess?: boolean;
   sidebar?: ReactNode;
   emptyHint?: string;
   maxSizeBytes?: number; // per-file limit; default 25 MB
