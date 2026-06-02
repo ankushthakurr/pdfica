@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState, type ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { UploadCloud, FileText, X, Loader2, CheckCircle2, Download, AlertTriangle } from "lucide-react";
+import { UploadCloud, FileText, X, Loader2, CheckCircle2, Download, AlertTriangle, Sparkles } from "lucide-react";
 import { formatBytes, downloadBlob } from "@/lib/format";
 
 export type ToolResult = { blob: Blob; filename: string } | null;
@@ -11,6 +11,8 @@ interface Props {
   accept: string;
   multi: boolean;
   cta?: string;
+  /** Auto-start processing as soon as valid files are dropped/selected. Defaults to true for single-file tools. */
+  autoProcess?: boolean;
   sidebar?: ReactNode;
   emptyHint?: string;
   maxSizeBytes?: number; // per-file limit; default 25 MB
@@ -39,6 +41,7 @@ export function ToolWorkspace({
   accept,
   multi,
   cta = "Process files",
+  autoProcess,
   sidebar,
   emptyHint,
   maxSizeBytes = DEFAULT_MAX_SIZE,
@@ -48,9 +51,12 @@ export function ToolWorkspace({
   const [files, setFiles] = useState<File[]>([]);
   const [dragOver, setDragOver] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [phase, setPhase] = useState<string>("");
+  const [elapsed, setElapsed] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ToolResult>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const autoOn = autoProcess ?? !multi;
 
   const accepted = accept.split(",").map((s) => s.trim());
 
@@ -85,6 +91,34 @@ export function ToolWorkspace({
     return { ok, errors };
   };
 
+  const runProcess = useCallback(
+    async (toRun: File[]) => {
+      setBusy(true);
+      setError(null);
+      setResult(null);
+      setPhase("Reading file…");
+      setElapsed(0);
+      const t0 = performance.now();
+      const tick = window.setInterval(() => setElapsed(performance.now() - t0), 100);
+      const phaseTimer = window.setTimeout(() => setPhase("Processing…"), 350);
+      try {
+        const r = await process(toRun);
+        if (r) {
+          setPhase("Finalizing…");
+          setResult(r);
+        }
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Something went wrong.");
+      } finally {
+        clearInterval(tick);
+        clearTimeout(phaseTimer);
+        setBusy(false);
+        setPhase("");
+      }
+    },
+    [process],
+  );
+
   const handleFiles = useCallback(
     (list: FileList | File[]) => {
       const { ok, errors } = validateFiles(Array.from(list));
@@ -95,13 +129,18 @@ export function ToolWorkspace({
         setError(null);
       }
       setResult(null);
-      setFiles((prev) => {
-        const combined = multi ? [...prev, ...ok] : ok;
-        if (multi && maxFiles) return combined.slice(0, maxFiles);
-        return multi ? combined : combined.slice(0, 1);
-      });
+      const next = (() => {
+        if (!multi) return ok.slice(0, 1);
+        const combined = [...files, ...ok];
+        return maxFiles ? combined.slice(0, maxFiles) : combined;
+      })();
+      setFiles(next);
+      if (autoOn && next.length && !errors.length) {
+        // Kick off processing immediately — no extra click needed.
+        void runProcess(next);
+      }
     },
-    [multi, maxFiles, maxSizeBytes, accept],
+    [multi, maxFiles, maxSizeBytes, accept, files, autoOn, runProcess],
   );
 
   const onDrop = (e: React.DragEvent) => {
@@ -117,18 +156,10 @@ export function ToolWorkspace({
       setError(errors.join(" ") || "One or more files failed validation.");
       return;
     }
-    setBusy(true);
-    setError(null);
-    setResult(null);
-    try {
-      const r = await process(ok);
-      if (r) setResult(r);
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Something went wrong.");
-    } finally {
-      setBusy(false);
-    }
+    await runProcess(ok);
   };
+
+
 
   const reset = () => {
     setFiles([]);
@@ -233,6 +264,35 @@ export function ToolWorkspace({
             </div>
           )}
 
+          {/* Progress indicator */}
+          <AnimatePresence>
+            {busy && !result && (
+              <motion.div
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="rounded-2xl border bg-surface p-4"
+              >
+                <div className="mb-2 flex items-center justify-between text-sm">
+                  <span className="inline-flex items-center gap-2 font-medium">
+                    <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+                    {phase || "Working…"}
+                  </span>
+                  <span className="text-xs text-muted-foreground tabular-nums">
+                    {(elapsed / 1000).toFixed(1)}s
+                  </span>
+                </div>
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+                  <motion.div
+                    className="h-full w-1/3 rounded-full bg-gradient-to-r from-primary/40 via-primary to-primary/40"
+                    animate={{ x: ["-100%", "300%"] }}
+                    transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+                  />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Error */}
           {error && (
             <div className="flex items-start gap-2 rounded-xl border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive">
@@ -240,6 +300,7 @@ export function ToolWorkspace({
               <span>{error}</span>
             </div>
           )}
+
 
           {/* Result */}
           <AnimatePresence>

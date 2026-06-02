@@ -3,7 +3,7 @@ import { jsPDF } from "jspdf";
 import { marked } from "marked";
 import * as XLSX from "xlsx";
 import QRCode from "qrcode";
-import { pdfjsLib } from "./pdfjs";
+import { loadPdfjs } from "./pdfjs";
 import { PDFDocument, rgb, StandardFonts } from "pdf-lib";
 
 // ---------- TEXT -> PDF ----------
@@ -110,7 +110,7 @@ export async function jsonToCsv(file: File): Promise<Blob> {
 // ---------- PDF -> TEXT ----------
 export async function pdfToText(file: File): Promise<Blob> {
   const data = new Uint8Array(await file.arrayBuffer());
-  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  const pdf = await (await loadPdfjs()).getDocument({ data }).promise;
   let out = "";
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
@@ -142,7 +142,7 @@ export async function pdfMetadata(file: File): Promise<Blob> {
 // ---------- GRAYSCALE PDF (overlay desaturating filter via rasterize) ----------
 export async function grayscalePdf(file: File): Promise<Blob> {
   const data = new Uint8Array(await file.arrayBuffer());
-  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  const pdf = await (await loadPdfjs()).getDocument({ data }).promise;
   const out = await PDFDocument.create();
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
@@ -202,7 +202,7 @@ export async function nUpPdf(file: File, perSheet: 2 | 4): Promise<Blob> {
 // ---------- FLATTEN PDF (rasterize each page) ----------
 export async function flattenPdf(file: File): Promise<Blob> {
   const data = new Uint8Array(await file.arrayBuffer());
-  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  const pdf = await (await loadPdfjs()).getDocument({ data }).promise;
   const out = await PDFDocument.create();
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
