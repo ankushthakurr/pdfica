@@ -124,23 +124,42 @@ export async function openPdf(file: File) {
 }
 
 // Render all pages with controlled concurrency + progress callback.
-export async function pdfToJpgPages(
+export async function pdfToImagePages(
   file: File,
-  opts: { scale?: number; quality?: number; concurrency?: number; onProgress?: (done: number, total: number) => void } = {},
+  opts: { scale?: number; quality?: number; concurrency?: number; format?: "image/jpeg" | "image/png" | "image/webp"; onProgress?: (done: number, total: number) => void } = {},
 ): Promise<{ blobs: Blob[]; numPages: number }> {
   const scale = opts.scale ?? 1.5;
   const quality = opts.quality ?? 0.85;
   const concurrency = Math.max(1, opts.concurrency ?? 3);
+  const format = opts.format ?? "image/jpeg";
   const pdf = await openPdf(file);
-  const total = pdf.numPages;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const p: any = pdf;
+  const total = p.numPages;
   const blobs: Blob[] = new Array(total);
   let done = 0;
   let next = 0;
+  const renderOne = async (pageNum: number): Promise<Blob> => {
+    const page = await p.getPage(pageNum);
+    const viewport = page.getViewport({ scale });
+    const canvas = document.createElement("canvas");
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    const ctx = canvas.getContext("2d")!;
+    if (format === "image/jpeg") {
+      ctx.fillStyle = "#ffffff";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+    await page.render({ canvasContext: ctx, viewport, canvas }).promise;
+    return await new Promise<Blob>((res, rej) =>
+      canvas.toBlob((b) => (b ? res(b) : rej(new Error("Encode failed"))), format, quality),
+    );
+  };
   const workers = Array.from({ length: Math.min(concurrency, total) }, async () => {
     while (true) {
       const i = next++;
       if (i >= total) break;
-      blobs[i] = await renderPdfPageJpg(pdf, i + 1, scale, quality);
+      blobs[i] = await renderOne(i + 1);
       done++;
       opts.onProgress?.(done, total);
     }
@@ -148,6 +167,11 @@ export async function pdfToJpgPages(
   await Promise.all(workers);
   return { blobs, numPages: total };
 }
+
+export const pdfToJpgPages = (
+  file: File,
+  opts: { scale?: number; quality?: number; concurrency?: number; onProgress?: (done: number, total: number) => void } = {},
+) => pdfToImagePages(file, { ...opts, format: "image/jpeg" });
 
 // Legacy single-blob convenience (kept for any other callers).
 export async function pdfToJpgs(file: File, scale = 1.5): Promise<{ blob: Blob; filename: string }> {
