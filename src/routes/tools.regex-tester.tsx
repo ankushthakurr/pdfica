@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import { UtilityPage } from "@/components/UtilityPage";
 
 function Page() {
@@ -11,7 +11,7 @@ function Page() {
     try {
       const re = new RegExp(pat, flags);
       const m = Array.from(text.matchAll(flags.includes("g") ? re : new RegExp(pat, flags + "g")));
-      let last = 0; const parts: (string | JSX.Element)[] = [];
+      let last = 0; const parts: ReactNode[] = [];
       m.forEach((mm, i) => {
         const s = mm.index ?? 0;
         parts.push(text.slice(last, s));
@@ -21,7 +21,7 @@ function Page() {
       parts.push(text.slice(last));
       return { error: null as string | null, matches: m.map((x) => x[0]), highlighted: parts };
     } catch (e) {
-      return { error: (e as Error).message, matches: [] as string[], highlighted: [text] as (string | JSX.Element)[] };
+      return { error: (e as Error).message, matches: [] as string[], highlighted: [text] as ReactNode[] };
     }
   }, [pat, flags, text]);
 

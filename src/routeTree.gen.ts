@@ -14,22 +14,30 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as ToolsYtThumbnailRouteImport } from './routes/tools.yt-thumbnail'
 import { Route as ToolsWordToPdfRouteImport } from './routes/tools.word-to-pdf'
 import { Route as ToolsWordCounterRouteImport } from './routes/tools.word-counter'
 import { Route as ToolsWatermarkRouteImport } from './routes/tools.watermark'
+import { Route as ToolsUuidGeneratorRouteImport } from './routes/tools.uuid-generator'
 import { Route as ToolsUrlEncoderRouteImport } from './routes/tools.url-encoder'
 import { Route as ToolsUnlockRouteImport } from './routes/tools.unlock'
+import { Route as ToolsTipCalculatorRouteImport } from './routes/tools.tip-calculator'
+import { Route as ToolsTimestampConverterRouteImport } from './routes/tools.timestamp-converter'
+import { Route as ToolsTextToSpeechRouteImport } from './routes/tools.text-to-speech'
 import { Route as ToolsTextToPdfRouteImport } from './routes/tools.text-to-pdf'
 import { Route as ToolsSplitRouteImport } from './routes/tools.split'
 import { Route as ToolsSignRouteImport } from './routes/tools.sign'
 import { Route as ToolsScanToPdfRouteImport } from './routes/tools.scan-to-pdf'
 import { Route as ToolsRotateRouteImport } from './routes/tools.rotate'
+import { Route as ToolsResumeBuilderRouteImport } from './routes/tools.resume-builder'
 import { Route as ToolsRepairRouteImport } from './routes/tools.repair'
 import { Route as ToolsRemovePagesRouteImport } from './routes/tools.remove-pages'
 import { Route as ToolsRemoveExifRouteImport } from './routes/tools.remove-exif'
+import { Route as ToolsRegexTesterRouteImport } from './routes/tools.regex-tester'
 import { Route as ToolsRedactRouteImport } from './routes/tools.redact'
 import { Route as ToolsQrGeneratorRouteImport } from './routes/tools.qr-generator'
 import { Route as ToolsProtectRouteImport } from './routes/tools.protect'
+import { Route as ToolsPercentageCalculatorRouteImport } from './routes/tools.percentage-calculator'
 import { Route as ToolsPdfToWordRouteImport } from './routes/tools.pdf-to-word'
 import { Route as ToolsPdfToTextRouteImport } from './routes/tools.pdf-to-text'
 import { Route as ToolsPdfToPdfaRouteImport } from './routes/tools.pdf-to-pdfa'
@@ -41,12 +49,16 @@ import { Route as ToolsPageNumbersRouteImport } from './routes/tools.page-number
 import { Route as ToolsOrganizeRouteImport } from './routes/tools.organize'
 import { Route as ToolsOcrRouteImport } from './routes/tools.ocr'
 import { Route as ToolsNUpRouteImport } from './routes/tools.n-up'
+import { Route as ToolsMetaTagGeneratorRouteImport } from './routes/tools.meta-tag-generator'
 import { Route as ToolsMergeRouteImport } from './routes/tools.merge'
 import { Route as ToolsMarkdownToPdfRouteImport } from './routes/tools.markdown-to-pdf'
 import { Route as ToolsLoremIpsumRouteImport } from './routes/tools.lorem-ipsum'
+import { Route as ToolsJwtDecoderRouteImport } from './routes/tools.jwt-decoder'
 import { Route as ToolsJsonToCsvRouteImport } from './routes/tools.json-to-csv'
 import { Route as ToolsJsonFormatterRouteImport } from './routes/tools.json-formatter'
 import { Route as ToolsJpgToPdfRouteImport } from './routes/tools.jpg-to-pdf'
+import { Route as ToolsInvoiceGeneratorRouteImport } from './routes/tools.invoice-generator'
+import { Route as ToolsImageToBase64RouteImport } from './routes/tools.image-to-base64'
 import { Route as ToolsImageRotateRouteImport } from './routes/tools.image-rotate'
 import { Route as ToolsImageResizeRouteImport } from './routes/tools.image-resize'
 import { Route as ToolsImageGrayscaleRouteImport } from './routes/tools.image-grayscale'
@@ -60,14 +72,19 @@ import { Route as ToolsFlattenPdfRouteImport } from './routes/tools.flatten-pdf'
 import { Route as ToolsExtractPagesRouteImport } from './routes/tools.extract-pages'
 import { Route as ToolsExcelToPdfRouteImport } from './routes/tools.excel-to-pdf'
 import { Route as ToolsExcelToCsvRouteImport } from './routes/tools.excel-to-csv'
+import { Route as ToolsEmiCalculatorRouteImport } from './routes/tools.emi-calculator'
 import { Route as ToolsEditRouteImport } from './routes/tools.edit'
 import { Route as ToolsCsvToJsonRouteImport } from './routes/tools.csv-to-json'
 import { Route as ToolsCsvToExcelRouteImport } from './routes/tools.csv-to-excel'
 import { Route as ToolsCropRouteImport } from './routes/tools.crop'
 import { Route as ToolsCompressRouteImport } from './routes/tools.compress'
 import { Route as ToolsCompareRouteImport } from './routes/tools.compare'
+import { Route as ToolsColorPickerRouteImport } from './routes/tools.color-picker'
 import { Route as ToolsCaseConverterRouteImport } from './routes/tools.case-converter'
+import { Route as ToolsBmiCalculatorRouteImport } from './routes/tools.bmi-calculator'
 import { Route as ToolsBase64RouteImport } from './routes/tools.base64'
+import { Route as ToolsAiSummarizerRouteImport } from './routes/tools.ai-summarizer'
+import { Route as ToolsAgeCalculatorRouteImport } from './routes/tools.age-calculator'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 
 const TermsRoute = TermsRouteImport.update({
@@ -95,6 +112,11 @@ const BlogIndexRoute = BlogIndexRouteImport.update({
   path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsYtThumbnailRoute = ToolsYtThumbnailRouteImport.update({
+  id: '/tools/yt-thumbnail',
+  path: '/tools/yt-thumbnail',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsWordToPdfRoute = ToolsWordToPdfRouteImport.update({
   id: '/tools/word-to-pdf',
   path: '/tools/word-to-pdf',
@@ -110,6 +132,11 @@ const ToolsWatermarkRoute = ToolsWatermarkRouteImport.update({
   path: '/tools/watermark',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsUuidGeneratorRoute = ToolsUuidGeneratorRouteImport.update({
+  id: '/tools/uuid-generator',
+  path: '/tools/uuid-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsUrlEncoderRoute = ToolsUrlEncoderRouteImport.update({
   id: '/tools/url-encoder',
   path: '/tools/url-encoder',
@@ -118,6 +145,21 @@ const ToolsUrlEncoderRoute = ToolsUrlEncoderRouteImport.update({
 const ToolsUnlockRoute = ToolsUnlockRouteImport.update({
   id: '/tools/unlock',
   path: '/tools/unlock',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsTipCalculatorRoute = ToolsTipCalculatorRouteImport.update({
+  id: '/tools/tip-calculator',
+  path: '/tools/tip-calculator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsTimestampConverterRoute = ToolsTimestampConverterRouteImport.update({
+  id: '/tools/timestamp-converter',
+  path: '/tools/timestamp-converter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsTextToSpeechRoute = ToolsTextToSpeechRouteImport.update({
+  id: '/tools/text-to-speech',
+  path: '/tools/text-to-speech',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsTextToPdfRoute = ToolsTextToPdfRouteImport.update({
@@ -145,6 +187,11 @@ const ToolsRotateRoute = ToolsRotateRouteImport.update({
   path: '/tools/rotate',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsResumeBuilderRoute = ToolsResumeBuilderRouteImport.update({
+  id: '/tools/resume-builder',
+  path: '/tools/resume-builder',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsRepairRoute = ToolsRepairRouteImport.update({
   id: '/tools/repair',
   path: '/tools/repair',
@@ -158,6 +205,11 @@ const ToolsRemovePagesRoute = ToolsRemovePagesRouteImport.update({
 const ToolsRemoveExifRoute = ToolsRemoveExifRouteImport.update({
   id: '/tools/remove-exif',
   path: '/tools/remove-exif',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRegexTesterRoute = ToolsRegexTesterRouteImport.update({
+  id: '/tools/regex-tester',
+  path: '/tools/regex-tester',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsRedactRoute = ToolsRedactRouteImport.update({
@@ -175,6 +227,12 @@ const ToolsProtectRoute = ToolsProtectRouteImport.update({
   path: '/tools/protect',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsPercentageCalculatorRoute =
+  ToolsPercentageCalculatorRouteImport.update({
+    id: '/tools/percentage-calculator',
+    path: '/tools/percentage-calculator',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ToolsPdfToWordRoute = ToolsPdfToWordRouteImport.update({
   id: '/tools/pdf-to-word',
   path: '/tools/pdf-to-word',
@@ -230,6 +288,11 @@ const ToolsNUpRoute = ToolsNUpRouteImport.update({
   path: '/tools/n-up',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsMetaTagGeneratorRoute = ToolsMetaTagGeneratorRouteImport.update({
+  id: '/tools/meta-tag-generator',
+  path: '/tools/meta-tag-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsMergeRoute = ToolsMergeRouteImport.update({
   id: '/tools/merge',
   path: '/tools/merge',
@@ -245,6 +308,11 @@ const ToolsLoremIpsumRoute = ToolsLoremIpsumRouteImport.update({
   path: '/tools/lorem-ipsum',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsJwtDecoderRoute = ToolsJwtDecoderRouteImport.update({
+  id: '/tools/jwt-decoder',
+  path: '/tools/jwt-decoder',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsJsonToCsvRoute = ToolsJsonToCsvRouteImport.update({
   id: '/tools/json-to-csv',
   path: '/tools/json-to-csv',
@@ -258,6 +326,16 @@ const ToolsJsonFormatterRoute = ToolsJsonFormatterRouteImport.update({
 const ToolsJpgToPdfRoute = ToolsJpgToPdfRouteImport.update({
   id: '/tools/jpg-to-pdf',
   path: '/tools/jpg-to-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsInvoiceGeneratorRoute = ToolsInvoiceGeneratorRouteImport.update({
+  id: '/tools/invoice-generator',
+  path: '/tools/invoice-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsImageToBase64Route = ToolsImageToBase64RouteImport.update({
+  id: '/tools/image-to-base64',
+  path: '/tools/image-to-base64',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsImageRotateRoute = ToolsImageRotateRouteImport.update({
@@ -325,6 +403,11 @@ const ToolsExcelToCsvRoute = ToolsExcelToCsvRouteImport.update({
   path: '/tools/excel-to-csv',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsEmiCalculatorRoute = ToolsEmiCalculatorRouteImport.update({
+  id: '/tools/emi-calculator',
+  path: '/tools/emi-calculator',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsEditRoute = ToolsEditRouteImport.update({
   id: '/tools/edit',
   path: '/tools/edit',
@@ -355,14 +438,34 @@ const ToolsCompareRoute = ToolsCompareRouteImport.update({
   path: '/tools/compare',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsColorPickerRoute = ToolsColorPickerRouteImport.update({
+  id: '/tools/color-picker',
+  path: '/tools/color-picker',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsCaseConverterRoute = ToolsCaseConverterRouteImport.update({
   id: '/tools/case-converter',
   path: '/tools/case-converter',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsBmiCalculatorRoute = ToolsBmiCalculatorRouteImport.update({
+  id: '/tools/bmi-calculator',
+  path: '/tools/bmi-calculator',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsBase64Route = ToolsBase64RouteImport.update({
   id: '/tools/base64',
   path: '/tools/base64',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsAiSummarizerRoute = ToolsAiSummarizerRouteImport.update({
+  id: '/tools/ai-summarizer',
+  path: '/tools/ai-summarizer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsAgeCalculatorRoute = ToolsAgeCalculatorRouteImport.update({
+  id: '/tools/age-calculator',
+  path: '/tools/age-calculator',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
@@ -377,14 +480,19 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
+  '/tools/ai-summarizer': typeof ToolsAiSummarizerRoute
   '/tools/base64': typeof ToolsBase64Route
+  '/tools/bmi-calculator': typeof ToolsBmiCalculatorRoute
   '/tools/case-converter': typeof ToolsCaseConverterRoute
+  '/tools/color-picker': typeof ToolsColorPickerRoute
   '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
   '/tools/crop': typeof ToolsCropRoute
   '/tools/csv-to-excel': typeof ToolsCsvToExcelRoute
   '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/edit': typeof ToolsEditRoute
+  '/tools/emi-calculator': typeof ToolsEmiCalculatorRoute
   '/tools/excel-to-csv': typeof ToolsExcelToCsvRoute
   '/tools/excel-to-pdf': typeof ToolsExcelToPdfRoute
   '/tools/extract-pages': typeof ToolsExtractPagesRoute
@@ -398,12 +506,16 @@ export interface FileRoutesByFullPath {
   '/tools/image-grayscale': typeof ToolsImageGrayscaleRoute
   '/tools/image-resize': typeof ToolsImageResizeRoute
   '/tools/image-rotate': typeof ToolsImageRotateRoute
+  '/tools/image-to-base64': typeof ToolsImageToBase64Route
+  '/tools/invoice-generator': typeof ToolsInvoiceGeneratorRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-to-csv': typeof ToolsJsonToCsvRoute
+  '/tools/jwt-decoder': typeof ToolsJwtDecoderRoute
   '/tools/lorem-ipsum': typeof ToolsLoremIpsumRoute
   '/tools/markdown-to-pdf': typeof ToolsMarkdownToPdfRoute
   '/tools/merge': typeof ToolsMergeRoute
+  '/tools/meta-tag-generator': typeof ToolsMetaTagGeneratorRoute
   '/tools/n-up': typeof ToolsNUpRoute
   '/tools/ocr': typeof ToolsOcrRoute
   '/tools/organize': typeof ToolsOrganizeRoute
@@ -415,22 +527,30 @@ export interface FileRoutesByFullPath {
   '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
   '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
+  '/tools/percentage-calculator': typeof ToolsPercentageCalculatorRoute
   '/tools/protect': typeof ToolsProtectRoute
   '/tools/qr-generator': typeof ToolsQrGeneratorRoute
   '/tools/redact': typeof ToolsRedactRoute
+  '/tools/regex-tester': typeof ToolsRegexTesterRoute
   '/tools/remove-exif': typeof ToolsRemoveExifRoute
   '/tools/remove-pages': typeof ToolsRemovePagesRoute
   '/tools/repair': typeof ToolsRepairRoute
+  '/tools/resume-builder': typeof ToolsResumeBuilderRoute
   '/tools/rotate': typeof ToolsRotateRoute
   '/tools/scan-to-pdf': typeof ToolsScanToPdfRoute
   '/tools/sign': typeof ToolsSignRoute
   '/tools/split': typeof ToolsSplitRoute
   '/tools/text-to-pdf': typeof ToolsTextToPdfRoute
+  '/tools/text-to-speech': typeof ToolsTextToSpeechRoute
+  '/tools/timestamp-converter': typeof ToolsTimestampConverterRoute
+  '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
   '/tools/unlock': typeof ToolsUnlockRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
+  '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/word-counter': typeof ToolsWordCounterRoute
   '/tools/word-to-pdf': typeof ToolsWordToPdfRoute
+  '/tools/yt-thumbnail': typeof ToolsYtThumbnailRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRoutesByTo {
@@ -439,14 +559,19 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
+  '/tools/ai-summarizer': typeof ToolsAiSummarizerRoute
   '/tools/base64': typeof ToolsBase64Route
+  '/tools/bmi-calculator': typeof ToolsBmiCalculatorRoute
   '/tools/case-converter': typeof ToolsCaseConverterRoute
+  '/tools/color-picker': typeof ToolsColorPickerRoute
   '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
   '/tools/crop': typeof ToolsCropRoute
   '/tools/csv-to-excel': typeof ToolsCsvToExcelRoute
   '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/edit': typeof ToolsEditRoute
+  '/tools/emi-calculator': typeof ToolsEmiCalculatorRoute
   '/tools/excel-to-csv': typeof ToolsExcelToCsvRoute
   '/tools/excel-to-pdf': typeof ToolsExcelToPdfRoute
   '/tools/extract-pages': typeof ToolsExtractPagesRoute
@@ -460,12 +585,16 @@ export interface FileRoutesByTo {
   '/tools/image-grayscale': typeof ToolsImageGrayscaleRoute
   '/tools/image-resize': typeof ToolsImageResizeRoute
   '/tools/image-rotate': typeof ToolsImageRotateRoute
+  '/tools/image-to-base64': typeof ToolsImageToBase64Route
+  '/tools/invoice-generator': typeof ToolsInvoiceGeneratorRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-to-csv': typeof ToolsJsonToCsvRoute
+  '/tools/jwt-decoder': typeof ToolsJwtDecoderRoute
   '/tools/lorem-ipsum': typeof ToolsLoremIpsumRoute
   '/tools/markdown-to-pdf': typeof ToolsMarkdownToPdfRoute
   '/tools/merge': typeof ToolsMergeRoute
+  '/tools/meta-tag-generator': typeof ToolsMetaTagGeneratorRoute
   '/tools/n-up': typeof ToolsNUpRoute
   '/tools/ocr': typeof ToolsOcrRoute
   '/tools/organize': typeof ToolsOrganizeRoute
@@ -477,22 +606,30 @@ export interface FileRoutesByTo {
   '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
   '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
+  '/tools/percentage-calculator': typeof ToolsPercentageCalculatorRoute
   '/tools/protect': typeof ToolsProtectRoute
   '/tools/qr-generator': typeof ToolsQrGeneratorRoute
   '/tools/redact': typeof ToolsRedactRoute
+  '/tools/regex-tester': typeof ToolsRegexTesterRoute
   '/tools/remove-exif': typeof ToolsRemoveExifRoute
   '/tools/remove-pages': typeof ToolsRemovePagesRoute
   '/tools/repair': typeof ToolsRepairRoute
+  '/tools/resume-builder': typeof ToolsResumeBuilderRoute
   '/tools/rotate': typeof ToolsRotateRoute
   '/tools/scan-to-pdf': typeof ToolsScanToPdfRoute
   '/tools/sign': typeof ToolsSignRoute
   '/tools/split': typeof ToolsSplitRoute
   '/tools/text-to-pdf': typeof ToolsTextToPdfRoute
+  '/tools/text-to-speech': typeof ToolsTextToSpeechRoute
+  '/tools/timestamp-converter': typeof ToolsTimestampConverterRoute
+  '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
   '/tools/unlock': typeof ToolsUnlockRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
+  '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/word-counter': typeof ToolsWordCounterRoute
   '/tools/word-to-pdf': typeof ToolsWordToPdfRoute
+  '/tools/yt-thumbnail': typeof ToolsYtThumbnailRoute
   '/blog': typeof BlogIndexRoute
 }
 export interface FileRoutesById {
@@ -502,14 +639,19 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/tools/age-calculator': typeof ToolsAgeCalculatorRoute
+  '/tools/ai-summarizer': typeof ToolsAiSummarizerRoute
   '/tools/base64': typeof ToolsBase64Route
+  '/tools/bmi-calculator': typeof ToolsBmiCalculatorRoute
   '/tools/case-converter': typeof ToolsCaseConverterRoute
+  '/tools/color-picker': typeof ToolsColorPickerRoute
   '/tools/compare': typeof ToolsCompareRoute
   '/tools/compress': typeof ToolsCompressRoute
   '/tools/crop': typeof ToolsCropRoute
   '/tools/csv-to-excel': typeof ToolsCsvToExcelRoute
   '/tools/csv-to-json': typeof ToolsCsvToJsonRoute
   '/tools/edit': typeof ToolsEditRoute
+  '/tools/emi-calculator': typeof ToolsEmiCalculatorRoute
   '/tools/excel-to-csv': typeof ToolsExcelToCsvRoute
   '/tools/excel-to-pdf': typeof ToolsExcelToPdfRoute
   '/tools/extract-pages': typeof ToolsExtractPagesRoute
@@ -523,12 +665,16 @@ export interface FileRoutesById {
   '/tools/image-grayscale': typeof ToolsImageGrayscaleRoute
   '/tools/image-resize': typeof ToolsImageResizeRoute
   '/tools/image-rotate': typeof ToolsImageRotateRoute
+  '/tools/image-to-base64': typeof ToolsImageToBase64Route
+  '/tools/invoice-generator': typeof ToolsInvoiceGeneratorRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-to-csv': typeof ToolsJsonToCsvRoute
+  '/tools/jwt-decoder': typeof ToolsJwtDecoderRoute
   '/tools/lorem-ipsum': typeof ToolsLoremIpsumRoute
   '/tools/markdown-to-pdf': typeof ToolsMarkdownToPdfRoute
   '/tools/merge': typeof ToolsMergeRoute
+  '/tools/meta-tag-generator': typeof ToolsMetaTagGeneratorRoute
   '/tools/n-up': typeof ToolsNUpRoute
   '/tools/ocr': typeof ToolsOcrRoute
   '/tools/organize': typeof ToolsOrganizeRoute
@@ -540,22 +686,30 @@ export interface FileRoutesById {
   '/tools/pdf-to-pdfa': typeof ToolsPdfToPdfaRoute
   '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
+  '/tools/percentage-calculator': typeof ToolsPercentageCalculatorRoute
   '/tools/protect': typeof ToolsProtectRoute
   '/tools/qr-generator': typeof ToolsQrGeneratorRoute
   '/tools/redact': typeof ToolsRedactRoute
+  '/tools/regex-tester': typeof ToolsRegexTesterRoute
   '/tools/remove-exif': typeof ToolsRemoveExifRoute
   '/tools/remove-pages': typeof ToolsRemovePagesRoute
   '/tools/repair': typeof ToolsRepairRoute
+  '/tools/resume-builder': typeof ToolsResumeBuilderRoute
   '/tools/rotate': typeof ToolsRotateRoute
   '/tools/scan-to-pdf': typeof ToolsScanToPdfRoute
   '/tools/sign': typeof ToolsSignRoute
   '/tools/split': typeof ToolsSplitRoute
   '/tools/text-to-pdf': typeof ToolsTextToPdfRoute
+  '/tools/text-to-speech': typeof ToolsTextToSpeechRoute
+  '/tools/timestamp-converter': typeof ToolsTimestampConverterRoute
+  '/tools/tip-calculator': typeof ToolsTipCalculatorRoute
   '/tools/unlock': typeof ToolsUnlockRoute
   '/tools/url-encoder': typeof ToolsUrlEncoderRoute
+  '/tools/uuid-generator': typeof ToolsUuidGeneratorRoute
   '/tools/watermark': typeof ToolsWatermarkRoute
   '/tools/word-counter': typeof ToolsWordCounterRoute
   '/tools/word-to-pdf': typeof ToolsWordToPdfRoute
+  '/tools/yt-thumbnail': typeof ToolsYtThumbnailRoute
   '/blog/': typeof BlogIndexRoute
 }
 export interface FileRouteTypes {
@@ -566,14 +720,19 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
+    | '/tools/age-calculator'
+    | '/tools/ai-summarizer'
     | '/tools/base64'
+    | '/tools/bmi-calculator'
     | '/tools/case-converter'
+    | '/tools/color-picker'
     | '/tools/compare'
     | '/tools/compress'
     | '/tools/crop'
     | '/tools/csv-to-excel'
     | '/tools/csv-to-json'
     | '/tools/edit'
+    | '/tools/emi-calculator'
     | '/tools/excel-to-csv'
     | '/tools/excel-to-pdf'
     | '/tools/extract-pages'
@@ -587,12 +746,16 @@ export interface FileRouteTypes {
     | '/tools/image-grayscale'
     | '/tools/image-resize'
     | '/tools/image-rotate'
+    | '/tools/image-to-base64'
+    | '/tools/invoice-generator'
     | '/tools/jpg-to-pdf'
     | '/tools/json-formatter'
     | '/tools/json-to-csv'
+    | '/tools/jwt-decoder'
     | '/tools/lorem-ipsum'
     | '/tools/markdown-to-pdf'
     | '/tools/merge'
+    | '/tools/meta-tag-generator'
     | '/tools/n-up'
     | '/tools/ocr'
     | '/tools/organize'
@@ -604,22 +767,30 @@ export interface FileRouteTypes {
     | '/tools/pdf-to-pdfa'
     | '/tools/pdf-to-text'
     | '/tools/pdf-to-word'
+    | '/tools/percentage-calculator'
     | '/tools/protect'
     | '/tools/qr-generator'
     | '/tools/redact'
+    | '/tools/regex-tester'
     | '/tools/remove-exif'
     | '/tools/remove-pages'
     | '/tools/repair'
+    | '/tools/resume-builder'
     | '/tools/rotate'
     | '/tools/scan-to-pdf'
     | '/tools/sign'
     | '/tools/split'
     | '/tools/text-to-pdf'
+    | '/tools/text-to-speech'
+    | '/tools/timestamp-converter'
+    | '/tools/tip-calculator'
     | '/tools/unlock'
     | '/tools/url-encoder'
+    | '/tools/uuid-generator'
     | '/tools/watermark'
     | '/tools/word-counter'
     | '/tools/word-to-pdf'
+    | '/tools/yt-thumbnail'
     | '/blog/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -628,14 +799,19 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
+    | '/tools/age-calculator'
+    | '/tools/ai-summarizer'
     | '/tools/base64'
+    | '/tools/bmi-calculator'
     | '/tools/case-converter'
+    | '/tools/color-picker'
     | '/tools/compare'
     | '/tools/compress'
     | '/tools/crop'
     | '/tools/csv-to-excel'
     | '/tools/csv-to-json'
     | '/tools/edit'
+    | '/tools/emi-calculator'
     | '/tools/excel-to-csv'
     | '/tools/excel-to-pdf'
     | '/tools/extract-pages'
@@ -649,12 +825,16 @@ export interface FileRouteTypes {
     | '/tools/image-grayscale'
     | '/tools/image-resize'
     | '/tools/image-rotate'
+    | '/tools/image-to-base64'
+    | '/tools/invoice-generator'
     | '/tools/jpg-to-pdf'
     | '/tools/json-formatter'
     | '/tools/json-to-csv'
+    | '/tools/jwt-decoder'
     | '/tools/lorem-ipsum'
     | '/tools/markdown-to-pdf'
     | '/tools/merge'
+    | '/tools/meta-tag-generator'
     | '/tools/n-up'
     | '/tools/ocr'
     | '/tools/organize'
@@ -666,22 +846,30 @@ export interface FileRouteTypes {
     | '/tools/pdf-to-pdfa'
     | '/tools/pdf-to-text'
     | '/tools/pdf-to-word'
+    | '/tools/percentage-calculator'
     | '/tools/protect'
     | '/tools/qr-generator'
     | '/tools/redact'
+    | '/tools/regex-tester'
     | '/tools/remove-exif'
     | '/tools/remove-pages'
     | '/tools/repair'
+    | '/tools/resume-builder'
     | '/tools/rotate'
     | '/tools/scan-to-pdf'
     | '/tools/sign'
     | '/tools/split'
     | '/tools/text-to-pdf'
+    | '/tools/text-to-speech'
+    | '/tools/timestamp-converter'
+    | '/tools/tip-calculator'
     | '/tools/unlock'
     | '/tools/url-encoder'
+    | '/tools/uuid-generator'
     | '/tools/watermark'
     | '/tools/word-counter'
     | '/tools/word-to-pdf'
+    | '/tools/yt-thumbnail'
     | '/blog'
   id:
     | '__root__'
@@ -690,14 +878,19 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/blog/$slug'
+    | '/tools/age-calculator'
+    | '/tools/ai-summarizer'
     | '/tools/base64'
+    | '/tools/bmi-calculator'
     | '/tools/case-converter'
+    | '/tools/color-picker'
     | '/tools/compare'
     | '/tools/compress'
     | '/tools/crop'
     | '/tools/csv-to-excel'
     | '/tools/csv-to-json'
     | '/tools/edit'
+    | '/tools/emi-calculator'
     | '/tools/excel-to-csv'
     | '/tools/excel-to-pdf'
     | '/tools/extract-pages'
@@ -711,12 +904,16 @@ export interface FileRouteTypes {
     | '/tools/image-grayscale'
     | '/tools/image-resize'
     | '/tools/image-rotate'
+    | '/tools/image-to-base64'
+    | '/tools/invoice-generator'
     | '/tools/jpg-to-pdf'
     | '/tools/json-formatter'
     | '/tools/json-to-csv'
+    | '/tools/jwt-decoder'
     | '/tools/lorem-ipsum'
     | '/tools/markdown-to-pdf'
     | '/tools/merge'
+    | '/tools/meta-tag-generator'
     | '/tools/n-up'
     | '/tools/ocr'
     | '/tools/organize'
@@ -728,22 +925,30 @@ export interface FileRouteTypes {
     | '/tools/pdf-to-pdfa'
     | '/tools/pdf-to-text'
     | '/tools/pdf-to-word'
+    | '/tools/percentage-calculator'
     | '/tools/protect'
     | '/tools/qr-generator'
     | '/tools/redact'
+    | '/tools/regex-tester'
     | '/tools/remove-exif'
     | '/tools/remove-pages'
     | '/tools/repair'
+    | '/tools/resume-builder'
     | '/tools/rotate'
     | '/tools/scan-to-pdf'
     | '/tools/sign'
     | '/tools/split'
     | '/tools/text-to-pdf'
+    | '/tools/text-to-speech'
+    | '/tools/timestamp-converter'
+    | '/tools/tip-calculator'
     | '/tools/unlock'
     | '/tools/url-encoder'
+    | '/tools/uuid-generator'
     | '/tools/watermark'
     | '/tools/word-counter'
     | '/tools/word-to-pdf'
+    | '/tools/yt-thumbnail'
     | '/blog/'
   fileRoutesById: FileRoutesById
 }
@@ -753,14 +958,19 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
   BlogSlugRoute: typeof BlogSlugRoute
+  ToolsAgeCalculatorRoute: typeof ToolsAgeCalculatorRoute
+  ToolsAiSummarizerRoute: typeof ToolsAiSummarizerRoute
   ToolsBase64Route: typeof ToolsBase64Route
+  ToolsBmiCalculatorRoute: typeof ToolsBmiCalculatorRoute
   ToolsCaseConverterRoute: typeof ToolsCaseConverterRoute
+  ToolsColorPickerRoute: typeof ToolsColorPickerRoute
   ToolsCompareRoute: typeof ToolsCompareRoute
   ToolsCompressRoute: typeof ToolsCompressRoute
   ToolsCropRoute: typeof ToolsCropRoute
   ToolsCsvToExcelRoute: typeof ToolsCsvToExcelRoute
   ToolsCsvToJsonRoute: typeof ToolsCsvToJsonRoute
   ToolsEditRoute: typeof ToolsEditRoute
+  ToolsEmiCalculatorRoute: typeof ToolsEmiCalculatorRoute
   ToolsExcelToCsvRoute: typeof ToolsExcelToCsvRoute
   ToolsExcelToPdfRoute: typeof ToolsExcelToPdfRoute
   ToolsExtractPagesRoute: typeof ToolsExtractPagesRoute
@@ -774,12 +984,16 @@ export interface RootRouteChildren {
   ToolsImageGrayscaleRoute: typeof ToolsImageGrayscaleRoute
   ToolsImageResizeRoute: typeof ToolsImageResizeRoute
   ToolsImageRotateRoute: typeof ToolsImageRotateRoute
+  ToolsImageToBase64Route: typeof ToolsImageToBase64Route
+  ToolsInvoiceGeneratorRoute: typeof ToolsInvoiceGeneratorRoute
   ToolsJpgToPdfRoute: typeof ToolsJpgToPdfRoute
   ToolsJsonFormatterRoute: typeof ToolsJsonFormatterRoute
   ToolsJsonToCsvRoute: typeof ToolsJsonToCsvRoute
+  ToolsJwtDecoderRoute: typeof ToolsJwtDecoderRoute
   ToolsLoremIpsumRoute: typeof ToolsLoremIpsumRoute
   ToolsMarkdownToPdfRoute: typeof ToolsMarkdownToPdfRoute
   ToolsMergeRoute: typeof ToolsMergeRoute
+  ToolsMetaTagGeneratorRoute: typeof ToolsMetaTagGeneratorRoute
   ToolsNUpRoute: typeof ToolsNUpRoute
   ToolsOcrRoute: typeof ToolsOcrRoute
   ToolsOrganizeRoute: typeof ToolsOrganizeRoute
@@ -791,22 +1005,30 @@ export interface RootRouteChildren {
   ToolsPdfToPdfaRoute: typeof ToolsPdfToPdfaRoute
   ToolsPdfToTextRoute: typeof ToolsPdfToTextRoute
   ToolsPdfToWordRoute: typeof ToolsPdfToWordRoute
+  ToolsPercentageCalculatorRoute: typeof ToolsPercentageCalculatorRoute
   ToolsProtectRoute: typeof ToolsProtectRoute
   ToolsQrGeneratorRoute: typeof ToolsQrGeneratorRoute
   ToolsRedactRoute: typeof ToolsRedactRoute
+  ToolsRegexTesterRoute: typeof ToolsRegexTesterRoute
   ToolsRemoveExifRoute: typeof ToolsRemoveExifRoute
   ToolsRemovePagesRoute: typeof ToolsRemovePagesRoute
   ToolsRepairRoute: typeof ToolsRepairRoute
+  ToolsResumeBuilderRoute: typeof ToolsResumeBuilderRoute
   ToolsRotateRoute: typeof ToolsRotateRoute
   ToolsScanToPdfRoute: typeof ToolsScanToPdfRoute
   ToolsSignRoute: typeof ToolsSignRoute
   ToolsSplitRoute: typeof ToolsSplitRoute
   ToolsTextToPdfRoute: typeof ToolsTextToPdfRoute
+  ToolsTextToSpeechRoute: typeof ToolsTextToSpeechRoute
+  ToolsTimestampConverterRoute: typeof ToolsTimestampConverterRoute
+  ToolsTipCalculatorRoute: typeof ToolsTipCalculatorRoute
   ToolsUnlockRoute: typeof ToolsUnlockRoute
   ToolsUrlEncoderRoute: typeof ToolsUrlEncoderRoute
+  ToolsUuidGeneratorRoute: typeof ToolsUuidGeneratorRoute
   ToolsWatermarkRoute: typeof ToolsWatermarkRoute
   ToolsWordCounterRoute: typeof ToolsWordCounterRoute
   ToolsWordToPdfRoute: typeof ToolsWordToPdfRoute
+  ToolsYtThumbnailRoute: typeof ToolsYtThumbnailRoute
   BlogIndexRoute: typeof BlogIndexRoute
 }
 
@@ -847,6 +1069,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/yt-thumbnail': {
+      id: '/tools/yt-thumbnail'
+      path: '/tools/yt-thumbnail'
+      fullPath: '/tools/yt-thumbnail'
+      preLoaderRoute: typeof ToolsYtThumbnailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/word-to-pdf': {
       id: '/tools/word-to-pdf'
       path: '/tools/word-to-pdf'
@@ -868,6 +1097,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsWatermarkRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/uuid-generator': {
+      id: '/tools/uuid-generator'
+      path: '/tools/uuid-generator'
+      fullPath: '/tools/uuid-generator'
+      preLoaderRoute: typeof ToolsUuidGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/url-encoder': {
       id: '/tools/url-encoder'
       path: '/tools/url-encoder'
@@ -880,6 +1116,27 @@ declare module '@tanstack/react-router' {
       path: '/tools/unlock'
       fullPath: '/tools/unlock'
       preLoaderRoute: typeof ToolsUnlockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/tip-calculator': {
+      id: '/tools/tip-calculator'
+      path: '/tools/tip-calculator'
+      fullPath: '/tools/tip-calculator'
+      preLoaderRoute: typeof ToolsTipCalculatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/timestamp-converter': {
+      id: '/tools/timestamp-converter'
+      path: '/tools/timestamp-converter'
+      fullPath: '/tools/timestamp-converter'
+      preLoaderRoute: typeof ToolsTimestampConverterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/text-to-speech': {
+      id: '/tools/text-to-speech'
+      path: '/tools/text-to-speech'
+      fullPath: '/tools/text-to-speech'
+      preLoaderRoute: typeof ToolsTextToSpeechRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/text-to-pdf': {
@@ -917,6 +1174,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsRotateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/resume-builder': {
+      id: '/tools/resume-builder'
+      path: '/tools/resume-builder'
+      fullPath: '/tools/resume-builder'
+      preLoaderRoute: typeof ToolsResumeBuilderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/repair': {
       id: '/tools/repair'
       path: '/tools/repair'
@@ -938,6 +1202,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsRemoveExifRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/regex-tester': {
+      id: '/tools/regex-tester'
+      path: '/tools/regex-tester'
+      fullPath: '/tools/regex-tester'
+      preLoaderRoute: typeof ToolsRegexTesterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/redact': {
       id: '/tools/redact'
       path: '/tools/redact'
@@ -957,6 +1228,13 @@ declare module '@tanstack/react-router' {
       path: '/tools/protect'
       fullPath: '/tools/protect'
       preLoaderRoute: typeof ToolsProtectRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/percentage-calculator': {
+      id: '/tools/percentage-calculator'
+      path: '/tools/percentage-calculator'
+      fullPath: '/tools/percentage-calculator'
+      preLoaderRoute: typeof ToolsPercentageCalculatorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/pdf-to-word': {
@@ -1036,6 +1314,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsNUpRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/meta-tag-generator': {
+      id: '/tools/meta-tag-generator'
+      path: '/tools/meta-tag-generator'
+      fullPath: '/tools/meta-tag-generator'
+      preLoaderRoute: typeof ToolsMetaTagGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/merge': {
       id: '/tools/merge'
       path: '/tools/merge'
@@ -1057,6 +1342,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsLoremIpsumRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/jwt-decoder': {
+      id: '/tools/jwt-decoder'
+      path: '/tools/jwt-decoder'
+      fullPath: '/tools/jwt-decoder'
+      preLoaderRoute: typeof ToolsJwtDecoderRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/json-to-csv': {
       id: '/tools/json-to-csv'
       path: '/tools/json-to-csv'
@@ -1076,6 +1368,20 @@ declare module '@tanstack/react-router' {
       path: '/tools/jpg-to-pdf'
       fullPath: '/tools/jpg-to-pdf'
       preLoaderRoute: typeof ToolsJpgToPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/invoice-generator': {
+      id: '/tools/invoice-generator'
+      path: '/tools/invoice-generator'
+      fullPath: '/tools/invoice-generator'
+      preLoaderRoute: typeof ToolsInvoiceGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/image-to-base64': {
+      id: '/tools/image-to-base64'
+      path: '/tools/image-to-base64'
+      fullPath: '/tools/image-to-base64'
+      preLoaderRoute: typeof ToolsImageToBase64RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/image-rotate': {
@@ -1169,6 +1475,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsExcelToCsvRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/emi-calculator': {
+      id: '/tools/emi-calculator'
+      path: '/tools/emi-calculator'
+      fullPath: '/tools/emi-calculator'
+      preLoaderRoute: typeof ToolsEmiCalculatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/edit': {
       id: '/tools/edit'
       path: '/tools/edit'
@@ -1211,6 +1524,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsCompareRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/color-picker': {
+      id: '/tools/color-picker'
+      path: '/tools/color-picker'
+      fullPath: '/tools/color-picker'
+      preLoaderRoute: typeof ToolsColorPickerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/case-converter': {
       id: '/tools/case-converter'
       path: '/tools/case-converter'
@@ -1218,11 +1538,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsCaseConverterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/bmi-calculator': {
+      id: '/tools/bmi-calculator'
+      path: '/tools/bmi-calculator'
+      fullPath: '/tools/bmi-calculator'
+      preLoaderRoute: typeof ToolsBmiCalculatorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/base64': {
       id: '/tools/base64'
       path: '/tools/base64'
       fullPath: '/tools/base64'
       preLoaderRoute: typeof ToolsBase64RouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/ai-summarizer': {
+      id: '/tools/ai-summarizer'
+      path: '/tools/ai-summarizer'
+      fullPath: '/tools/ai-summarizer'
+      preLoaderRoute: typeof ToolsAiSummarizerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/age-calculator': {
+      id: '/tools/age-calculator'
+      path: '/tools/age-calculator'
+      fullPath: '/tools/age-calculator'
+      preLoaderRoute: typeof ToolsAgeCalculatorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/$slug': {
@@ -1241,14 +1582,19 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
   BlogSlugRoute: BlogSlugRoute,
+  ToolsAgeCalculatorRoute: ToolsAgeCalculatorRoute,
+  ToolsAiSummarizerRoute: ToolsAiSummarizerRoute,
   ToolsBase64Route: ToolsBase64Route,
+  ToolsBmiCalculatorRoute: ToolsBmiCalculatorRoute,
   ToolsCaseConverterRoute: ToolsCaseConverterRoute,
+  ToolsColorPickerRoute: ToolsColorPickerRoute,
   ToolsCompareRoute: ToolsCompareRoute,
   ToolsCompressRoute: ToolsCompressRoute,
   ToolsCropRoute: ToolsCropRoute,
   ToolsCsvToExcelRoute: ToolsCsvToExcelRoute,
   ToolsCsvToJsonRoute: ToolsCsvToJsonRoute,
   ToolsEditRoute: ToolsEditRoute,
+  ToolsEmiCalculatorRoute: ToolsEmiCalculatorRoute,
   ToolsExcelToCsvRoute: ToolsExcelToCsvRoute,
   ToolsExcelToPdfRoute: ToolsExcelToPdfRoute,
   ToolsExtractPagesRoute: ToolsExtractPagesRoute,
@@ -1262,12 +1608,16 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsImageGrayscaleRoute: ToolsImageGrayscaleRoute,
   ToolsImageResizeRoute: ToolsImageResizeRoute,
   ToolsImageRotateRoute: ToolsImageRotateRoute,
+  ToolsImageToBase64Route: ToolsImageToBase64Route,
+  ToolsInvoiceGeneratorRoute: ToolsInvoiceGeneratorRoute,
   ToolsJpgToPdfRoute: ToolsJpgToPdfRoute,
   ToolsJsonFormatterRoute: ToolsJsonFormatterRoute,
   ToolsJsonToCsvRoute: ToolsJsonToCsvRoute,
+  ToolsJwtDecoderRoute: ToolsJwtDecoderRoute,
   ToolsLoremIpsumRoute: ToolsLoremIpsumRoute,
   ToolsMarkdownToPdfRoute: ToolsMarkdownToPdfRoute,
   ToolsMergeRoute: ToolsMergeRoute,
+  ToolsMetaTagGeneratorRoute: ToolsMetaTagGeneratorRoute,
   ToolsNUpRoute: ToolsNUpRoute,
   ToolsOcrRoute: ToolsOcrRoute,
   ToolsOrganizeRoute: ToolsOrganizeRoute,
@@ -1279,22 +1629,30 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsPdfToPdfaRoute: ToolsPdfToPdfaRoute,
   ToolsPdfToTextRoute: ToolsPdfToTextRoute,
   ToolsPdfToWordRoute: ToolsPdfToWordRoute,
+  ToolsPercentageCalculatorRoute: ToolsPercentageCalculatorRoute,
   ToolsProtectRoute: ToolsProtectRoute,
   ToolsQrGeneratorRoute: ToolsQrGeneratorRoute,
   ToolsRedactRoute: ToolsRedactRoute,
+  ToolsRegexTesterRoute: ToolsRegexTesterRoute,
   ToolsRemoveExifRoute: ToolsRemoveExifRoute,
   ToolsRemovePagesRoute: ToolsRemovePagesRoute,
   ToolsRepairRoute: ToolsRepairRoute,
+  ToolsResumeBuilderRoute: ToolsResumeBuilderRoute,
   ToolsRotateRoute: ToolsRotateRoute,
   ToolsScanToPdfRoute: ToolsScanToPdfRoute,
   ToolsSignRoute: ToolsSignRoute,
   ToolsSplitRoute: ToolsSplitRoute,
   ToolsTextToPdfRoute: ToolsTextToPdfRoute,
+  ToolsTextToSpeechRoute: ToolsTextToSpeechRoute,
+  ToolsTimestampConverterRoute: ToolsTimestampConverterRoute,
+  ToolsTipCalculatorRoute: ToolsTipCalculatorRoute,
   ToolsUnlockRoute: ToolsUnlockRoute,
   ToolsUrlEncoderRoute: ToolsUrlEncoderRoute,
+  ToolsUuidGeneratorRoute: ToolsUuidGeneratorRoute,
   ToolsWatermarkRoute: ToolsWatermarkRoute,
   ToolsWordCounterRoute: ToolsWordCounterRoute,
   ToolsWordToPdfRoute: ToolsWordToPdfRoute,
+  ToolsYtThumbnailRoute: ToolsYtThumbnailRoute,
   BlogIndexRoute: BlogIndexRoute,
 }
 export const routeTree = rootRouteImport
