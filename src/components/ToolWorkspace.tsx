@@ -301,6 +301,33 @@ export function ToolWorkspace({
                     transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
                   />
                 </div>
+
+                {multi && fileProgress.length > 1 && (
+                  <ul className="mt-4 space-y-2.5">
+                    {files.map((f, i) => {
+                      const fp = fileProgress[i] ?? { phase: "Queued", pct: 0 };
+                      const done = fp.phase.toLowerCase() === "done" || fp.pct >= 100;
+                      return (
+                        <li key={f.name + i} className="text-xs">
+                          <div className="mb-1 flex items-center justify-between gap-3">
+                            <span className="truncate font-medium text-foreground">{f.name}</span>
+                            <span className={`tabular-nums ${done ? "text-success" : "text-muted-foreground"}`}>
+                              {done ? "Done" : fp.phase}
+                              {!done && fp.pct > 0 ? ` · ${Math.round(fp.pct)}%` : ""}
+                            </span>
+                          </div>
+                          <div className="h-1 w-full overflow-hidden rounded-full bg-muted">
+                            <motion.div
+                              className={`h-full rounded-full ${done ? "bg-success" : "bg-primary"}`}
+                              animate={{ width: `${done ? 100 : Math.max(4, fp.pct)}%` }}
+                              transition={{ duration: 0.3 }}
+                            />
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
