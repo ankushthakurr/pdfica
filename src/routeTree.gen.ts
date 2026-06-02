@@ -58,6 +58,7 @@ import { Route as ToolsJsonToCsvRouteImport } from './routes/tools.json-to-csv'
 import { Route as ToolsJsonFormatterRouteImport } from './routes/tools.json-formatter'
 import { Route as ToolsJpgToPdfRouteImport } from './routes/tools.jpg-to-pdf'
 import { Route as ToolsInvoiceGeneratorRouteImport } from './routes/tools.invoice-generator'
+import { Route as ToolsImageToPdfRouteImport } from './routes/tools.image-to-pdf'
 import { Route as ToolsImageToBase64RouteImport } from './routes/tools.image-to-base64'
 import { Route as ToolsImageRotateRouteImport } from './routes/tools.image-rotate'
 import { Route as ToolsImageResizeRouteImport } from './routes/tools.image-resize'
@@ -333,6 +334,11 @@ const ToolsInvoiceGeneratorRoute = ToolsInvoiceGeneratorRouteImport.update({
   path: '/tools/invoice-generator',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsImageToPdfRoute = ToolsImageToPdfRouteImport.update({
+  id: '/tools/image-to-pdf',
+  path: '/tools/image-to-pdf',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsImageToBase64Route = ToolsImageToBase64RouteImport.update({
   id: '/tools/image-to-base64',
   path: '/tools/image-to-base64',
@@ -507,6 +513,7 @@ export interface FileRoutesByFullPath {
   '/tools/image-resize': typeof ToolsImageResizeRoute
   '/tools/image-rotate': typeof ToolsImageRotateRoute
   '/tools/image-to-base64': typeof ToolsImageToBase64Route
+  '/tools/image-to-pdf': typeof ToolsImageToPdfRoute
   '/tools/invoice-generator': typeof ToolsInvoiceGeneratorRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
@@ -586,6 +593,7 @@ export interface FileRoutesByTo {
   '/tools/image-resize': typeof ToolsImageResizeRoute
   '/tools/image-rotate': typeof ToolsImageRotateRoute
   '/tools/image-to-base64': typeof ToolsImageToBase64Route
+  '/tools/image-to-pdf': typeof ToolsImageToPdfRoute
   '/tools/invoice-generator': typeof ToolsInvoiceGeneratorRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
@@ -666,6 +674,7 @@ export interface FileRoutesById {
   '/tools/image-resize': typeof ToolsImageResizeRoute
   '/tools/image-rotate': typeof ToolsImageRotateRoute
   '/tools/image-to-base64': typeof ToolsImageToBase64Route
+  '/tools/image-to-pdf': typeof ToolsImageToPdfRoute
   '/tools/invoice-generator': typeof ToolsInvoiceGeneratorRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
@@ -747,6 +756,7 @@ export interface FileRouteTypes {
     | '/tools/image-resize'
     | '/tools/image-rotate'
     | '/tools/image-to-base64'
+    | '/tools/image-to-pdf'
     | '/tools/invoice-generator'
     | '/tools/jpg-to-pdf'
     | '/tools/json-formatter'
@@ -826,6 +836,7 @@ export interface FileRouteTypes {
     | '/tools/image-resize'
     | '/tools/image-rotate'
     | '/tools/image-to-base64'
+    | '/tools/image-to-pdf'
     | '/tools/invoice-generator'
     | '/tools/jpg-to-pdf'
     | '/tools/json-formatter'
@@ -905,6 +916,7 @@ export interface FileRouteTypes {
     | '/tools/image-resize'
     | '/tools/image-rotate'
     | '/tools/image-to-base64'
+    | '/tools/image-to-pdf'
     | '/tools/invoice-generator'
     | '/tools/jpg-to-pdf'
     | '/tools/json-formatter'
@@ -985,6 +997,7 @@ export interface RootRouteChildren {
   ToolsImageResizeRoute: typeof ToolsImageResizeRoute
   ToolsImageRotateRoute: typeof ToolsImageRotateRoute
   ToolsImageToBase64Route: typeof ToolsImageToBase64Route
+  ToolsImageToPdfRoute: typeof ToolsImageToPdfRoute
   ToolsInvoiceGeneratorRoute: typeof ToolsInvoiceGeneratorRoute
   ToolsJpgToPdfRoute: typeof ToolsJpgToPdfRoute
   ToolsJsonFormatterRoute: typeof ToolsJsonFormatterRoute
@@ -1377,6 +1390,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsInvoiceGeneratorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/image-to-pdf': {
+      id: '/tools/image-to-pdf'
+      path: '/tools/image-to-pdf'
+      fullPath: '/tools/image-to-pdf'
+      preLoaderRoute: typeof ToolsImageToPdfRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/image-to-base64': {
       id: '/tools/image-to-base64'
       path: '/tools/image-to-base64'
@@ -1609,6 +1629,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsImageResizeRoute: ToolsImageResizeRoute,
   ToolsImageRotateRoute: ToolsImageRotateRoute,
   ToolsImageToBase64Route: ToolsImageToBase64Route,
+  ToolsImageToPdfRoute: ToolsImageToPdfRoute,
   ToolsInvoiceGeneratorRoute: ToolsInvoiceGeneratorRoute,
   ToolsJpgToPdfRoute: ToolsJpgToPdfRoute,
   ToolsJsonFormatterRoute: ToolsJsonFormatterRoute,
