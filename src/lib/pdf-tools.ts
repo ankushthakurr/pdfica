@@ -1,6 +1,6 @@
 import { PDFDocument, degrees, rgb, StandardFonts } from "pdf-lib";
 import JSZip from "jszip";
-import { pdfjsLib } from "./pdfjs";
+import { loadPdfjs } from "./pdfjs";
 import { Document, Packer, Paragraph, TextRun } from "docx";
 import mammoth from "mammoth";
 import { jsPDF } from "jspdf";
@@ -114,7 +114,7 @@ export async function renderPdfPageJpg(
 
 export async function openPdf(file: File) {
   const data = new Uint8Array(await readAB(file));
-  return await pdfjsLib.getDocument({ data }).promise;
+  return await (await loadPdfjs()).getDocument({ data }).promise;
 }
 
 // Render all pages with controlled concurrency + progress callback.
@@ -189,7 +189,7 @@ export async function imagesToPdf(
 // ----- PDF → WORD -----
 export async function pdfToWord(file: File): Promise<Blob> {
   const data = new Uint8Array(await readAB(file));
-  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  const pdf = await (await loadPdfjs()).getDocument({ data }).promise;
   const paragraphs: Paragraph[] = [];
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
@@ -290,7 +290,7 @@ export async function organizePdf(file: File, ops: OrganizeOp): Promise<Blob> {
 // ----- THUMBNAILS (parallelized) -----
 export async function renderPageThumbs(file: File, maxW = 180): Promise<string[]> {
   const data = new Uint8Array(await readAB(file));
-  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  const pdf = await (await loadPdfjs()).getDocument({ data }).promise;
   const total = pdf.numPages;
   const out: string[] = new Array(total);
   const concurrency = Math.min(4, total);
@@ -573,7 +573,7 @@ export async function excelToPdf(file: File): Promise<Blob> {
 export async function pdfToExcel(file: File): Promise<Blob> {
   const XLSX = await import("xlsx");
   const data = new Uint8Array(await readAB(file));
-  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  const pdf = await (await loadPdfjs()).getDocument({ data }).promise;
   const wb = XLSX.utils.book_new();
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
@@ -602,7 +602,7 @@ export async function ocrPdfToText(
 ): Promise<Blob> {
   const Tesseract = (await import("tesseract.js")).default;
   const data = new Uint8Array(await readAB(file));
-  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  const pdf = await (await loadPdfjs()).getDocument({ data }).promise;
   let combined = "";
   for (let i = 1; i <= pdf.numPages; i++) {
     onProgress?.(((i - 1) / pdf.numPages) * 100, `OCR page ${i} of ${pdf.numPages}…`);
@@ -647,7 +647,7 @@ export async function pdfToPdfA(file: File): Promise<Blob> {
 // ----- COMPARE (text diff) -----
 async function extractAllText(file: File): Promise<string> {
   const data = new Uint8Array(await readAB(file));
-  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  const pdf = await (await loadPdfjs()).getDocument({ data }).promise;
   let out = "";
   for (let i = 1; i <= pdf.numPages; i++) {
     const page = await pdf.getPage(i);
