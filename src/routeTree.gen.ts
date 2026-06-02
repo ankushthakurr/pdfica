@@ -37,6 +37,7 @@ import { Route as ToolsRegexTesterRouteImport } from './routes/tools.regex-teste
 import { Route as ToolsRedactRouteImport } from './routes/tools.redact'
 import { Route as ToolsQrGeneratorRouteImport } from './routes/tools.qr-generator'
 import { Route as ToolsProtectRouteImport } from './routes/tools.protect'
+import { Route as ToolsPngToJpgRouteImport } from './routes/tools.png-to-jpg'
 import { Route as ToolsPercentageCalculatorRouteImport } from './routes/tools.percentage-calculator'
 import { Route as ToolsPdfToWordRouteImport } from './routes/tools.pdf-to-word'
 import { Route as ToolsPdfToTextRouteImport } from './routes/tools.pdf-to-text'
@@ -56,6 +57,7 @@ import { Route as ToolsLoremIpsumRouteImport } from './routes/tools.lorem-ipsum'
 import { Route as ToolsJwtDecoderRouteImport } from './routes/tools.jwt-decoder'
 import { Route as ToolsJsonToCsvRouteImport } from './routes/tools.json-to-csv'
 import { Route as ToolsJsonFormatterRouteImport } from './routes/tools.json-formatter'
+import { Route as ToolsJpgToPngRouteImport } from './routes/tools.jpg-to-png'
 import { Route as ToolsJpgToPdfRouteImport } from './routes/tools.jpg-to-pdf'
 import { Route as ToolsInvoiceGeneratorRouteImport } from './routes/tools.invoice-generator'
 import { Route as ToolsImageToPdfRouteImport } from './routes/tools.image-to-pdf'
@@ -228,6 +230,11 @@ const ToolsProtectRoute = ToolsProtectRouteImport.update({
   path: '/tools/protect',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsPngToJpgRoute = ToolsPngToJpgRouteImport.update({
+  id: '/tools/png-to-jpg',
+  path: '/tools/png-to-jpg',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToolsPercentageCalculatorRoute =
   ToolsPercentageCalculatorRouteImport.update({
     id: '/tools/percentage-calculator',
@@ -322,6 +329,11 @@ const ToolsJsonToCsvRoute = ToolsJsonToCsvRouteImport.update({
 const ToolsJsonFormatterRoute = ToolsJsonFormatterRouteImport.update({
   id: '/tools/json-formatter',
   path: '/tools/json-formatter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsJpgToPngRoute = ToolsJpgToPngRouteImport.update({
+  id: '/tools/jpg-to-png',
+  path: '/tools/jpg-to-png',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToolsJpgToPdfRoute = ToolsJpgToPdfRouteImport.update({
@@ -516,6 +528,7 @@ export interface FileRoutesByFullPath {
   '/tools/image-to-pdf': typeof ToolsImageToPdfRoute
   '/tools/invoice-generator': typeof ToolsInvoiceGeneratorRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
+  '/tools/jpg-to-png': typeof ToolsJpgToPngRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-to-csv': typeof ToolsJsonToCsvRoute
   '/tools/jwt-decoder': typeof ToolsJwtDecoderRoute
@@ -535,6 +548,7 @@ export interface FileRoutesByFullPath {
   '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/percentage-calculator': typeof ToolsPercentageCalculatorRoute
+  '/tools/png-to-jpg': typeof ToolsPngToJpgRoute
   '/tools/protect': typeof ToolsProtectRoute
   '/tools/qr-generator': typeof ToolsQrGeneratorRoute
   '/tools/redact': typeof ToolsRedactRoute
@@ -596,6 +610,7 @@ export interface FileRoutesByTo {
   '/tools/image-to-pdf': typeof ToolsImageToPdfRoute
   '/tools/invoice-generator': typeof ToolsInvoiceGeneratorRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
+  '/tools/jpg-to-png': typeof ToolsJpgToPngRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-to-csv': typeof ToolsJsonToCsvRoute
   '/tools/jwt-decoder': typeof ToolsJwtDecoderRoute
@@ -615,6 +630,7 @@ export interface FileRoutesByTo {
   '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/percentage-calculator': typeof ToolsPercentageCalculatorRoute
+  '/tools/png-to-jpg': typeof ToolsPngToJpgRoute
   '/tools/protect': typeof ToolsProtectRoute
   '/tools/qr-generator': typeof ToolsQrGeneratorRoute
   '/tools/redact': typeof ToolsRedactRoute
@@ -677,6 +693,7 @@ export interface FileRoutesById {
   '/tools/image-to-pdf': typeof ToolsImageToPdfRoute
   '/tools/invoice-generator': typeof ToolsInvoiceGeneratorRoute
   '/tools/jpg-to-pdf': typeof ToolsJpgToPdfRoute
+  '/tools/jpg-to-png': typeof ToolsJpgToPngRoute
   '/tools/json-formatter': typeof ToolsJsonFormatterRoute
   '/tools/json-to-csv': typeof ToolsJsonToCsvRoute
   '/tools/jwt-decoder': typeof ToolsJwtDecoderRoute
@@ -696,6 +713,7 @@ export interface FileRoutesById {
   '/tools/pdf-to-text': typeof ToolsPdfToTextRoute
   '/tools/pdf-to-word': typeof ToolsPdfToWordRoute
   '/tools/percentage-calculator': typeof ToolsPercentageCalculatorRoute
+  '/tools/png-to-jpg': typeof ToolsPngToJpgRoute
   '/tools/protect': typeof ToolsProtectRoute
   '/tools/qr-generator': typeof ToolsQrGeneratorRoute
   '/tools/redact': typeof ToolsRedactRoute
@@ -759,6 +777,7 @@ export interface FileRouteTypes {
     | '/tools/image-to-pdf'
     | '/tools/invoice-generator'
     | '/tools/jpg-to-pdf'
+    | '/tools/jpg-to-png'
     | '/tools/json-formatter'
     | '/tools/json-to-csv'
     | '/tools/jwt-decoder'
@@ -778,6 +797,7 @@ export interface FileRouteTypes {
     | '/tools/pdf-to-text'
     | '/tools/pdf-to-word'
     | '/tools/percentage-calculator'
+    | '/tools/png-to-jpg'
     | '/tools/protect'
     | '/tools/qr-generator'
     | '/tools/redact'
@@ -839,6 +859,7 @@ export interface FileRouteTypes {
     | '/tools/image-to-pdf'
     | '/tools/invoice-generator'
     | '/tools/jpg-to-pdf'
+    | '/tools/jpg-to-png'
     | '/tools/json-formatter'
     | '/tools/json-to-csv'
     | '/tools/jwt-decoder'
@@ -858,6 +879,7 @@ export interface FileRouteTypes {
     | '/tools/pdf-to-text'
     | '/tools/pdf-to-word'
     | '/tools/percentage-calculator'
+    | '/tools/png-to-jpg'
     | '/tools/protect'
     | '/tools/qr-generator'
     | '/tools/redact'
@@ -919,6 +941,7 @@ export interface FileRouteTypes {
     | '/tools/image-to-pdf'
     | '/tools/invoice-generator'
     | '/tools/jpg-to-pdf'
+    | '/tools/jpg-to-png'
     | '/tools/json-formatter'
     | '/tools/json-to-csv'
     | '/tools/jwt-decoder'
@@ -938,6 +961,7 @@ export interface FileRouteTypes {
     | '/tools/pdf-to-text'
     | '/tools/pdf-to-word'
     | '/tools/percentage-calculator'
+    | '/tools/png-to-jpg'
     | '/tools/protect'
     | '/tools/qr-generator'
     | '/tools/redact'
@@ -1000,6 +1024,7 @@ export interface RootRouteChildren {
   ToolsImageToPdfRoute: typeof ToolsImageToPdfRoute
   ToolsInvoiceGeneratorRoute: typeof ToolsInvoiceGeneratorRoute
   ToolsJpgToPdfRoute: typeof ToolsJpgToPdfRoute
+  ToolsJpgToPngRoute: typeof ToolsJpgToPngRoute
   ToolsJsonFormatterRoute: typeof ToolsJsonFormatterRoute
   ToolsJsonToCsvRoute: typeof ToolsJsonToCsvRoute
   ToolsJwtDecoderRoute: typeof ToolsJwtDecoderRoute
@@ -1019,6 +1044,7 @@ export interface RootRouteChildren {
   ToolsPdfToTextRoute: typeof ToolsPdfToTextRoute
   ToolsPdfToWordRoute: typeof ToolsPdfToWordRoute
   ToolsPercentageCalculatorRoute: typeof ToolsPercentageCalculatorRoute
+  ToolsPngToJpgRoute: typeof ToolsPngToJpgRoute
   ToolsProtectRoute: typeof ToolsProtectRoute
   ToolsQrGeneratorRoute: typeof ToolsQrGeneratorRoute
   ToolsRedactRoute: typeof ToolsRedactRoute
@@ -1243,6 +1269,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToolsProtectRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools/png-to-jpg': {
+      id: '/tools/png-to-jpg'
+      path: '/tools/png-to-jpg'
+      fullPath: '/tools/png-to-jpg'
+      preLoaderRoute: typeof ToolsPngToJpgRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tools/percentage-calculator': {
       id: '/tools/percentage-calculator'
       path: '/tools/percentage-calculator'
@@ -1374,6 +1407,13 @@ declare module '@tanstack/react-router' {
       path: '/tools/json-formatter'
       fullPath: '/tools/json-formatter'
       preLoaderRoute: typeof ToolsJsonFormatterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools/jpg-to-png': {
+      id: '/tools/jpg-to-png'
+      path: '/tools/jpg-to-png'
+      fullPath: '/tools/jpg-to-png'
+      preLoaderRoute: typeof ToolsJpgToPngRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tools/jpg-to-pdf': {
@@ -1632,6 +1672,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsImageToPdfRoute: ToolsImageToPdfRoute,
   ToolsInvoiceGeneratorRoute: ToolsInvoiceGeneratorRoute,
   ToolsJpgToPdfRoute: ToolsJpgToPdfRoute,
+  ToolsJpgToPngRoute: ToolsJpgToPngRoute,
   ToolsJsonFormatterRoute: ToolsJsonFormatterRoute,
   ToolsJsonToCsvRoute: ToolsJsonToCsvRoute,
   ToolsJwtDecoderRoute: ToolsJwtDecoderRoute,
@@ -1651,6 +1692,7 @@ const rootRouteChildren: RootRouteChildren = {
   ToolsPdfToTextRoute: ToolsPdfToTextRoute,
   ToolsPdfToWordRoute: ToolsPdfToWordRoute,
   ToolsPercentageCalculatorRoute: ToolsPercentageCalculatorRoute,
+  ToolsPngToJpgRoute: ToolsPngToJpgRoute,
   ToolsProtectRoute: ToolsProtectRoute,
   ToolsQrGeneratorRoute: ToolsQrGeneratorRoute,
   ToolsRedactRoute: ToolsRedactRoute,
@@ -1679,3 +1721,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
