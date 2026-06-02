@@ -41,6 +41,7 @@ export function ToolWorkspace({
   accept,
   multi,
   cta = "Process files",
+  autoProcess,
   sidebar,
   emptyHint,
   maxSizeBytes = DEFAULT_MAX_SIZE,
@@ -50,9 +51,12 @@ export function ToolWorkspace({
   const [files, setFiles] = useState<File[]>([]);
   const [dragOver, setDragOver] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [phase, setPhase] = useState<string>("");
+  const [elapsed, setElapsed] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ToolResult>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const autoOn = autoProcess ?? !multi;
 
   const accepted = accept.split(",").map((s) => s.trim());
 
@@ -87,6 +91,34 @@ export function ToolWorkspace({
     return { ok, errors };
   };
 
+  const runProcess = useCallback(
+    async (toRun: File[]) => {
+      setBusy(true);
+      setError(null);
+      setResult(null);
+      setPhase("Reading file…");
+      setElapsed(0);
+      const t0 = performance.now();
+      const tick = window.setInterval(() => setElapsed(performance.now() - t0), 100);
+      const phaseTimer = window.setTimeout(() => setPhase("Processing…"), 350);
+      try {
+        const r = await process(toRun);
+        if (r) {
+          setPhase("Finalizing…");
+          setResult(r);
+        }
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : "Something went wrong.");
+      } finally {
+        clearInterval(tick);
+        clearTimeout(phaseTimer);
+        setBusy(false);
+        setPhase("");
+      }
+    },
+    [process],
+  );
+
   const handleFiles = useCallback(
     (list: FileList | File[]) => {
       const { ok, errors } = validateFiles(Array.from(list));
@@ -97,13 +129,18 @@ export function ToolWorkspace({
         setError(null);
       }
       setResult(null);
-      setFiles((prev) => {
-        const combined = multi ? [...prev, ...ok] : ok;
-        if (multi && maxFiles) return combined.slice(0, maxFiles);
-        return multi ? combined : combined.slice(0, 1);
-      });
+      const next = (() => {
+        if (!multi) return ok.slice(0, 1);
+        const combined = [...files, ...ok];
+        return maxFiles ? combined.slice(0, maxFiles) : combined;
+      })();
+      setFiles(next);
+      if (autoOn && next.length && !errors.length) {
+        // Kick off processing immediately — no extra click needed.
+        void runProcess(next);
+      }
     },
-    [multi, maxFiles, maxSizeBytes, accept],
+    [multi, maxFiles, maxSizeBytes, accept, files, autoOn, runProcess],
   );
 
   const onDrop = (e: React.DragEvent) => {
@@ -119,15 +156,9 @@ export function ToolWorkspace({
       setError(errors.join(" ") || "One or more files failed validation.");
       return;
     }
-    setBusy(true);
-    setError(null);
-    setResult(null);
-    try {
-      const r = await process(ok);
-      if (r) setResult(r);
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Something went wrong.");
-    } finally {
+    await runProcess(ok);
+  };
+
       setBusy(false);
     }
   };
