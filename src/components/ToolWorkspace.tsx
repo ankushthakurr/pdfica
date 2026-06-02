@@ -159,9 +159,7 @@ export function ToolWorkspace({
     await runProcess(ok);
   };
 
-      setBusy(false);
-    }
-  };
+
 
   const reset = () => {
     setFiles([]);
