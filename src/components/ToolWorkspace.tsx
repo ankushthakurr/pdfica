@@ -4,6 +4,7 @@ import { UploadCloud, FileText, X, Loader2, CheckCircle2, Download, AlertTriangl
 import { formatBytes, downloadBlob } from "@/lib/format";
 
 export type ToolResult = { blob: Blob; filename: string } | null;
+export type FileReporter = (index: number, phase: string, pct?: number) => void;
 
 interface Props {
   title: string;
@@ -17,8 +18,9 @@ interface Props {
   emptyHint?: string;
   maxSizeBytes?: number; // per-file limit; default 25 MB
   maxFiles?: number; // for multi tools
-  // Returns a blob + filename (or null to keep state).
-  process: (files: File[]) => Promise<ToolResult>;
+  // Returns a blob + filename (or null to keep state). Second arg lets the tool
+  // report per-file progress: report(index, phase, pct?).
+  process: (files: File[], report: FileReporter) => Promise<ToolResult>;
 }
 
 const DEFAULT_MAX_SIZE = 100 * 1024 * 1024; // 100 MB
