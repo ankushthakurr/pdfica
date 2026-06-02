@@ -40,21 +40,21 @@ export function Header() {
                   transition={{ duration: 0.18 }}
                   className="absolute left-1/2 top-full -translate-x-1/2 pt-3"
                 >
-                  <div className="w-[640px] rounded-2xl border bg-surface p-6 shadow-card-hover grid grid-cols-2 gap-6">
+                  <div className="w-[min(95vw,1100px)] max-h-[78vh] overflow-y-auto rounded-2xl border bg-surface p-6 shadow-card-hover grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-5">
                     {(Object.keys(grouped) as ToolCategory[]).map((cat) => (
                       <div key={cat}>
-                        <div className="mb-3 flex items-baseline justify-between">
-                          <span className={`text-xs font-bold uppercase tracking-wider ${CATEGORIES[cat].tone}`}>
+                        <div className="mb-2">
+                          <div className={`text-[11px] font-bold uppercase tracking-wider ${CATEGORIES[cat].tone}`}>
                             {CATEGORIES[cat].label}
-                          </span>
-                          <span className="text-xs text-muted-foreground">{CATEGORIES[cat].description}</span>
+                          </div>
+                          <div className="text-[11px] text-muted-foreground">{CATEGORIES[cat].description}</div>
                         </div>
-                        <ul className="space-y-1">
+                        <ul className="space-y-0.5">
                           {grouped[cat].map((t) => (
                             <li key={t.slug}>
                               <Link
                                 to={t.to}
-                                className="block rounded-md px-2 py-1.5 text-sm hover:bg-muted transition-colors"
+                                className="block rounded-md px-2 py-1 text-[13px] hover:bg-muted transition-colors"
                               >
                                 {t.name}
                               </Link>
