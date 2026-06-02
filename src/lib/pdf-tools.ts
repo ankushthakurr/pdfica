@@ -163,10 +163,14 @@ export async function pdfToJpgs(file: File, scale = 1.5): Promise<{ blob: Blob; 
 export async function imagesToPdf(
   files: File[],
   pageSize: "fit" | "a4" = "fit",
+  report?: FileProgress,
 ): Promise<Blob> {
   const doc = await PDFDocument.create();
-  for (const f of files) {
+  for (let i = 0; i < files.length; i++) {
+    const f = files[i];
+    report?.(i, "Reading", 20);
     const buf = await readAB(f);
+    report?.(i, "Embedding", 60);
     const img =
       f.type === "image/png"
         ? await doc.embedPng(buf)
@@ -188,6 +192,7 @@ export async function imagesToPdf(
     }
     const page = doc.addPage([pageW, pageH]);
     page.drawImage(img, { x, y, width: drawW, height: drawH });
+    report?.(i, "Done", 100);
   }
   return new Blob([(await doc.save()) as BlobPart], { type: "application/pdf" });
 }
