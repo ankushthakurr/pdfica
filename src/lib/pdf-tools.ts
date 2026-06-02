@@ -287,23 +287,31 @@ export async function organizePdf(file: File, ops: OrganizeOp): Promise<Blob> {
   return new Blob([(await out.save()) as BlobPart], { type: "application/pdf" });
 }
 
-// ----- THUMBNAILS -----
+// ----- THUMBNAILS (parallelized) -----
 export async function renderPageThumbs(file: File, maxW = 180): Promise<string[]> {
   const data = new Uint8Array(await readAB(file));
   const pdf = await pdfjsLib.getDocument({ data }).promise;
-  const out: string[] = [];
-  for (let i = 1; i <= pdf.numPages; i++) {
-    const page = await pdf.getPage(i);
-    const vp1 = page.getViewport({ scale: 1 });
-    const scale = maxW / vp1.width;
-    const viewport = page.getViewport({ scale });
-    const canvas = document.createElement("canvas");
-    canvas.width = viewport.width;
-    canvas.height = viewport.height;
-    const ctx = canvas.getContext("2d")!;
-    await page.render({ canvasContext: ctx, viewport, canvas }).promise;
-    out.push(canvas.toDataURL("image/jpeg", 0.7));
-  }
+  const total = pdf.numPages;
+  const out: string[] = new Array(total);
+  const concurrency = Math.min(4, total);
+  let next = 0;
+  const work = async () => {
+    while (true) {
+      const i = next++;
+      if (i >= total) break;
+      const page = await pdf.getPage(i + 1);
+      const vp1 = page.getViewport({ scale: 1 });
+      const scale = maxW / vp1.width;
+      const viewport = page.getViewport({ scale });
+      const canvas = document.createElement("canvas");
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      const ctx = canvas.getContext("2d")!;
+      await page.render({ canvasContext: ctx, viewport, canvas }).promise;
+      out[i] = canvas.toDataURL("image/jpeg", 0.7);
+    }
+  };
+  await Promise.all(Array.from({ length: concurrency }, work));
   return out;
 }
 
