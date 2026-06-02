@@ -264,6 +264,35 @@ export function ToolWorkspace({
             </div>
           )}
 
+          {/* Progress indicator */}
+          <AnimatePresence>
+            {busy && !result && (
+              <motion.div
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0 }}
+                className="rounded-2xl border bg-surface p-4"
+              >
+                <div className="mb-2 flex items-center justify-between text-sm">
+                  <span className="inline-flex items-center gap-2 font-medium">
+                    <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+                    {phase || "Working…"}
+                  </span>
+                  <span className="text-xs text-muted-foreground tabular-nums">
+                    {(elapsed / 1000).toFixed(1)}s
+                  </span>
+                </div>
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
+                  <motion.div
+                    className="h-full w-1/3 rounded-full bg-gradient-to-r from-primary/40 via-primary to-primary/40"
+                    animate={{ x: ["-100%", "300%"] }}
+                    transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
+                  />
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Error */}
           {error && (
             <div className="flex items-start gap-2 rounded-xl border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive">
@@ -271,6 +300,7 @@ export function ToolWorkspace({
               <span>{error}</span>
             </div>
           )}
+
 
           {/* Result */}
           <AnimatePresence>
