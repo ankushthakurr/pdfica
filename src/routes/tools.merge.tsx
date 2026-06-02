@@ -23,9 +23,9 @@ export const Route = createFileRoute("/tools/merge")({
       maxFiles={10}
       cta="Merge PDFs"
       emptyHint="Drop two or more PDFs to combine them in order."
-      process={async (files) => {
+      process={async (files, report) => {
         if (files.length < 2) throw new Error("Add at least two PDFs to merge.");
-        const blob = await mergePdfs(files);
+        const blob = await mergePdfs(files, report);
         return { blob, filename: "merged.pdf" };
       }}
     />

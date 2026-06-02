@@ -34,8 +34,8 @@ function JpgToPdfPage() {
           ))}
         </div>
       }
-      process={async (files) => {
-        const blob = await imagesToPdf(files, size);
+      process={async (files, report) => {
+        const blob = await imagesToPdf(files, size, report);
         return { blob, filename: "images.pdf" };
       }}
     />

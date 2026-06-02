@@ -23,12 +23,18 @@ function parseRanges(ranges: string, total: number): number[] {
 }
 
 // ----- MERGE -----
-export async function mergePdfs(files: File[]): Promise<Blob> {
+export type FileProgress = (index: number, phase: string, pct?: number) => void;
+
+export async function mergePdfs(files: File[], report?: FileProgress): Promise<Blob> {
   const out = await PDFDocument.create();
-  for (const f of files) {
+  for (let i = 0; i < files.length; i++) {
+    const f = files[i];
+    report?.(i, "Reading", 10);
     const src = await PDFDocument.load(await readAB(f), { ignoreEncryption: true });
+    report?.(i, "Copying pages", 55);
     const pages = await out.copyPages(src, src.getPageIndices());
     pages.forEach((p) => out.addPage(p));
+    report?.(i, "Done", 100);
   }
   return new Blob([(await out.save()) as BlobPart], { type: "application/pdf" });
 }
@@ -157,10 +163,14 @@ export async function pdfToJpgs(file: File, scale = 1.5): Promise<{ blob: Blob; 
 export async function imagesToPdf(
   files: File[],
   pageSize: "fit" | "a4" = "fit",
+  report?: FileProgress,
 ): Promise<Blob> {
   const doc = await PDFDocument.create();
-  for (const f of files) {
+  for (let i = 0; i < files.length; i++) {
+    const f = files[i];
+    report?.(i, "Reading", 20);
     const buf = await readAB(f);
+    report?.(i, "Embedding", 60);
     const img =
       f.type === "image/png"
         ? await doc.embedPng(buf)
@@ -182,6 +192,7 @@ export async function imagesToPdf(
     }
     const page = doc.addPage([pageW, pageH]);
     page.drawImage(img, { x, y, width: drawW, height: drawH });
+    report?.(i, "Done", 100);
   }
   return new Blob([(await doc.save()) as BlobPart], { type: "application/pdf" });
 }

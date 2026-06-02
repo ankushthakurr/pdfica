@@ -4,6 +4,7 @@ import { UploadCloud, FileText, X, Loader2, CheckCircle2, Download, AlertTriangl
 import { formatBytes, downloadBlob } from "@/lib/format";
 
 export type ToolResult = { blob: Blob; filename: string } | null;
+export type FileReporter = (index: number, phase: string, pct?: number) => void;
 
 interface Props {
   title: string;
@@ -17,8 +18,9 @@ interface Props {
   emptyHint?: string;
   maxSizeBytes?: number; // per-file limit; default 25 MB
   maxFiles?: number; // for multi tools
-  // Returns a blob + filename (or null to keep state).
-  process: (files: File[]) => Promise<ToolResult>;
+  // Returns a blob + filename (or null to keep state). Second arg lets the tool
+  // report per-file progress: report(index, phase, pct?).
+  process: (files: File[], report: FileReporter) => Promise<ToolResult>;
 }
 
 const DEFAULT_MAX_SIZE = 100 * 1024 * 1024; // 100 MB
@@ -53,6 +55,7 @@ export function ToolWorkspace({
   const [busy, setBusy] = useState(false);
   const [phase, setPhase] = useState<string>("");
   const [elapsed, setElapsed] = useState(0);
+  const [fileProgress, setFileProgress] = useState<Array<{ phase: string; pct: number }>>([]);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ToolResult>(null);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -98,11 +101,20 @@ export function ToolWorkspace({
       setResult(null);
       setPhase("Reading file…");
       setElapsed(0);
+      setFileProgress(toRun.map(() => ({ phase: "Queued", pct: 0 })));
       const t0 = performance.now();
       const tick = window.setInterval(() => setElapsed(performance.now() - t0), 100);
       const phaseTimer = window.setTimeout(() => setPhase("Processing…"), 350);
+      const report: FileReporter = (index, p, pct) => {
+        setFileProgress((prev) => {
+          if (index < 0 || index >= prev.length) return prev;
+          const next = prev.slice();
+          next[index] = { phase: p, pct: pct ?? next[index].pct };
+          return next;
+        });
+      };
       try {
-        const r = await process(toRun);
+        const r = await process(toRun, report);
         if (r) {
           setPhase("Finalizing…");
           setResult(r);
@@ -289,6 +301,33 @@ export function ToolWorkspace({
                     transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
                   />
                 </div>
+
+                {multi && fileProgress.length > 1 && (
+                  <ul className="mt-4 space-y-2.5">
+                    {files.map((f, i) => {
+                      const fp = fileProgress[i] ?? { phase: "Queued", pct: 0 };
+                      const done = fp.phase.toLowerCase() === "done" || fp.pct >= 100;
+                      return (
+                        <li key={f.name + i} className="text-xs">
+                          <div className="mb-1 flex items-center justify-between gap-3">
+                            <span className="truncate font-medium text-foreground">{f.name}</span>
+                            <span className={`tabular-nums ${done ? "text-success" : "text-muted-foreground"}`}>
+                              {done ? "Done" : fp.phase}
+                              {!done && fp.pct > 0 ? ` · ${Math.round(fp.pct)}%` : ""}
+                            </span>
+                          </div>
+                          <div className="h-1 w-full overflow-hidden rounded-full bg-muted">
+                            <motion.div
+                              className={`h-full rounded-full ${done ? "bg-success" : "bg-primary"}`}
+                              animate={{ width: `${done ? 100 : Math.max(4, fp.pct)}%` }}
+                              transition={{ duration: 0.3 }}
+                            />
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
               </motion.div>
             )}
           </AnimatePresence>
