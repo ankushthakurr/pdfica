@@ -103,6 +103,11 @@ function Page() {
   const [pitch, setPitch] = useState(1);
   const [speaking, setSpeaking] = useState(false);
 
+  // Language: "auto" runs detection on every text change; any other value pins.
+  const [langChoice, setLangChoice] = useState<string>("auto");
+  const detected = useMemo(() => detectLang(text), [text]);
+  const activeLang = langChoice === "auto" ? detected : langChoice;
+
   const [dlVoice, setDlVoice] = useState("Brian");
   const [generating, setGenerating] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -115,12 +120,30 @@ function Page() {
     const load = () => {
       const v = window.speechSynthesis.getVoices();
       setVoices(v);
-      if (!voice && v[0]) setVoice(v[0].name);
     };
     load();
     window.speechSynthesis.onvoiceschanged = load;
     return () => { window.speechSynthesis.cancel(); };
-  }, [voice]);
+  }, []);
+
+  // Voices filtered by the active language (fallback to all if none match).
+  const matchingVoices = useMemo(() => {
+    const m = voices.filter((v) => v.lang.toLowerCase().startsWith(activeLang.toLowerCase()));
+    return m.length ? m : voices;
+  }, [voices, activeLang]);
+
+  useEffect(() => {
+    if (!matchingVoices.length) return;
+    if (!voice || !matchingVoices.some((v) => v.name === voice)) {
+      setVoice(matchingVoices[0].name);
+    }
+  }, [matchingVoices, voice]);
+
+  useEffect(() => {
+    if (SE_VOICE_LANG[dlVoice] === activeLang) return;
+    const match = Object.entries(SE_VOICE_LANG).find(([, l]) => l === activeLang);
+    if (match) setDlVoice(match[0]);
+  }, [activeLang, dlVoice]);
 
   useEffect(() => () => { if (audioUrl) URL.revokeObjectURL(audioUrl); }, [audioUrl]);
 
@@ -130,6 +153,7 @@ function Page() {
     const u = new SpeechSynthesisUtterance(text);
     const v = voices.find((x) => x.name === voice);
     if (v) u.voice = v;
+    u.lang = v?.lang || activeLang;
     u.rate = rate; u.pitch = pitch;
     u.onend = () => setSpeaking(false);
     setSpeaking(true);
