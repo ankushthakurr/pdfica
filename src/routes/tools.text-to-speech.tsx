@@ -240,9 +240,14 @@ function Page() {
         <h3 className="text-sm font-semibold">Generate downloadable MP3</h3>
         <p className="mt-1 text-xs text-muted-foreground">Creates a real audio file you can save and use anywhere.</p>
         <div className="mt-3 grid gap-4 md:grid-cols-2">
-          <label className="block text-sm"><span className="font-medium">Voice</span>
+          <label className="block text-sm"><span className="font-medium">Voice ({langName(activeLang)})</span>
             <select value={dlVoice} onChange={(e) => setDlVoice(e.target.value)} className="mt-1 w-full rounded-lg border bg-background px-3 py-2">
-              {SE_VOICES.map((v) => <option key={v} value={v}>{v}</option>)}
+              <optgroup label={`Matches ${langName(activeLang)}`}>
+                {SE_VOICES.filter((v) => SE_VOICE_LANG[v] === activeLang).map((v) => <option key={v} value={v}>{v} ({SE_VOICE_LANG[v]})</option>)}
+              </optgroup>
+              <optgroup label="All voices">
+                {SE_VOICES.map((v) => <option key={v} value={v}>{v} ({SE_VOICE_LANG[v] || "?"})</option>)}
+              </optgroup>
             </select>
           </label>
           <div className="flex items-end justify-end">
