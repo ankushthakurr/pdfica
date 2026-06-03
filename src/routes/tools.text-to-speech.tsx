@@ -1,8 +1,73 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { UtilityPage } from "@/components/UtilityPage";
-import { Play, Square, Download, Loader2 } from "lucide-react";
+import { Play, Square, Download, Loader2, Languages } from "lucide-react";
 import { downloadBlob } from "@/lib/format";
+
+// Lightweight script + common-word heuristic language detection (no deps).
+type LangInfo = { code: string; name: string };
+const LANGS: LangInfo[] = [
+  { code: "auto", name: "Auto-detect" },
+  { code: "en", name: "English" },
+  { code: "es", name: "Spanish" },
+  { code: "fr", name: "French" },
+  { code: "de", name: "German" },
+  { code: "it", name: "Italian" },
+  { code: "pt", name: "Portuguese" },
+  { code: "nl", name: "Dutch" },
+  { code: "ru", name: "Russian" },
+  { code: "ja", name: "Japanese" },
+  { code: "zh", name: "Chinese" },
+  { code: "ko", name: "Korean" },
+  { code: "ar", name: "Arabic" },
+  { code: "hi", name: "Hindi" },
+  { code: "tr", name: "Turkish" },
+  { code: "pl", name: "Polish" },
+];
+
+// StreamElements voice → language mapping (subset of voices available).
+const SE_VOICE_LANG: Record<string, string> = {
+  Brian: "en", Amy: "en", Emma: "en", Joanna: "en", Matthew: "en", Ivy: "en",
+  Justin: "en", Kendra: "en", Kimberly: "en", Salli: "en", Joey: "en",
+  Russell: "en", Nicole: "en", Geraint: "en", Raveena: "en",
+  Mizuki: "ja", Takumi: "ja",
+  Celine: "fr", Mathieu: "fr",
+  Hans: "de", Marlene: "de", Vicki: "de",
+  Conchita: "es", Enrique: "es",
+  Carla: "it", Giorgio: "it",
+  Ricardo: "pt", Vitoria: "pt",
+};
+
+function detectLang(text: string): string {
+  const t = text.trim();
+  if (!t) return "en";
+  if (/[\u3040-\u309f\u30a0-\u30ff]/.test(t)) return "ja";
+  if (/[\uac00-\ud7af]/.test(t)) return "ko";
+  if (/[\u4e00-\u9fff]/.test(t)) return "zh";
+  if (/[\u0600-\u06ff]/.test(t)) return "ar";
+  if (/[\u0900-\u097f]/.test(t)) return "hi";
+  if (/[\u0400-\u04ff]/.test(t)) return "ru";
+  const lower = " " + t.toLowerCase().replace(/[^\p{L}\s']/gu, " ") + " ";
+  const hints: Record<string, string[]> = {
+    en: [" the ", " and ", " is ", " of ", " you ", " that ", " with "],
+    es: [" el ", " la ", " los ", " que ", " de ", " y ", " es ", " un ", " una ", " por ", " con "],
+    fr: [" le ", " la ", " les ", " et ", " est ", " un ", " une ", " que ", " des ", " avec ", " pour "],
+    de: [" der ", " die ", " das ", " und ", " ist ", " nicht ", " ein ", " eine ", " mit ", " für "],
+    it: [" il ", " la ", " che ", " di ", " e ", " un ", " una ", " per ", " con ", " sono "],
+    pt: [" o ", " a ", " que ", " de ", " e ", " um ", " uma ", " para ", " com ", " não "],
+    nl: [" de ", " het ", " een ", " en ", " is ", " van ", " dat ", " niet ", " met "],
+    tr: [" ve ", " bir ", " bu ", " için ", " ile ", " değil ", " çok "],
+    pl: [" jest ", " nie ", " się ", " że ", " to ", " na ", " z ", " do "],
+  };
+  let best = "en", bestScore = 0;
+  for (const [code, words] of Object.entries(hints)) {
+    const score = words.reduce((a, w) => a + (lower.includes(w) ? 1 : 0), 0);
+    if (score > bestScore) { bestScore = score; best = code; }
+  }
+  return best;
+}
+
+const langName = (c: string) => LANGS.find((l) => l.code === c)?.name || c;
 
 // Free public TTS endpoint (StreamElements) — returns an MP3 with no API key.
 // Has a per-request length cap, so we chunk long text and stitch the MP3 parts.
