@@ -197,13 +197,27 @@ function Page() {
       <textarea value={text} onChange={(e) => setText(e.target.value)} rows={8}
         className="w-full rounded-lg border bg-background p-3 text-sm outline-none focus:border-primary focus:ring-2 focus:ring-primary/20" />
 
+      <div className="mt-4 flex flex-wrap items-center gap-3 rounded-xl border bg-muted/20 p-3">
+        <div className="flex items-center gap-2 text-sm">
+          <Languages className="h-4 w-4 text-primary" />
+          <span className="font-medium">Language</span>
+        </div>
+        <select value={langChoice} onChange={(e) => setLangChoice(e.target.value)}
+          className="rounded-lg border bg-background px-3 py-1.5 text-sm">
+          {LANGS.map((l) => <option key={l.code} value={l.code}>{l.name}</option>)}
+        </select>
+        <span className="text-xs text-muted-foreground">
+          {langChoice === "auto" ? <>Auto-detected: <b>{langName(activeLang)}</b></> : <>Pinned for better pronunciation.</>}
+        </span>
+      </div>
+
       <div className="mt-6 rounded-2xl border bg-muted/30 p-4">
         <h3 className="text-sm font-semibold">Browser preview</h3>
         <p className="mt-1 text-xs text-muted-foreground">Instant playback using your system voices (cannot be saved as a file).</p>
         <div className="mt-3 grid gap-4 md:grid-cols-3">
-          <label className="block text-sm"><span className="font-medium">Voice</span>
+          <label className="block text-sm"><span className="font-medium">Voice ({langName(activeLang)})</span>
             <select value={voice} onChange={(e) => setVoice(e.target.value)} className="mt-1 w-full rounded-lg border bg-background px-3 py-2">
-              {voices.map((v) => <option key={v.name} value={v.name}>{v.name} ({v.lang})</option>)}
+              {matchingVoices.map((v) => <option key={v.name} value={v.name}>{v.name} ({v.lang})</option>)}
             </select>
           </label>
           <label className="block text-sm"><span className="font-medium">Rate: {rate.toFixed(1)}</span>
