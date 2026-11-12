@@ -1,4 +1,5 @@
 # Website reliability and readiness
+- [x] Add visual PDF text selection, replacement, deletion, scanned-page recognition, and verified export.
 - [x] Add sequential batch conversion and ready-to-download archives to shared upload tools.
 - [x] Add batch PDF image conversion; preserve combine and comparison workflows.
 - [x] Correct image-format handling, missing comparison download, policy claims, and page metadata.
