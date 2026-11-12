@@ -49,7 +49,7 @@ export const TOOLS: Tool[] = [
   { slug: "markdown-to-pdf", name: "Markdown to PDF", tagline: "Render Markdown to a PDF.", description: "Convert Markdown with headings, lists and paragraphs into a styled PDF.", category: "convert", accept: "*/*", multi: false, icon: "FileCode", to: "/tools/markdown-to-pdf" },
 
   // EDIT
-  { slug: "edit", name: "Edit PDF", tagline: "Add text on top of any page.", description: "Place text annotations anywhere on a PDF page with full control over size and position.", category: "edit", accept: "application/pdf", multi: false, icon: "PenLine", to: "/tools/edit" },
+  { slug: "edit", name: "Edit PDF", tagline: "Select, rewrite or delete PDF text.", description: "Edit detected text directly on your PDF pages, recognize scanned text, and download the edited document.", category: "edit", accept: "application/pdf", multi: false, icon: "PenLine", to: "/tools/edit" },
   { slug: "sign", name: "Sign PDF", tagline: "Draw and place your signature.", description: "Sign with your mouse or finger and place the signature on the page of your choice.", category: "edit", accept: "application/pdf", multi: false, icon: "PenTool", to: "/tools/sign" },
   { slug: "watermark", name: "Watermark PDF", tagline: "Add a diagonal text watermark.", description: "Stamp every page with a text watermark — adjust opacity, size and angle.", category: "edit", accept: "application/pdf", multi: false, icon: "Stamp", to: "/tools/watermark" },
   { slug: "page-numbers", name: "Page Numbers", tagline: "Add page numbers to every page.", description: "Number every page with multiple position and format options.", category: "edit", accept: "application/pdf", multi: false, icon: "Hash", to: "/tools/page-numbers" },
