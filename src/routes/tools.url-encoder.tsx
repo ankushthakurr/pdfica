@@ -25,6 +25,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/url-encoder")({
-  head: () => ({ meta: [{ title: "URL Encoder — Free | Pdfica" }, { name: "description", content: "Percent-encode and decode URLs in your browser." }] }),
+  head: () => ({ meta: [{ title: "URL Encoder — Free | Pdfica" }, { name: "description", content: "Percent-encode and decode URLs in your browser." },
+      { property: "og:title", content: "URL Encoder — Free | Pdfica" },
+      { property: "og:description", content: "Percent-encode and decode URLs in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

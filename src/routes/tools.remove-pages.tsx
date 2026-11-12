@@ -27,6 +27,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/remove-pages")({
-  head: () => ({ meta: [{ title: "Remove PDF Pages — Free | Pdfica" }, { name: "description", content: "Delete pages from a PDF in your browser." }] }),
+  head: () => ({ meta: [{ title: "Remove PDF Pages — Free | Pdfica" }, { name: "description", content: "Delete pages from a PDF in your browser." },
+      { property: "og:title", content: "Remove PDF Pages — Free | Pdfica" },
+      { property: "og:description", content: "Delete pages from a PDF in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

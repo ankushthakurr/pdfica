@@ -32,6 +32,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/case-converter")({
-  head: () => ({ meta: [{ title: "Case Converter — Free | Pdfica" }, { name: "description", content: "Convert text between UPPER, lower, Title, snake_case and more." }] }),
+  head: () => ({ meta: [{ title: "Case Converter — Free | Pdfica" }, { name: "description", content: "Convert text between UPPER, lower, Title, snake_case and more." },
+      { property: "og:title", content: "Case Converter — Free | Pdfica" },
+      { property: "og:description", content: "Convert text between UPPER, lower, Title, snake_case and more." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

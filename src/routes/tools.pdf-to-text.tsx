@@ -6,7 +6,12 @@ import { getTool } from "@/lib/tools";
 const tool = getTool("pdf-to-text")!;
 
 export const Route = createFileRoute("/tools/pdf-to-text")({
-  head: () => ({ meta: [{ title: "PDF to Text — Free | Pdfica" }, { name: "description", content: "Extract all text from a PDF and download a .txt file." }] }),
+  head: () => ({ meta: [{ title: "PDF to Text — Free | Pdfica" }, { name: "description", content: "Extract all text from a PDF and download a .txt file." },
+      { property: "og:title", content: "PDF to Text — Free | Pdfica" },
+      { property: "og:description", content: "Extract all text from a PDF and download a .txt file." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: () => (
     <ToolWorkspace title={tool.name} description={tool.description} accept={tool.accept} multi={false} cta="Extract text"
       process={async ([file]) => {

@@ -43,6 +43,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/page-numbers")({
-  head: () => ({ meta: [{ title: "Add Page Numbers to PDF — Free | Pdfica" }, { name: "description", content: "Add page numbers to every page of a PDF with custom format and position." }] }),
+  head: () => ({ meta: [{ title: "Add Page Numbers to PDF — Free | Pdfica" }, { name: "description", content: "Add page numbers to every page of a PDF with custom format and position." },
+      { property: "og:title", content: "Add Page Numbers to PDF — Free | Pdfica" },
+      { property: "og:description", content: "Add page numbers to every page of a PDF with custom format and position." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

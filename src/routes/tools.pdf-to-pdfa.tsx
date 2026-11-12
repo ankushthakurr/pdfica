@@ -6,7 +6,12 @@ import { getTool } from "@/lib/tools";
 const tool = getTool("pdf-to-pdfa")!;
 
 export const Route = createFileRoute("/tools/pdf-to-pdfa")({
-  head: () => ({ meta: [{ title: "PDF to PDF/A — Free | Pdfica" }, { name: "description", content: "Re-save a PDF in an archive-friendly PDF/A best-effort format." }] }),
+  head: () => ({ meta: [{ title: "PDF to PDF/A — Free | Pdfica" }, { name: "description", content: "Re-save a PDF in an archive-friendly PDF/A best-effort format." },
+      { property: "og:title", content: "PDF to PDF/A — Free | Pdfica" },
+      { property: "og:description", content: "Re-save a PDF in an archive-friendly PDF/A best-effort format." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: () => (
     <ToolWorkspace title={tool.name} description={tool.description} accept={tool.accept} multi={false} cta="Convert"
       process={async ([file]) => {

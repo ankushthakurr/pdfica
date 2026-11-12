@@ -118,6 +118,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/invoice-generator")({
-  head: () => ({ meta: [{ title: "Free Invoice Generator — PDF in Seconds | Pdfica" }, { name: "description", content: "Create and download a professional PDF invoice for free. No sign-up, no watermark." }] }),
+  head: () => ({ meta: [{ title: "Free Invoice Generator — PDF in Seconds | Pdfica" }, { name: "description", content: "Create and download a professional PDF invoice for free. No sign-up, no watermark." },
+      { property: "og:title", content: "Free Invoice Generator — PDF in Seconds | Pdfica" },
+      { property: "og:description", content: "Create and download a professional PDF invoice for free. No sign-up, no watermark." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

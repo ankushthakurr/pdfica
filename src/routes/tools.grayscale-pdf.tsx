@@ -6,7 +6,12 @@ import { getTool } from "@/lib/tools";
 const tool = getTool("grayscale-pdf")!;
 
 export const Route = createFileRoute("/tools/grayscale-pdf")({
-  head: () => ({ meta: [{ title: "Grayscale PDF — Free | Pdfica" }, { name: "description", content: "Convert every page of a PDF to black and white." }] }),
+  head: () => ({ meta: [{ title: "Grayscale PDF — Free | Pdfica" }, { name: "description", content: "Convert every page of a PDF to black and white." },
+      { property: "og:title", content: "Grayscale PDF — Free | Pdfica" },
+      { property: "og:description", content: "Convert every page of a PDF to black and white." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: () => (
     <ToolWorkspace title={tool.name} description={tool.description} accept={tool.accept} multi={false} cta="Convert"
       process={async ([file]) => {

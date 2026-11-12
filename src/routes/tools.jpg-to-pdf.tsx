@@ -49,6 +49,9 @@ export const Route = createFileRoute("/tools/jpg-to-pdf")({
       { name: "description", content: "Combine multiple JPG, PNG, or WebP images into a single PDF document in your browser." },
       { property: "og:title", content: "JPG to PDF — Pdfica" },
       { property: "og:description", content: "Merge images into a single PDF document, free and private." },
+    
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: JpgToPdfPage,

@@ -6,7 +6,12 @@ import { getTool } from "@/lib/tools";
 const tool = getTool("pdf-to-excel")!;
 
 export const Route = createFileRoute("/tools/pdf-to-excel")({
-  head: () => ({ meta: [{ title: "PDF to Excel — Free | Pdfica" }, { name: "description", content: "Extract PDF text content into an Excel workbook." }] }),
+  head: () => ({ meta: [{ title: "PDF to Excel — Free | Pdfica" }, { name: "description", content: "Extract PDF text content into an Excel workbook." },
+      { property: "og:title", content: "PDF to Excel — Free | Pdfica" },
+      { property: "og:description", content: "Extract PDF text content into an Excel workbook." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: () => (
     <ToolWorkspace title={tool.name} description={tool.description} accept={tool.accept} multi={false} cta="Convert to Excel"
       process={async ([file]) => {

@@ -32,6 +32,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/image-convert")({
-  head: () => ({ meta: [{ title: "Convert Image — JPG, PNG, WebP | Pdfica" }, { name: "description", content: "Convert images between JPG, PNG and WebP in your browser." }] }),
+  head: () => ({ meta: [{ title: "Convert Image — JPG, PNG, WebP | Pdfica" }, { name: "description", content: "Convert images between JPG, PNG and WebP in your browser." },
+      { property: "og:title", content: "Convert Image — JPG, PNG, WebP | Pdfica" },
+      { property: "og:description", content: "Convert images between JPG, PNG and WebP in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

@@ -30,6 +30,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/jwt-decoder")({
-  head: () => ({ meta: [{ title: "JWT Decoder — Free | Pdfica" }, { name: "description", content: "Decode JSON Web Tokens (JWT) in your browser. Header and payload, fully private." }] }),
+  head: () => ({ meta: [{ title: "JWT Decoder — Free | Pdfica" }, { name: "description", content: "Decode JSON Web Tokens (JWT) in your browser. Header and payload, fully private." },
+      { property: "og:title", content: "JWT Decoder — Free | Pdfica" },
+      { property: "og:description", content: "Decode JSON Web Tokens (JWT) in your browser. Header and payload, fully private." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

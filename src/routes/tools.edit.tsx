@@ -43,6 +43,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/edit")({
-  head: () => ({ meta: [{ title: "Edit PDF — Add Text | Pdfica" }, { name: "description", content: "Place text on any PDF page with full position control." }] }),
+  head: () => ({ meta: [{ title: "Edit PDF — Add Text | Pdfica" }, { name: "description", content: "Place text on any PDF page with full position control." },
+      { property: "og:title", content: "Edit PDF — Add Text | Pdfica" },
+      { property: "og:description", content: "Place text on any PDF page with full position control." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

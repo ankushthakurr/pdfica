@@ -59,6 +59,9 @@ export const Route = createFileRoute("/tools/protect")({
       { name: "description", content: "Password-protect a PDF in your browser. Nothing is uploaded — your password and your file stay on your device." },
       { property: "og:title", content: "Protect PDF — Pdfica" },
       { property: "og:description", content: "Add a password to your PDF, 100% on-device." },
+    
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: ProtectPage,

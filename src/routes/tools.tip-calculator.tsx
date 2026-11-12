@@ -30,6 +30,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/tip-calculator")({
-  head: () => ({ meta: [{ title: "Tip Calculator — Free | Pdfica" }, { name: "description", content: "Calculate tip amounts and split bills between any number of people." }] }),
+  head: () => ({ meta: [{ title: "Tip Calculator — Free | Pdfica" }, { name: "description", content: "Calculate tip amounts and split bills between any number of people." },
+      { property: "og:title", content: "Tip Calculator — Free | Pdfica" },
+      { property: "og:description", content: "Calculate tip amounts and split bills between any number of people." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

@@ -26,6 +26,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/crop")({
-  head: () => ({ meta: [{ title: "Crop PDF — Free Online | Pdfica" }, { name: "description", content: "Trim margins from every page of a PDF in your browser." }] }),
+  head: () => ({ meta: [{ title: "Crop PDF — Free Online | Pdfica" }, { name: "description", content: "Trim margins from every page of a PDF in your browser." },
+      { property: "og:title", content: "Crop PDF — Free Online | Pdfica" },
+      { property: "og:description", content: "Trim margins from every page of a PDF in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

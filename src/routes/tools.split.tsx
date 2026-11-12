@@ -43,6 +43,9 @@ export const Route = createFileRoute("/tools/split")({
       { name: "description", content: "Split a PDF by page ranges or extract each page as a separate file. Runs entirely in your browser." },
       { property: "og:title", content: "Split PDF — Pdfica" },
       { property: "og:description", content: "Extract pages or split a PDF into parts. 100% private." },
+    
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: SplitPage,

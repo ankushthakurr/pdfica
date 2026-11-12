@@ -123,6 +123,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/scan-to-pdf")({
-  head: () => ({ meta: [{ title: "Scan to PDF — Free | Pdfica" }, { name: "description", content: "Use your device camera to scan documents into a PDF." }] }),
+  head: () => ({ meta: [{ title: "Scan to PDF — Free | Pdfica" }, { name: "description", content: "Use your device camera to scan documents into a PDF." },
+      { property: "og:title", content: "Scan to PDF — Free | Pdfica" },
+      { property: "og:description", content: "Use your device camera to scan documents into a PDF." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

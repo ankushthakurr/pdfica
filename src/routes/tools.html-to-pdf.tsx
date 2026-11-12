@@ -57,6 +57,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/html-to-pdf")({
-  head: () => ({ meta: [{ title: "HTML to PDF — Free | Pdfica" }, { name: "description", content: "Paste HTML and convert it to a downloadable PDF in your browser." }] }),
+  head: () => ({ meta: [{ title: "HTML to PDF — Free | Pdfica" }, { name: "description", content: "Paste HTML and convert it to a downloadable PDF in your browser." },
+      { property: "og:title", content: "HTML to PDF — Free | Pdfica" },
+      { property: "og:description", content: "Paste HTML and convert it to a downloadable PDF in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

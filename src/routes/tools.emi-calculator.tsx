@@ -31,6 +31,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/emi-calculator")({
-  head: () => ({ meta: [{ title: "EMI / Loan Calculator — Free | Pdfica" }, { name: "description", content: "Free EMI calculator. Compute monthly loan payments, interest and totals." }] }),
+  head: () => ({ meta: [{ title: "EMI / Loan Calculator — Free | Pdfica" }, { name: "description", content: "Free EMI calculator. Compute monthly loan payments, interest and totals." },
+      { property: "og:title", content: "EMI / Loan Calculator — Free | Pdfica" },
+      { property: "og:description", content: "Free EMI calculator. Compute monthly loan payments, interest and totals." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

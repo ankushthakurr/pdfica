@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { FileText, Github, Twitter, Mail } from "lucide-react";
-import { TOOLS, CATEGORIES, toolsByCategory, type ToolCategory } from "@/lib/tools";
+import { FileText, Mail } from "lucide-react";
+import { CATEGORIES, toolsByCategory, type ToolCategory } from "@/lib/tools";
 
 export function Footer() {
   const grouped = toolsByCategory();
@@ -19,16 +19,10 @@ export function Footer() {
             </Link>
             <p className="mt-4 max-w-xs text-sm text-secondary-foreground/70">
               Free, fast, and private document tools. Every file is processed on your device —
-              nothing is ever uploaded to a server.
+              PDFs and images stay on your device. Downloadable speech uses an online service.
             </p>
             <div className="mt-5 flex gap-3">
-              <a href="#" aria-label="Twitter" className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors">
-                <Twitter className="h-4 w-4" />
-              </a>
-              <a href="#" aria-label="GitHub" className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors">
-                <Github className="h-4 w-4" />
-              </a>
-              <Link to="/contact" aria-label="Contact" className="rounded-full bg-white/10 p-2 hover:bg-white/20 transition-colors">
+              <Link to="/contact" aria-label="Contact" className="rounded-full bg-secondary-foreground/10 p-2 hover:bg-secondary-foreground/20 transition-colors">
                 <Mail className="h-4 w-4" />
               </Link>
             </div>
@@ -53,7 +47,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/10 pt-6 sm:flex-row sm:items-center sm:justify-between text-sm text-secondary-foreground/60">
+        <div className="mt-12 flex flex-col gap-3 border-t border-secondary-foreground/10 pt-6 sm:flex-row sm:items-center sm:justify-between text-sm text-secondary-foreground/60">
           <p>© {new Date().getFullYear()} Pdfica · pdfica.in — Built with privacy in mind.</p>
           <div className="flex gap-5">
             <Link to="/privacy" className="hover:text-primary">Privacy</Link>

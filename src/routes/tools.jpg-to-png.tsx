@@ -28,6 +28,9 @@ export const Route = createFileRoute("/tools/jpg-to-png")({
       { name: "description", content: "Convert JPG/JPEG images to lossless PNG in your browser. Drag and drop, instant download, completely private." },
       { property: "og:title", content: "JPG to PNG — Pdfica" },
       { property: "og:description", content: "Fast, free JPG → PNG conversion. No upload, no signup." },
+    
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Page,

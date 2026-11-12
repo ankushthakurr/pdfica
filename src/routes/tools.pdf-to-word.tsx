@@ -12,6 +12,9 @@ export const Route = createFileRoute("/tools/pdf-to-word")({
       { name: "description", content: "Convert your PDF to an editable Word (.docx) document directly in your browser. No upload required." },
       { property: "og:title", content: "PDF to Word — Pdfica" },
       { property: "og:description", content: "Extract text from PDFs into a clean editable Word document." },
+    
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => (

@@ -97,6 +97,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/compare")({
-  head: () => ({ meta: [{ title: "Compare PDFs — Free | Pdfica" }, { name: "description", content: "Diff the text content of two PDFs in your browser." }] }),
+  head: () => ({ meta: [{ title: "Compare PDFs — Free | Pdfica" }, { name: "description", content: "Diff the text content of two PDFs in your browser." },
+      { property: "og:title", content: "Compare PDFs — Free | Pdfica" },
+      { property: "og:description", content: "Diff the text content of two PDFs in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

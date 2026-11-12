@@ -124,6 +124,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/sign")({
-  head: () => ({ meta: [{ title: "Sign PDF — Free Online | Pdfica" }, { name: "description", content: "Draw a signature and place it on any PDF page — 100% private." }] }),
+  head: () => ({ meta: [{ title: "Sign PDF — Free Online | Pdfica" }, { name: "description", content: "Draw a signature and place it on any PDF page — 100% private." },
+      { property: "og:title", content: "Sign PDF — Free Online | Pdfica" },
+      { property: "og:description", content: "Draw a signature and place it on any PDF page — 100% private." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

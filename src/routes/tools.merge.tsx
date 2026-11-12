@@ -12,6 +12,9 @@ export const Route = createFileRoute("/tools/merge")({
       { name: "description", content: "Free online PDF merger. Combine multiple PDFs into one file in seconds. No upload, no signup — runs entirely in your browser." },
       { property: "og:title", content: "Merge PDF — Pdfica" },
       { property: "og:description", content: "Combine multiple PDFs into one. 100% private, 100% free." },
+    
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => (

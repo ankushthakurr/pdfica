@@ -22,6 +22,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/text-to-pdf")({
-  head: () => ({ meta: [{ title: "Text to PDF — Free | Pdfica" }, { name: "description", content: "Convert plain text to PDF in your browser." }] }),
+  head: () => ({ meta: [{ title: "Text to PDF — Free | Pdfica" }, { name: "description", content: "Convert plain text to PDF in your browser." },
+      { property: "og:title", content: "Text to PDF — Free | Pdfica" },
+      { property: "og:description", content: "Convert plain text to PDF in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

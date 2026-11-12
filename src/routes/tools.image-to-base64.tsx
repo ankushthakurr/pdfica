@@ -41,6 +41,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/image-to-base64")({
-  head: () => ({ meta: [{ title: "Image to Base64 — Free | Pdfica" }, { name: "description", content: "Convert any image to a Base64 data URI in your browser." }] }),
+  head: () => ({ meta: [{ title: "Image to Base64 — Free | Pdfica" }, { name: "description", content: "Convert any image to a Base64 data URI in your browser." },
+      { property: "og:title", content: "Image to Base64 — Free | Pdfica" },
+      { property: "og:description", content: "Convert any image to a Base64 data URI in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

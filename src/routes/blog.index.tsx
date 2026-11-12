@@ -9,6 +9,11 @@ export const Route = createFileRoute("/blog/")({
       { name: "description", content: "Practical guides on editing, compressing, and converting PDFs — entirely from your browser." },
       { property: "og:title", content: "Pdfica Blog" },
       { property: "og:description", content: "Tutorials, guides, and tips for working with PDFs privately." },
+    
+      { property: "og:image", content: POSTS[0].hero },
+      { name: "twitter:image", content: POSTS[0].hero },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: BlogIndex,

@@ -49,6 +49,9 @@ export const Route = createFileRoute("/tools/image-to-pdf")({
       { name: "description", content: "Combine any JPG, PNG or WebP images into a single PDF document. Drag-and-drop, free, private, runs in your browser." },
       { property: "og:title", content: "Image to PDF — Pdfica" },
       { property: "og:description", content: "Merge images into a single PDF document, free and private." },
+    
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Page,

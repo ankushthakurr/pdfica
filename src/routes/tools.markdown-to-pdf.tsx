@@ -31,6 +31,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/markdown-to-pdf")({
-  head: () => ({ meta: [{ title: "Markdown to PDF — Free | Pdfica" }, { name: "description", content: "Convert Markdown to PDF in your browser." }] }),
+  head: () => ({ meta: [{ title: "Markdown to PDF — Free | Pdfica" }, { name: "description", content: "Convert Markdown to PDF in your browser." },
+      { property: "og:title", content: "Markdown to PDF — Free | Pdfica" },
+      { property: "og:description", content: "Convert Markdown to PDF in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

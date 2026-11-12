@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { z } from "zod";
+import { Button } from "@/components/ui/button";
 import { CheckCircle2, Mail, MessageSquare, User } from "lucide-react";
 
 const schema = z.object({
@@ -17,6 +18,9 @@ export const Route = createFileRoute("/contact")({
       { name: "description", content: "Reach the Pdfica team with questions, feedback, or partnership ideas." },
       { property: "og:title", content: "Contact Pdfica" },
       { property: "og:description", content: "Get in touch with the Pdfica team." },
+    
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Contact,
@@ -40,6 +44,7 @@ function Contact() {
       return;
     }
     setErrors({});
+    window.location.href = `mailto:hello@pdfica.in?subject=${encodeURIComponent("Pdfica feedback from " + r.data.name)}&body=${encodeURIComponent(r.data.message + "\n\nReply to: " + r.data.email)}`;
     setSent(true);
   };
 
@@ -70,8 +75,8 @@ function Contact() {
                 <MessageSquare className="h-4 w-4" />
               </div>
               <div>
-                <p className="font-semibold">Typical response time</p>
-                <p className="text-muted-foreground">Within two business days.</p>
+                <p className="font-semibold">Delivery</p>
+                <p className="text-muted-foreground">Send using your own email application.</p>
               </div>
             </div>
           </div>
@@ -94,11 +99,11 @@ function Contact() {
                 >
                   <CheckCircle2 className="h-7 w-7" />
                 </motion.div>
-                <h3 className="font-display text-2xl font-bold">Message sent!</h3>
+                <h3 className="font-display text-2xl font-bold">Email draft prepared</h3>
                 <p className="mt-2 text-sm text-muted-foreground">
-                  Thanks {data.name.split(" ")[0]} — we'll get back to you at {data.email} soon.
+                  Complete sending in your email application. Pdfica has not sent this message.
                 </p>
-                <button
+                <Button
                   onClick={() => {
                     setSent(false);
                     setData({ name: "", email: "", message: "" });
@@ -106,7 +111,7 @@ function Contact() {
                   className="mt-6 rounded-full border bg-surface px-5 py-2.5 text-sm font-semibold hover:bg-muted"
                 >
                   Send another
-                </button>
+                </Button>
               </motion.div>
             ) : (
               <motion.form
@@ -141,12 +146,12 @@ function Contact() {
                   />
                   {errors.message && <p className="mt-1 text-xs text-destructive">{errors.message}</p>}
                 </div>
-                <button
+                <Button
                   type="submit"
                   className="w-full rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow hover:scale-[1.02] transition-transform"
                 >
-                  Send message
-                </button>
+                  Prepare email
+                </Button>
               </motion.form>
             )}
           </AnimatePresence>

@@ -51,6 +51,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/password-generator")({
-  head: () => ({ meta: [{ title: "Password Generator — Free | Pdfica" }, { name: "description", content: "Generate strong, random passwords in your browser." }] }),
+  head: () => ({ meta: [{ title: "Password Generator — Free | Pdfica" }, { name: "description", content: "Generate strong, random passwords in your browser." },
+      { property: "og:title", content: "Password Generator — Free | Pdfica" },
+      { property: "og:description", content: "Generate strong, random passwords in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

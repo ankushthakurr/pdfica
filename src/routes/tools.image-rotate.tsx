@@ -31,6 +31,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/image-rotate")({
-  head: () => ({ meta: [{ title: "Rotate Image — Free | Pdfica" }, { name: "description", content: "Rotate images 90, 180 or 270 degrees in your browser." }] }),
+  head: () => ({ meta: [{ title: "Rotate Image — Free | Pdfica" }, { name: "description", content: "Rotate images 90, 180 or 270 degrees in your browser." },
+      { property: "og:title", content: "Rotate Image — Free | Pdfica" },
+      { property: "og:description", content: "Rotate images 90, 180 or 270 degrees in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });
