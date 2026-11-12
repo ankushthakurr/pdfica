@@ -30,6 +30,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/timestamp-converter")({
-  head: () => ({ meta: [{ title: "Unix Timestamp Converter — Free | Pdfica" }, { name: "description", content: "Convert between Unix timestamps and human-readable dates." }] }),
+  head: () => ({ meta: [{ title: "Unix Timestamp Converter — Free | Pdfica" }, { name: "description", content: "Convert between Unix timestamps and human-readable dates." },
+      { property: "og:title", content: "Unix Timestamp Converter — Free | Pdfica" },
+      { property: "og:description", content: "Convert between Unix timestamps and human-readable dates." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

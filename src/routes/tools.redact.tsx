@@ -16,7 +16,7 @@ function Page() {
       title={tool.name} description={tool.description} accept={tool.accept} multi={false} cta="Apply redactions"
       sidebar={
         <div className="space-y-3 text-sm">
-          <p className="text-xs text-muted-foreground">Coordinates are percentages of the page. (0,0) is top-left.</p>
+          <p className="text-xs text-destructive">Visual blackouts do not remove underlying text. Do not rely on this tool to securely remove confidential information.</p>
           {boxes.map((b, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} className="rounded-lg border p-3 space-y-2">
               <div className="flex items-center justify-between">
@@ -47,6 +47,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/redact")({
-  head: () => ({ meta: [{ title: "Redact PDF — Free Online | Pdfica" }, { name: "description", content: "Black out sensitive areas of a PDF before sharing." }] }),
+  head: () => ({ meta: [{ title: "Redact PDF — Free Online | Pdfica" }, { name: "description", content: "Black out sensitive areas of a PDF before sharing." },
+      { property: "og:title", content: "Redact PDF — Free Online | Pdfica" },
+      { property: "og:description", content: "Black out sensitive areas of a PDF before sharing." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

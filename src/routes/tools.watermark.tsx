@@ -39,6 +39,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/watermark")({
-  head: () => ({ meta: [{ title: "Watermark PDF — Free Online | Pdfica" }, { name: "description", content: "Add a customizable text watermark to every PDF page." }] }),
+  head: () => ({ meta: [{ title: "Watermark PDF — Free Online | Pdfica" }, { name: "description", content: "Add a customizable text watermark to every PDF page." },
+      { property: "og:title", content: "Watermark PDF — Free Online | Pdfica" },
+      { property: "og:description", content: "Add a customizable text watermark to every PDF page." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

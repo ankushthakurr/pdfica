@@ -49,6 +49,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/qr-generator")({
-  head: () => ({ meta: [{ title: "QR Code Generator — Free | Pdfica" }, { name: "description", content: "Generate QR codes for any URL or text." }] }),
+  head: () => ({ meta: [{ title: "QR Code Generator — Free | Pdfica" }, { name: "description", content: "Generate QR codes for any URL or text." },
+      { property: "og:title", content: "QR Code Generator — Free | Pdfica" },
+      { property: "og:description", content: "Generate QR codes for any URL or text." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

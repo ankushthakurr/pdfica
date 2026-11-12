@@ -38,6 +38,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/rotate")({
-  head: () => ({ meta: [{ title: "Rotate PDF — Free Online | Pdfica" }, { name: "description", content: "Rotate all or selected pages of a PDF in your browser." }] }),
+  head: () => ({ meta: [{ title: "Rotate PDF — Free Online | Pdfica" }, { name: "description", content: "Rotate all or selected pages of a PDF in your browser." },
+      { property: "og:title", content: "Rotate PDF — Free Online | Pdfica" },
+      { property: "og:description", content: "Rotate all or selected pages of a PDF in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

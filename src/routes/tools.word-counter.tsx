@@ -31,6 +31,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/word-counter")({
-  head: () => ({ meta: [{ title: "Word Counter — Free | Pdfica" }, { name: "description", content: "Count words, characters, sentences and reading time." }] }),
+  head: () => ({ meta: [{ title: "Word Counter — Free | Pdfica" }, { name: "description", content: "Count words, characters, sentences and reading time." },
+      { property: "og:title", content: "Word Counter — Free | Pdfica" },
+      { property: "og:description", content: "Count words, characters, sentences and reading time." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

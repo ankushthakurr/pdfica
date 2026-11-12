@@ -274,6 +274,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/text-to-speech")({
-  head: () => ({ meta: [{ title: "Text to Speech — Free Online MP3 Download | Pdfica" }, { name: "description", content: "Convert text to speech and download as MP3. Free, unlimited, with multiple voices and instant browser preview." }] }),
+  head: () => ({ meta: [{ title: "Text to Speech — Free Online MP3 Download | Pdfica" }, { name: "description", content: "Convert text to speech and download as MP3. Free, unlimited, with multiple voices and instant browser preview." },
+      { property: "og:title", content: "Text to Speech — Free Online MP3 Download | Pdfica" },
+      { property: "og:description", content: "Convert text to speech and download as MP3. Free, unlimited, with multiple voices and instant browser preview." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

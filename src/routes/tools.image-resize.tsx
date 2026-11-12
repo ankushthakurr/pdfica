@@ -32,6 +32,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/image-resize")({
-  head: () => ({ meta: [{ title: "Resize Image — Free | Pdfica" }, { name: "description", content: "Resize images to a target size in your browser." }] }),
+  head: () => ({ meta: [{ title: "Resize Image — Free | Pdfica" }, { name: "description", content: "Resize images to a target size in your browser." },
+      { property: "og:title", content: "Resize Image — Free | Pdfica" },
+      { property: "og:description", content: "Resize images to a target size in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

@@ -26,6 +26,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/lorem-ipsum")({
-  head: () => ({ meta: [{ title: "Lorem Ipsum Generator — Free | Pdfica" }, { name: "description", content: "Generate Lorem Ipsum placeholder text." }] }),
+  head: () => ({ meta: [{ title: "Lorem Ipsum Generator — Free | Pdfica" }, { name: "description", content: "Generate Lorem Ipsum placeholder text." },
+      { property: "og:title", content: "Lorem Ipsum Generator — Free | Pdfica" },
+      { property: "og:description", content: "Generate Lorem Ipsum placeholder text." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

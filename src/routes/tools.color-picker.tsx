@@ -73,6 +73,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/color-picker")({
-  head: () => ({ meta: [{ title: "Color Picker from Image — Free | Pdfica" }, { name: "description", content: "Pick HEX, RGB, and HSL colors from any image. Free and private in your browser." }] }),
+  head: () => ({ meta: [{ title: "Color Picker from Image — Free | Pdfica" }, { name: "description", content: "Pick HEX, RGB, and HSL colors from any image. Free and private in your browser." },
+      { property: "og:title", content: "Color Picker from Image — Free | Pdfica" },
+      { property: "og:description", content: "Pick HEX, RGB, and HSL colors from any image. Free and private in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

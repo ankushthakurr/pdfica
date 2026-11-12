@@ -33,6 +33,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/json-formatter")({
-  head: () => ({ meta: [{ title: "JSON Formatter — Free | Pdfica" }, { name: "description", content: "Format and minify JSON in your browser." }] }),
+  head: () => ({ meta: [{ title: "JSON Formatter — Free | Pdfica" }, { name: "description", content: "Format and minify JSON in your browser." },
+      { property: "og:title", content: "JSON Formatter — Free | Pdfica" },
+      { property: "og:description", content: "Format and minify JSON in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

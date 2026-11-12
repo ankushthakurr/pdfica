@@ -27,6 +27,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/base64")({
-  head: () => ({ meta: [{ title: "Base64 Encode/Decode — Free | Pdfica" }, { name: "description", content: "Encode and decode Base64 strings in your browser." }] }),
+  head: () => ({ meta: [{ title: "Base64 Encode/Decode — Free | Pdfica" }, { name: "description", content: "Encode and decode Base64 strings in your browser." },
+      { property: "og:title", content: "Base64 Encode/Decode — Free | Pdfica" },
+      { property: "og:description", content: "Encode and decode Base64 strings in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

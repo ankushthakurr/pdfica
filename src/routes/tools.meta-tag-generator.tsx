@@ -48,6 +48,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/meta-tag-generator")({
-  head: () => ({ meta: [{ title: "Meta Tag Generator — Free SEO Tool | Pdfica" }, { name: "description", content: "Generate SEO, Open Graph, and Twitter card meta tags in one click." }] }),
+  head: () => ({ meta: [{ title: "Meta Tag Generator — Free SEO Tool | Pdfica" }, { name: "description", content: "Generate SEO, Open Graph, and Twitter card meta tags in one click." },
+      { property: "og:title", content: "Meta Tag Generator — Free SEO Tool | Pdfica" },
+      { property: "og:description", content: "Generate SEO, Open Graph, and Twitter card meta tags in one click." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

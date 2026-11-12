@@ -6,7 +6,12 @@ import { getTool } from "@/lib/tools";
 const tool = getTool("json-to-csv")!;
 
 export const Route = createFileRoute("/tools/json-to-csv")({
-  head: () => ({ meta: [{ title: "JSON to CSV — Free | Pdfica" }, { name: "description", content: "Convert a JSON array to a CSV file." }] }),
+  head: () => ({ meta: [{ title: "JSON to CSV — Free | Pdfica" }, { name: "description", content: "Convert a JSON array to a CSV file." },
+      { property: "og:title", content: "JSON to CSV — Free | Pdfica" },
+      { property: "og:description", content: "Convert a JSON array to a CSV file." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: () => (
     <ToolWorkspace title={tool.name} description={tool.description} accept={tool.accept} multi={false} cta="Convert"
       process={async ([file]) => {

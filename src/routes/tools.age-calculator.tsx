@@ -44,6 +44,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/age-calculator")({
-  head: () => ({ meta: [{ title: "Age Calculator — Free Online | Pdfica" }, { name: "description", content: "Calculate your exact age in years, months, days, hours and minutes." }] }),
+  head: () => ({ meta: [{ title: "Age Calculator — Free Online | Pdfica" }, { name: "description", content: "Calculate your exact age in years, months, days, hours and minutes." },
+      { property: "og:title", content: "Age Calculator — Free Online | Pdfica" },
+      { property: "og:description", content: "Calculate your exact age in years, months, days, hours and minutes." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

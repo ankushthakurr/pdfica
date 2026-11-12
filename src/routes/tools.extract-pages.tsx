@@ -27,6 +27,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/extract-pages")({
-  head: () => ({ meta: [{ title: "Extract PDF Pages — Free | Pdfica" }, { name: "description", content: "Extract specific pages from a PDF in your browser." }] }),
+  head: () => ({ meta: [{ title: "Extract PDF Pages — Free | Pdfica" }, { name: "description", content: "Extract specific pages from a PDF in your browser." },
+      { property: "og:title", content: "Extract PDF Pages — Free | Pdfica" },
+      { property: "og:description", content: "Extract specific pages from a PDF in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

@@ -6,7 +6,12 @@ import { getTool } from "@/lib/tools";
 const tool = getTool("repair")!;
 
 export const Route = createFileRoute("/tools/repair")({
-  head: () => ({ meta: [{ title: "Repair PDF — Free Online | Pdfica" }, { name: "description", content: "Best-effort in-browser repair of slightly corrupted PDFs." }] }),
+  head: () => ({ meta: [{ title: "Repair PDF — Free Online | Pdfica" }, { name: "description", content: "Best-effort in-browser repair of slightly corrupted PDFs." },
+      { property: "og:title", content: "Repair PDF — Free Online | Pdfica" },
+      { property: "og:description", content: "Best-effort in-browser repair of slightly corrupted PDFs." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: () => (
     <ToolWorkspace title={tool.name} description={tool.description} accept={tool.accept} multi={false} cta="Repair"
       process={async ([file]) => {

@@ -32,6 +32,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/percentage-calculator")({
-  head: () => ({ meta: [{ title: "Percentage Calculator — Free | Pdfica" }, { name: "description", content: "Three percentage calculators in one: percent of, percent change, X is what % of Y." }] }),
+  head: () => ({ meta: [{ title: "Percentage Calculator — Free | Pdfica" }, { name: "description", content: "Three percentage calculators in one: percent of, percent change, X is what % of Y." },
+      { property: "og:title", content: "Percentage Calculator — Free | Pdfica" },
+      { property: "og:description", content: "Three percentage calculators in one: percent of, percent change, X is what % of Y." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

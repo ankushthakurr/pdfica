@@ -64,6 +64,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/yt-thumbnail")({
-  head: () => ({ meta: [{ title: "YouTube Thumbnail Downloader — Free | Pdfica" }, { name: "description", content: "Download YouTube video thumbnails in HD, SD or HQ resolutions, free." }] }),
+  head: () => ({ meta: [{ title: "YouTube Thumbnail Downloader — Free | Pdfica" }, { name: "description", content: "Download YouTube video thumbnails in HD, SD or HQ resolutions, free." },
+      { property: "og:title", content: "YouTube Thumbnail Downloader — Free | Pdfica" },
+      { property: "og:description", content: "Download YouTube video thumbnails in HD, SD or HQ resolutions, free." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

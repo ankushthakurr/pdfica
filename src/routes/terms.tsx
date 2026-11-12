@@ -7,6 +7,9 @@ export const Route = createFileRoute("/terms")({
       { name: "description", content: "Terms of service for using the free Pdfica PDF tools." },
       { property: "og:title", content: "Terms of Service — Pdfica" },
       { property: "og:description", content: "The rules for using Pdfica." },
+    
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: Terms,
@@ -16,7 +19,7 @@ function Terms() {
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 py-12 md:py-16">
       <h1 className="font-display text-4xl md:text-5xl font-bold">Terms of Service</h1>
-      <p className="mt-2 text-sm text-muted-foreground">Last updated: May 28, 2026</p>
+      <p className="mt-2 text-sm text-muted-foreground">Last updated: November 12, 2026</p>
 
       <section className="mt-8 space-y-4 text-foreground/85 leading-relaxed">
         <p>
@@ -25,12 +28,12 @@ function Terms() {
 
         <h2 className="mt-8 font-display text-2xl font-bold text-foreground">1. What Pdfica is</h2>
         <p>
-          Pdfica is a collection of browser-based PDF utilities. All tools run on your own device using JavaScript. We do not operate a server-side document pipeline and do not receive any of the files you process.
+          Pdfica is a collection of browser-based PDF utilities. Document and image tools run on your own device using JavaScript. Optional downloadable speech uses a third-party service. We do not operate a server-side document pipeline and do not receive any of the files you process.
         </p>
 
         <h2 className="mt-8 font-display text-2xl font-bold text-foreground">2. Free of charge</h2>
         <p>
-          Every tool on Pdfica is free to use. There is no subscription, no signup, no daily limit, and no watermark on output files. We may add optional paid features in the future; if we do, the core free tools will remain free.
+          Every tool on Pdfica is free to use. There is no subscription, no signup, no daily limit, and no watermark on output files. Supported file formats and per-batch safety limits depend on the tool and your device; there are no daily usage quotas.
         </p>
 
         <h2 className="mt-8 font-display text-2xl font-bold text-foreground">3. Acceptable use</h2>
@@ -40,7 +43,7 @@ function Terms() {
 
         <h2 className="mt-8 font-display text-2xl font-bold text-foreground">4. No warranty</h2>
         <p>
-          Pdfica is provided "as is" without warranties of any kind. We do our best to make every tool reliable, but we cannot guarantee that conversions or operations will be lossless or perfect for every input. Always keep a backup of the original file before processing.
+          Pdfica is provided "as is" without warranties of any kind. We do our best to make every tool reliable, but we cannot guarantee that conversions or operations will be lossless or perfect for every input. Always keep a backup of the original file before processing. Office conversions extract text and may not preserve complex layouts. PDF/A metadata rewriting does not certify archival conformance. Password prompts are not PDF encryption, and visual blackouts alone do not remove underlying content; do not rely on these for sensitive documents.
         </p>
 
         <h2 className="mt-8 font-display text-2xl font-bold text-foreground">5. Limitation of liability</h2>

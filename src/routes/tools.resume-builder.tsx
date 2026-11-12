@@ -77,6 +77,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/resume-builder")({
-  head: () => ({ meta: [{ title: "Free Resume Builder — PDF Resume in Minutes | Pdfica" }, { name: "description", content: "Build a clean, ATS-friendly resume and download as PDF — free, no sign-up." }] }),
+  head: () => ({ meta: [{ title: "Free Resume Builder — PDF Resume in Minutes | Pdfica" }, { name: "description", content: "Build a clean, ATS-friendly resume and download as PDF — free, no sign-up." },
+      { property: "og:title", content: "Free Resume Builder — PDF Resume in Minutes | Pdfica" },
+      { property: "og:description", content: "Build a clean, ATS-friendly resume and download as PDF — free, no sign-up." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

@@ -12,6 +12,9 @@ export const Route = createFileRoute("/tools/compress")({
       { name: "description", content: "Compress a PDF in your browser. Re-encodes images and strips metadata for a smaller file." },
       { property: "og:title", content: "Compress PDF — Pdfica" },
       { property: "og:description", content: "Reduce PDF file size without leaving your browser." },
+    
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => (

@@ -25,6 +25,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/image-crop")({
-  head: () => ({ meta: [{ title: "Crop Image — Free | Pdfica" }, { name: "description", content: "Crop image margins in your browser." }] }),
+  head: () => ({ meta: [{ title: "Crop Image — Free | Pdfica" }, { name: "description", content: "Crop image margins in your browser." },
+      { property: "og:title", content: "Crop Image — Free | Pdfica" },
+      { property: "og:description", content: "Crop image margins in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

@@ -12,6 +12,9 @@ export const Route = createFileRoute("/tools/word-to-pdf")({
       { name: "description", content: "Convert .docx Word documents into clean PDFs directly in your browser." },
       { property: "og:title", content: "Word to PDF — Pdfica" },
       { property: "og:description", content: "Turn Word documents into PDFs without leaving your browser." },
+    
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: () => (

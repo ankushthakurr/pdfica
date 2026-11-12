@@ -46,6 +46,9 @@ export const Route = createFileRoute("/tools/unlock")({
       { name: "description", content: "Remove password protection from PDFs you own, directly in your browser. Nothing is uploaded." },
       { property: "og:title", content: "Unlock PDF — Pdfica" },
       { property: "og:description", content: "Remove the password from a PDF you own. 100% private." },
+    
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: UnlockPage,

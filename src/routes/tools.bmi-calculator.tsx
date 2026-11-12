@@ -35,6 +35,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/bmi-calculator")({
-  head: () => ({ meta: [{ title: "BMI Calculator — Free Online | Pdfica" }, { name: "description", content: "Free Body Mass Index calculator with metric and imperial units." }] }),
+  head: () => ({ meta: [{ title: "BMI Calculator — Free Online | Pdfica" }, { name: "description", content: "Free Body Mass Index calculator with metric and imperial units." },
+      { property: "og:title", content: "BMI Calculator — Free Online | Pdfica" },
+      { property: "og:description", content: "Free Body Mass Index calculator with metric and imperial units." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

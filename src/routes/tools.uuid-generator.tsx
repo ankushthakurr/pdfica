@@ -22,6 +22,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/uuid-generator")({
-  head: () => ({ meta: [{ title: "UUID Generator — Free Online | Pdfica" }, { name: "description", content: "Generate v4 UUIDs in your browser. Bulk-generate any number." }] }),
+  head: () => ({ meta: [{ title: "UUID Generator — Free Online | Pdfica" }, { name: "description", content: "Generate v4 UUIDs in your browser. Bulk-generate any number." },
+      { property: "og:title", content: "UUID Generator — Free Online | Pdfica" },
+      { property: "og:description", content: "Generate v4 UUIDs in your browser. Bulk-generate any number." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

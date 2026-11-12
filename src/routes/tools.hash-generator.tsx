@@ -44,6 +44,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/hash-generator")({
-  head: () => ({ meta: [{ title: "Hash Generator — Free | Pdfica" }, { name: "description", content: "Compute SHA-1, SHA-256 and SHA-512 hashes in your browser." }] }),
+  head: () => ({ meta: [{ title: "Hash Generator — Free | Pdfica" }, { name: "description", content: "Compute SHA-1, SHA-256 and SHA-512 hashes in your browser." },
+      { property: "og:title", content: "Hash Generator — Free | Pdfica" },
+      { property: "og:description", content: "Compute SHA-1, SHA-256 and SHA-512 hashes in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

@@ -27,6 +27,9 @@ export const Route = createFileRoute("/tools/organize")({
       { name: "description", content: "Visually reorder, rotate, or delete pages of your PDF, then download the result. Everything stays in your browser." },
       { property: "og:title", content: "Organize PDF — Pdfica" },
       { property: "og:description", content: "Drag-and-drop pages to reorganize your PDF, 100% private." },
+    
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
   }),
   component: OrganizePage,

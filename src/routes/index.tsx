@@ -18,8 +18,11 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content: "Every PDF tool you need, working entirely in your browser.",
       },
+    
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [{ rel: "canonical", href: "https://pdfica.lovable.app/" }],
   }),
   component: Home,
 });

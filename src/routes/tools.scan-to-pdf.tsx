@@ -3,7 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { scanToPdf } from "@/lib/pdf-tools";
 import { downloadBlob } from "@/lib/format";
-import { Camera, Loader2, Download, AlertTriangle, Trash2, RefreshCw } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { UploadCloud, Camera, Loader2, Download, AlertTriangle, Trash2, RefreshCw } from "lucide-react";
 
 function Page() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -26,9 +27,25 @@ function Page() {
     return () => { stream?.getTracks().forEach((t) => t.stop()); };
   }, []);
 
+  const addImages = async (files: FileList | File[]) => {
+    setError(null); setBlob(null);
+    for (const file of Array.from(files)) {
+      if (!file.type.startsWith("image/") || !file.size || file.size > 100 * 1024 * 1024) { setError("Choose non-empty images up to 100 MB each."); continue; }
+      try {
+        const bitmap = await createImageBitmap(file);
+        const canvas = document.createElement("canvas");
+        canvas.width = bitmap.width; canvas.height = bitmap.height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) throw new Error("Image processing unavailable.");
+        ctx.drawImage(bitmap, 0, 0); bitmap.close();
+        setPages((previous) => [...previous, canvas.toDataURL("image/jpeg", 0.92)]);
+      } catch { setError(`Could not read ${file.name}.`); }
+    }
+  };
   const capture = () => {
     const v = videoRef.current;
-    if (!v) return;
+    if (!v || !v.videoWidth || !v.videoHeight) return;
+    setBlob(null);
     const canvas = document.createElement("canvas");
     canvas.width = v.videoWidth; canvas.height = v.videoHeight;
     canvas.getContext("2d")!.drawImage(v, 0, 0);
@@ -51,10 +68,11 @@ function Page() {
 
       <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
         <div className="space-y-4">
-          <div className="relative overflow-hidden rounded-3xl border bg-black aspect-[4/3]">
+          <label onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); if (!busy) void addImages(e.dataTransfer.files); }} className="block cursor-pointer rounded-lg border-2 border-dashed p-6 text-center hover:border-primary"><input type="file" accept="image/*" multiple disabled={busy} className="hidden" onChange={(e) => { if (e.target.files) void addImages(e.target.files); e.target.value = ""; }} /><UploadCloud className="mx-auto mb-2 text-primary" /><span className="text-sm font-medium">Add scanned images</span></label>
+          <div className="relative overflow-hidden rounded-3xl border bg-secondary aspect-[4/3]">
             <video ref={videoRef} autoPlay playsInline muted className="h-full w-full object-cover" />
             {!streaming && (
-              <div className="absolute inset-0 grid place-items-center text-white/70 text-sm">
+              <div className="absolute inset-0 grid place-items-center text-secondary-foreground/70 text-sm">
                 <Loader2 className="h-6 w-6 animate-spin" />
               </div>
             )}
@@ -67,10 +85,10 @@ function Page() {
           )}
 
           <div className="flex justify-center gap-3">
-            <button onClick={capture} disabled={!streaming}
+            <Button onClick={capture} disabled={!streaming}
               className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-glow disabled:opacity-40 enabled:hover:scale-[1.03] transition-transform">
               <Camera className="h-4 w-4" /> Capture page
-            </button>
+            </Button>
           </div>
 
           <AnimatePresence>
@@ -81,21 +99,21 @@ function Page() {
                   {pages.map((src, i) => (
                     <motion.div key={i} initial={{ scale: 0.85, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="relative group">
                       <img src={src} alt={`Page ${i + 1}`} className="w-full rounded-lg border" />
-                      <button onClick={() => setPages((p) => p.filter((_, idx) => idx !== i))}
-                        className="absolute top-1 right-1 rounded-full bg-black/60 p-1 text-white opacity-0 group-hover:opacity-100 transition-opacity">
+                      <Button onClick={() => { setPages((p) => p.filter((_, idx) => idx !== i)); setBlob(null); }}
+                        className="absolute top-1 right-1 rounded-full bg-secondary/60 p-1 text-primary-foreground opacity-0 group-hover:opacity-100 transition-opacity">
                         <Trash2 className="h-3 w-3" />
-                      </button>
+                      </Button>
                     </motion.div>
                   ))}
                 </div>
                 <div className="mt-4 flex justify-end gap-2">
-                  <button onClick={() => setPages([])} className="inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold hover:bg-muted">
+                  <Button onClick={() => { setPages([]); setBlob(null); }} className="inline-flex items-center gap-1.5 rounded-full border px-4 py-2 text-xs font-semibold hover:bg-muted">
                     <RefreshCw className="h-3.5 w-3.5" /> Clear all
-                  </button>
-                  <button onClick={build} disabled={busy}
+                  </Button>
+                  <Button onClick={build} disabled={busy}
                     className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2 text-xs font-semibold text-primary-foreground shadow-glow disabled:opacity-40">
                     {busy && <Loader2 className="h-3.5 w-3.5 animate-spin" />}Build PDF
-                  </button>
+                  </Button>
                 </div>
               </motion.div>
             )}
@@ -103,10 +121,10 @@ function Page() {
 
           {blob && (
             <motion.div initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} className="flex justify-end">
-              <button onClick={() => downloadBlob(blob, "scan.pdf")}
-                className="inline-flex items-center gap-2 rounded-full bg-success px-6 py-3 text-sm font-semibold text-white hover:scale-[1.03] transition-transform">
+              <Button onClick={() => downloadBlob(blob, "scan.pdf")}
+                className="inline-flex items-center gap-2 rounded-full bg-success px-6 py-3 text-sm font-semibold text-primary-foreground hover:scale-[1.03] transition-transform">
                 <Download className="h-4 w-4" /> Download PDF
-              </button>
+              </Button>
             </motion.div>
           )}
         </div>
@@ -123,6 +141,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/scan-to-pdf")({
-  head: () => ({ meta: [{ title: "Scan to PDF — Free | Pdfica" }, { name: "description", content: "Use your device camera to scan documents into a PDF." }] }),
+  head: () => ({ meta: [{ title: "Scan to PDF — Free | Pdfica" }, { name: "description", content: "Use your device camera to scan documents into a PDF." },
+      { property: "og:title", content: "Scan to PDF — Free | Pdfica" },
+      { property: "og:description", content: "Use your device camera to scan documents into a PDF." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

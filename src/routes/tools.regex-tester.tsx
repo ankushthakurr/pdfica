@@ -43,6 +43,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/regex-tester")({
-  head: () => ({ meta: [{ title: "Regex Tester — Free Online | Pdfica" }, { name: "description", content: "Test JavaScript regex patterns live with match highlighting. Free and private." }] }),
+  head: () => ({ meta: [{ title: "Regex Tester — Free Online | Pdfica" }, { name: "description", content: "Test JavaScript regex patterns live with match highlighting. Free and private." },
+      { property: "og:title", content: "Regex Tester — Free Online | Pdfica" },
+      { property: "og:description", content: "Test JavaScript regex patterns live with match highlighting. Free and private." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

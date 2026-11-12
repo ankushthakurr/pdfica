@@ -29,6 +29,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/n-up")({
-  head: () => ({ meta: [{ title: "N-up PDF — Free | Pdfica" }, { name: "description", content: "Place 2 or 4 source pages on every A4 sheet." }] }),
+  head: () => ({ meta: [{ title: "N-up PDF — Free | Pdfica" }, { name: "description", content: "Place 2 or 4 source pages on every A4 sheet." },
+      { property: "og:title", content: "N-up PDF — Free | Pdfica" },
+      { property: "og:description", content: "Place 2 or 4 source pages on every A4 sheet." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

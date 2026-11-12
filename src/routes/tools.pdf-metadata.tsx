@@ -6,7 +6,12 @@ import { getTool } from "@/lib/tools";
 const tool = getTool("pdf-metadata")!;
 
 export const Route = createFileRoute("/tools/pdf-metadata")({
-  head: () => ({ meta: [{ title: "PDF Metadata Viewer — Free | Pdfica" }, { name: "description", content: "Inspect PDF metadata: title, author, page count and more." }] }),
+  head: () => ({ meta: [{ title: "PDF Metadata Viewer — Free | Pdfica" }, { name: "description", content: "Inspect PDF metadata: title, author, page count and more." },
+      { property: "og:title", content: "PDF Metadata Viewer — Free | Pdfica" },
+      { property: "og:description", content: "Inspect PDF metadata: title, author, page count and more." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: () => (
     <ToolWorkspace title={tool.name} description={tool.description} accept={tool.accept} multi={false} cta="Inspect"
       process={async ([file]) => {

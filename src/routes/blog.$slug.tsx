@@ -14,7 +14,9 @@ export const Route = createFileRoute("/blog/$slug")({
         { property: "og:title", content: p.title },
         { property: "og:description", content: p.excerpt },
         { property: "og:image", content: p.hero },
+        { name: "twitter:image", content: p.hero },
         { property: "og:type", content: "article" },
+        { name: "twitter:card", content: "summary_large_image" },
       ],
     };
   },
@@ -72,7 +74,9 @@ function renderBody(body: string) {
 }
 
 function PostPage() {
-  const { post } = Route.useLoaderData();
+  const { slug } = Route.useParams();
+  const post = getPost(slug);
+  if (!post) throw notFound();
   const related = TOOLS.filter((t) => post.relatedTools.includes(t.slug));
   return (
     <article className="mx-auto max-w-3xl px-4 sm:px-6 py-12 md:py-16">

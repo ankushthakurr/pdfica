@@ -26,6 +26,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/image-compress")({
-  head: () => ({ meta: [{ title: "Compress Image — Free | Pdfica" }, { name: "description", content: "Compress JPG, PNG, or WebP images in your browser." }] }),
+  head: () => ({ meta: [{ title: "Compress Image — Free | Pdfica" }, { name: "description", content: "Compress JPG, PNG, or WebP images in your browser." },
+      { property: "og:title", content: "Compress Image — Free | Pdfica" },
+      { property: "og:description", content: "Compress JPG, PNG, or WebP images in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });

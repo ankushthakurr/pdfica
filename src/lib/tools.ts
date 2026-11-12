@@ -23,10 +23,10 @@ export const TOOLS: Tool[] = [
   { slug: "n-up", name: "N-up PDF", tagline: "Multiple pages on one sheet.", description: "Print-friendly layout: place 2 or 4 source pages on every A4 sheet.", category: "organize", accept: "application/pdf", multi: false, icon: "Grid2x2", to: "/tools/n-up" },
 
   // OPTIMIZE
-  { slug: "compress", name: "Compress PDF", tagline: "Reduce file size, keep great quality.", description: "Re-encode embedded images and strip metadata to shrink your PDF.", category: "optimize", accept: "application/pdf", multi: false, icon: "Minimize2", to: "/tools/compress" },
+  { slug: "compress", name: "Compress PDF", tagline: "Reduce file size, keep great quality.", description: "Re-save PDF structure and strip metadata. Size reduction varies by document.", category: "optimize", accept: "application/pdf", multi: false, icon: "Minimize2", to: "/tools/compress" },
   { slug: "repair", name: "Repair PDF", tagline: "Fix broken or damaged PDFs.", description: "Best-effort in-browser rebuild for slightly corrupted PDF files.", category: "optimize", accept: "application/pdf", multi: false, icon: "Wrench", to: "/tools/repair" },
   { slug: "ocr", name: "OCR PDF", tagline: "Extract text from scanned PDFs.", description: "Run optical character recognition right in your browser — slower, but free and private.", category: "optimize", accept: "application/pdf", multi: false, icon: "ScanText", to: "/tools/ocr" },
-  { slug: "pdf-to-pdfa", name: "PDF to PDF/A", tagline: "Archive-ready PDF format.", description: "Re-save your PDF with PDF/A friendly metadata and structure (best-effort).", category: "optimize", accept: "application/pdf", multi: false, icon: "Archive", to: "/tools/pdf-to-pdfa" },
+  { slug: "pdf-to-pdfa", name: "PDF to PDF/A", tagline: "Archive-ready PDF format.", description: "Re-save PDF metadata for archival preparation. Output is not certified PDF/A.", category: "optimize", accept: "application/pdf", multi: false, icon: "Archive", to: "/tools/pdf-to-pdfa" },
   { slug: "grayscale-pdf", name: "Grayscale PDF", tagline: "Convert to black & white.", description: "Desaturate every page of a PDF for printing in monochrome.", category: "optimize", accept: "application/pdf", multi: false, icon: "Contrast", to: "/tools/grayscale-pdf" },
   { slug: "flatten-pdf", name: "Flatten PDF", tagline: "Rasterize every page.", description: "Flatten forms, annotations and layers by rasterizing each page.", category: "optimize", accept: "application/pdf", multi: false, icon: "Layers3", to: "/tools/flatten-pdf" },
   { slug: "pdf-metadata", name: "PDF Metadata", tagline: "View PDF info & properties.", description: "Inspect title, author, page count, creation date and other metadata.", category: "optimize", accept: "application/pdf", multi: false, icon: "Info", to: "/tools/pdf-metadata" },
@@ -57,7 +57,7 @@ export const TOOLS: Tool[] = [
   { slug: "redact", name: "Redact PDF", tagline: "Black out sensitive areas.", description: "Cover sensitive content with opaque black rectangles before sharing.", category: "edit", accept: "application/pdf", multi: false, icon: "EyeOff", to: "/tools/redact" },
 
   // SECURITY
-  { slug: "protect", name: "Protect PDF", tagline: "Add a password to your PDF.", description: "Encrypt your PDF with a password so only the right people can open it.", category: "security", accept: "application/pdf", multi: false, icon: "Lock", to: "/tools/protect" },
+  { slug: "protect", name: "Protect PDF", tagline: "Add a reader password prompt.", description: "Add a JavaScript password prompt for compatible readers. This does not encrypt the PDF.", category: "security", accept: "application/pdf", multi: false, icon: "Lock", to: "/tools/protect" },
   { slug: "unlock", name: "Unlock PDF", tagline: "Remove password protection from PDFs.", description: "Strip the open-password from a PDF you own. The file never leaves your device.", category: "security", accept: "application/pdf", multi: false, icon: "Unlock", to: "/tools/unlock" },
   { slug: "compare", name: "Compare PDF", tagline: "See what changed between two PDFs.", description: "Run a side-by-side text diff between two PDFs and download the report.", category: "security", accept: "application/pdf", multi: true, icon: "GitCompare", to: "/tools/compare" },
 

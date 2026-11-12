@@ -44,6 +44,11 @@ function Page() {
 }
 
 export const Route = createFileRoute("/tools/ai-summarizer")({
-  head: () => ({ meta: [{ title: "AI Text Summarizer — Free Online | Pdfica" }, { name: "description", content: "Free AI text summarizer. Paste any article and get a concise summary instantly in your browser." }] }),
+  head: () => ({ meta: [{ title: "AI Text Summarizer — Free Online | Pdfica" }, { name: "description", content: "Free AI text summarizer. Paste any article and get a concise summary instantly in your browser." },
+      { property: "og:title", content: "AI Text Summarizer — Free Online | Pdfica" },
+      { property: "og:description", content: "Free AI text summarizer. Paste any article and get a concise summary instantly in your browser." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ] }),
   component: Page,
 });
