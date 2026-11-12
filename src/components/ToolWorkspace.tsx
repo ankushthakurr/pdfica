@@ -5,8 +5,9 @@ import { formatBytes, deliverFile } from "@/lib/format";
 
 import { Button } from "@/components/ui/button";
 import { convertSequentially, prepareArchive, type OutputFile } from "@/lib/batch";
+import { ResultImages } from "@/components/ResultImages";
 
-export type ToolResult = { blob: Blob; filename: string } | null;
+export type ToolResult = OutputFile | null;
 export type FileReporter = (index: number, phase: string, pct?: number) => void;
 
 interface Props {
@@ -395,6 +396,7 @@ export function ToolWorkspace({
                   <CheckCircle2 className="h-8 w-8" />
                 </motion.div>
                 <h3 className="font-display text-2xl font-semibold">{outputs.length > 1 ? `${outputs.length} files ready` : "Done!"}</h3>
+                {outputs.map((output, i) => output.images ? <ResultImages key={i} images={output.images} /> : null)}
                 <p className="mt-1 break-all text-sm text-muted-foreground">
                   {result.filename} · {formatBytes(result.blob.size)}
                 </p>

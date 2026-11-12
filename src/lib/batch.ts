@@ -1,4 +1,4 @@
-export type OutputFile = { blob: Blob; filename: string };
+export type OutputFile = { blob: Blob; filename: string; images?: OutputFile[] };
 export type BatchReport = (index: number, phase: string, pct?: number) => void;
 
 export async function convertSequentially(
