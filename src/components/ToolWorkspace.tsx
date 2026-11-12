@@ -1,7 +1,10 @@
-import { useCallback, useRef, useState, type ReactNode } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useCallback, useRef, useState, useEffect, type ReactNode } from "react";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { UploadCloud, FileText, X, Loader2, CheckCircle2, Download, AlertTriangle, Sparkles } from "lucide-react";
-import { formatBytes, downloadBlob } from "@/lib/format";
+import { formatBytes, deliverFile } from "@/lib/format";
+
+import { Button } from "@/components/ui/button";
+import { convertSequentially, prepareArchive, type OutputFile } from "@/lib/batch";
 
 export type ToolResult = { blob: Blob; filename: string } | null;
 export type FileReporter = (index: number, phase: string, pct?: number) => void;
@@ -11,6 +14,8 @@ interface Props {
   description: string;
   accept: string;
   multi: boolean;
+  /** Combine inputs together; false converts each independently. */
+  batch?: boolean;
   cta?: string;
   /** Auto-start processing as soon as valid files are dropped/selected. Defaults to true for single-file tools. */
   autoProcess?: boolean;
@@ -42,6 +47,7 @@ export function ToolWorkspace({
   description,
   accept,
   multi,
+  batch = !multi,
   cta = "Process files",
   autoProcess,
   sidebar,
@@ -59,13 +65,21 @@ export function ToolWorkspace({
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<ToolResult>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const autoOn = autoProcess ?? !multi;
+  const autoOn = autoProcess ?? (batch && !sidebar);
+  const multiple = batch || multi;
+  const limit = maxFiles ?? (batch ? 100 : undefined);
+  const running = useRef(false);
+  const reducedMotion = useReducedMotion();
+  const [outputs, setOutputs] = useState<OutputFile[]>([]);
+  useEffect(() => { if (inputRef.current && !files.length) inputRef.current.value = ""; }, [files.length]);
 
   const accepted = accept.split(",").map((s) => s.trim());
 
   const isAccepted = (f: File) =>
     accepted.some((a) =>
-      a.startsWith(".") ? f.name.toLowerCase().endsWith(a) : f.type === a || a === "*/*",
+      a.startsWith(".") ? f.name.toLowerCase().endsWith(a.toLowerCase()) :
+      f.type === a || a === "*/*" || (a.endsWith("/*") && f.type.startsWith(a.slice(0, -1))) ||
+      ({ "application/pdf": ["pdf"], "image/png": ["png"], "image/jpeg": ["jpg", "jpeg"], "image/webp": ["webp"] }[a]?.includes(f.name.split(".").pop()?.toLowerCase() ?? "") ?? false),
     );
 
   const validateFiles = (list: File[]): { ok: File[]; errors: string[] } => {
@@ -79,6 +93,7 @@ export function ToolWorkspace({
         errors.push(`"${f.name}" is a ${label} — only ${accepted.map(a => a.replace(/^\./, "").toUpperCase()).join(", ")} files are accepted here.`);
         continue;
       }
+      if (!f.size) { errors.push(`"${f.name}" is empty.`); continue; }
       if (f.size > maxSizeBytes) {
         errors.push(`"${f.name}" is ${formatBytes(f.size)} — the maximum is ${formatBytes(maxSizeBytes)} per file.`);
         continue;
@@ -86,8 +101,8 @@ export function ToolWorkspace({
       ok.push(f);
     }
 
-    if (multi && maxFiles && ok.length > maxFiles) {
-      errors.push(`You can upload up to ${maxFiles} files. You selected ${ok.length}.`);
+    if (multiple && limit && ok.length > limit) {
+      errors.push(`You can upload up to ${limit} files. You selected ${ok.length}.`);
       return { ok: [], errors };
     }
 
@@ -96,7 +111,10 @@ export function ToolWorkspace({
 
   const runProcess = useCallback(
     async (toRun: File[]) => {
+      if (running.current || !toRun.length) return;
+      running.current = true;
       setBusy(true);
+      setOutputs([]);
       setError(null);
       setResult(null);
       setPhase("Reading file…");
@@ -114,7 +132,17 @@ export function ToolWorkspace({
         });
       };
       try {
-        const r = await process(toRun, report);
+        let r: ToolResult;
+        if (batch) {
+          const converted = await convertSequentially(toRun, (file, perFileReport) => process([file], perFileReport), report);
+          setOutputs(converted.outputs);
+          if (converted.errors.length) setError(converted.errors.join(" "));
+          setPhase("Preparing download…");
+          r = await prepareArchive(converted.outputs);
+        } else {
+          r = await process(toRun, report);
+          if (r) { setOutputs([r]); toRun.forEach((_, i) => report(i, "Done", 100)); }
+        }
         if (r) {
           setPhase("Finalizing…");
           setResult(r);
@@ -124,15 +152,17 @@ export function ToolWorkspace({
       } finally {
         clearInterval(tick);
         clearTimeout(phaseTimer);
+        running.current = false;
         setBusy(false);
         setPhase("");
       }
     },
-    [process],
+    [process, batch],
   );
 
   const handleFiles = useCallback(
     (list: FileList | File[]) => {
+      if (running.current) return;
       const { ok, errors } = validateFiles(Array.from(list));
       if (errors.length) {
         setError(errors.join(" "));
@@ -142,11 +172,14 @@ export function ToolWorkspace({
       }
       setResult(null);
       const next = (() => {
-        if (!multi) return ok.slice(0, 1);
+        if (!multiple) return ok.slice(0, 1);
         const combined = [...files, ...ok];
-        return maxFiles ? combined.slice(0, maxFiles) : combined;
+        return combined;
       })();
+      if (limit && next.length > limit) { setError(`You can upload up to ${limit} files per batch.`); return; }
       setFiles(next);
+      setFileProgress([]);
+      setOutputs([]);
       if (autoOn && next.length && !errors.length) {
         // Kick off processing immediately — no extra click needed.
         void runProcess(next);
@@ -174,7 +207,10 @@ export function ToolWorkspace({
 
 
   const reset = () => {
+    if (running.current) return;
     setFiles([]);
+    setOutputs([]);
+    setFileProgress([]);
     setResult(null);
     setError(null);
   };
@@ -198,7 +234,7 @@ export function ToolWorkspace({
               onDragLeave={() => setDragOver(false)}
               onDrop={onDrop}
               animate={{ scale: dragOver ? 1.01 : 1 }}
-              className={`relative rounded-3xl border-2 border-dashed p-10 md:p-16 text-center transition-colors ${
+              className={`relative rounded-lg border-2 border-dashed p-10 md:p-16 text-center transition-colors ${
                 dragOver ? "border-primary bg-primary/5" : "border-border bg-surface"
               }`}
             >
@@ -206,44 +242,45 @@ export function ToolWorkspace({
                 ref={inputRef}
                 type="file"
                 accept={accept}
-                multiple={multi}
+                multiple={multiple}
+                disabled={busy}
                 onChange={(e) => e.target.files && handleFiles(e.target.files)}
                 className="hidden"
               />
               <motion.div
                 animate={{ y: dragOver ? -6 : 0 }}
-                className="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-2xl bg-primary/10 text-primary"
+                className="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-lg bg-primary/10 text-primary"
               >
                 <UploadCloud className="h-8 w-8" />
               </motion.div>
-              <h3 className="font-display text-2xl font-semibold">Drop {multi ? "files" : "a file"} here</h3>
+              <h3 className="font-display text-2xl font-semibold">Drop {multiple ? "files" : "a file"} here</h3>
               <p className="mt-1 text-sm text-muted-foreground">
-                {emptyHint ?? `Or click to browse your device. ${multi ? "Multiple files allowed." : ""}`}
+                {emptyHint ?? `Or click to browse your device. ${multiple ? "Multiple files allowed." : ""}`}
               </p>
               <p className="mt-2 text-xs text-muted-foreground/70">
                 Max {formatBytes(maxSizeBytes)} per file
-                {multi && maxFiles ? ` · up to ${maxFiles} files` : ""}
-                {multi && !maxFiles ? " · multiple files allowed" : ""}
+                {multiple && limit ? ` · up to ${limit} files` : ""}
+                {multiple && !limit ? " · multiple files allowed" : ""}
               </p>
-              <button
-                onClick={() => inputRef.current?.click()}
+              <Button
+                disabled={busy} onClick={() => inputRef.current?.click()}
                 className="mt-6 inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow transition-transform hover:scale-[1.03]"
               >
-                Select {multi ? "files" : "file"}
-              </button>
+                Select {multiple ? "files" : "file"}
+              </Button>
             </motion.div>
           )}
 
           {/* File list */}
-          {files.length > 0 && !result && (
-            <div className="rounded-2xl border bg-surface p-4">
+          {files.length > 0 && (
+            <div className="rounded-lg border bg-surface p-4">
               <div className="mb-2 flex items-center justify-between">
                 <p className="text-sm font-medium">
-                  {files.length} file{files.length > 1 ? "s" : ""} ready
+                  {files.length} file{files.length > 1 ? "s" : ""} {busy ? "in queue" : result ? "processed" : "ready"}
                 </p>
-                <button onClick={reset} className="text-xs text-muted-foreground hover:text-foreground">
+                <Button disabled={busy} variant="ghost" onClick={reset} className="text-xs text-muted-foreground hover:text-foreground">
                   Clear
-                </button>
+                </Button>
               </div>
               <ul className="divide-y">
                 <AnimatePresence initial={false}>
@@ -260,15 +297,15 @@ export function ToolWorkspace({
                       </div>
                       <div className="min-w-0 flex-1">
                         <p className="truncate text-sm font-medium">{f.name}</p>
-                        <p className="text-xs text-muted-foreground">{formatBytes(f.size)}</p>
+                        <p className="text-xs text-muted-foreground">{formatBytes(f.size)} · {fileProgress[i]?.phase ?? "Ready"}</p>
                       </div>
-                      <button
-                        onClick={() => setFiles((p) => p.filter((_, idx) => idx !== i))}
+                      <Button
+                        disabled={busy} variant="ghost" size="icon" onClick={() => { setFiles((p) => p.filter((_, idx) => idx !== i)); setResult(null); setOutputs([]); setFileProgress([]); }}
                         className="rounded-md p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
                         aria-label="Remove"
                       >
                         <X className="h-4 w-4" />
-                      </button>
+                      </Button>
                     </motion.li>
                   ))}
                 </AnimatePresence>
@@ -283,7 +320,7 @@ export function ToolWorkspace({
                 initial={{ opacity: 0, y: 6 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="rounded-2xl border bg-surface p-4"
+                className="rounded-lg border bg-surface p-4"
               >
                 <div className="mb-2 flex items-center justify-between text-sm">
                   <span className="inline-flex items-center gap-2 font-medium">
@@ -297,12 +334,12 @@ export function ToolWorkspace({
                 <div className="h-1.5 w-full overflow-hidden rounded-full bg-muted">
                   <motion.div
                     className="h-full w-1/3 rounded-full bg-gradient-to-r from-primary/40 via-primary to-primary/40"
-                    animate={{ x: ["-100%", "300%"] }}
+                    animate={reducedMotion ? undefined : { x: ["-100%", "300%"] }}
                     transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
                   />
                 </div>
 
-                {multi && fileProgress.length > 1 && (
+                {multiple && fileProgress.length > 1 && (
                   <ul className="mt-4 space-y-2.5">
                     {files.map((f, i) => {
                       const fp = fileProgress[i] ?? { phase: "Queued", pct: 0 };
@@ -334,7 +371,7 @@ export function ToolWorkspace({
 
           {/* Error */}
           {error && (
-            <div className="flex items-start gap-2 rounded-xl border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive">
+            <div role="alert" className="flex items-start gap-2 rounded-xl border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive">
               <AlertTriangle className="h-4 w-4 mt-0.5" />
               <span>{error}</span>
             </div>
@@ -347,7 +384,7 @@ export function ToolWorkspace({
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="rounded-3xl border bg-surface p-10 text-center shadow-card"
+                className="rounded-lg border bg-surface p-10 text-center shadow-card"
               >
                 <motion.div
                   initial={{ scale: 0 }}
@@ -357,23 +394,24 @@ export function ToolWorkspace({
                 >
                   <CheckCircle2 className="h-8 w-8" />
                 </motion.div>
-                <h3 className="font-display text-2xl font-semibold">Done!</h3>
-                <p className="mt-1 text-sm text-muted-foreground">
+                <h3 className="font-display text-2xl font-semibold">{outputs.length > 1 ? `${outputs.length} files ready` : "Done!"}</h3>
+                <p className="mt-1 break-all text-sm text-muted-foreground">
                   {result.filename} · {formatBytes(result.blob.size)}
                 </p>
-                <div className="mt-6 flex justify-center gap-3">
-                  <button
-                    onClick={() => downloadBlob(result.blob, result.filename)}
+                {outputs.length > 1 && <ul className="mt-5 divide-y text-left">{outputs.map((output, i) => <li key={i} className="flex items-center justify-between gap-3 py-2"><span className="truncate text-sm">{output.filename}</span><Button variant="ghost" size="icon" aria-label={`Download ${output.filename}`} onClick={() => void deliverFile(output.blob, output.filename)}><Download /></Button></li>)}</ul>}
+                <div className="mt-6 flex flex-wrap justify-center gap-3">
+                  <Button
+                    onClick={() => void deliverFile(result.blob, result.filename)}
                     className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-glow hover:scale-[1.03] transition-transform"
                   >
-                    <Download className="h-4 w-4" /> Download
-                  </button>
-                  <button
+                    <Download className="h-4 w-4" /> {outputs.length > 1 ? "Download all (ZIP)" : "Download"}
+                  </Button>
+                  <Button
                     onClick={reset}
                     className="inline-flex items-center gap-2 rounded-full border bg-surface px-6 py-3 text-sm font-semibold hover:bg-muted"
                   >
                     Start over
-                  </button>
+                  </Button>
                 </div>
               </motion.div>
             )}
@@ -382,25 +420,25 @@ export function ToolWorkspace({
           {/* Process button */}
           {!result && (
             <div className="flex justify-end">
-              <button
+              <Button
                 disabled={!files.length || busy}
                 onClick={run}
                 className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-glow disabled:opacity-40 disabled:cursor-not-allowed enabled:hover:scale-[1.03] transition-transform"
               >
                 {busy && <Loader2 className="h-4 w-4 animate-spin" />}
                 {busy ? "Working..." : cta}
-              </button>
+              </Button>
             </div>
           )}
         </div>
 
         {/* Sidebar */}
         <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-2xl border bg-surface p-5">
+          <fieldset disabled={busy} className="border-t py-5">
             <h4 className="font-display text-base font-semibold mb-3">Options</h4>
             {sidebar ?? <p className="text-sm text-muted-foreground">No options needed — just drop your file.</p>}
-          </div>
-          <div className="mt-4 rounded-2xl border bg-gradient-to-br from-primary/10 to-transparent p-5 text-sm">
+          </fieldset>
+          <div className="mt-4 rounded-lg border bg-gradient-to-br from-primary/10 to-transparent p-5 text-sm">
             <p className="font-semibold">🔒 100% private</p>
             <p className="mt-1 text-muted-foreground">
               Your files are processed entirely on your device. We never upload, store, or see them.
