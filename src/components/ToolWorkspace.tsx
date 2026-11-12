@@ -385,7 +385,7 @@ export function ToolWorkspace({
               <motion.div
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="rounded-lg border bg-surface p-10 text-center shadow-card"
+                className="rounded-lg border bg-surface p-5 sm:p-10 text-center shadow-card"
               >
                 <motion.div
                   initial={{ scale: 0 }}
@@ -409,6 +409,7 @@ export function ToolWorkspace({
                     <Download className="h-4 w-4" /> {outputs.length > 1 ? "Download all (ZIP)" : "Download"}
                   </Button>
                   <Button
+                    variant="outline"
                     onClick={reset}
                     className="inline-flex items-center gap-2 rounded-full border bg-surface px-6 py-3 text-sm font-semibold hover:bg-muted"
                   >

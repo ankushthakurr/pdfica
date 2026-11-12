@@ -16,7 +16,7 @@ function Page() {
       title={tool.name} description={tool.description} accept={tool.accept} multi={false} cta="Apply redactions"
       sidebar={
         <div className="space-y-3 text-sm">
-          <p className="text-xs text-muted-foreground">Coordinates are percentages of the page. (0,0) is top-left.</p>
+          <p className="text-xs text-destructive">Visual blackouts do not remove underlying text. Do not rely on this tool to securely remove confidential information.</p>
           {boxes.map((b, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} className="rounded-lg border p-3 space-y-2">
               <div className="flex items-center justify-between">

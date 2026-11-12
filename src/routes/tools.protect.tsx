@@ -39,8 +39,7 @@ function ProtectPage() {
           </label>
           <p className="flex items-start gap-1.5 text-xs text-muted-foreground">
             <Lock className="h-3 w-3 mt-0.5" />
-            We embed a password prompt into the PDF so viewers that support JavaScript actions
-            (Adobe Reader, Foxit) require the password to open. Keep it safe — we never see it.
+            This adds a reader prompt, not encryption. The password is embedded in the file and can be bypassed. Do not use this for confidential documents.
           </p>
         </div>
       }
