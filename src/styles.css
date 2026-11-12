@@ -37,6 +37,10 @@
   --color-ring: var(--ring);
   --color-success: var(--success);
   --color-surface: var(--surface);
+  --color-editor-paper: var(--editor-paper);
+  --color-editor-ink-black: var(--editor-ink-black);
+  --color-editor-ink-red: var(--editor-ink-red);
+  --color-editor-ink-blue: var(--editor-ink-blue);
 
   --color-tool-organize: var(--tool-organize);
   --color-tool-optimize: var(--tool-optimize);
@@ -77,6 +81,10 @@
 }
 
 :root {
+  --editor-paper: #ffffff;
+  --editor-ink-black: #171717;
+  --editor-ink-red: #c62828;
+  --editor-ink-blue: #1565c0;
   --radius: 0.875rem;
 
   /* #F7FAFC */
@@ -146,6 +154,12 @@
   }
   h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: 0; }
 }
+
+.pdf-editor-sheet { background: var(--editor-paper); }
+.editor-ink-black { background: var(--editor-ink-black); }
+.editor-ink-red { background: var(--editor-ink-red); }
+.editor-ink-blue { background: var(--editor-ink-blue); }
+.pdf-text-region:focus-visible { border-color: var(--primary); }
 
 @utility glass {
   background: color-mix(in oklab, var(--surface) 70%, transparent);
