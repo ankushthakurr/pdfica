@@ -2,11 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { comparePdfs, type DiffLine } from "@/lib/pdf-tools";
-import { UploadCloud, Loader2, AlertTriangle, FileText } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { deliverFile } from "@/lib/format";
+import { Download, UploadCloud, Loader2, AlertTriangle, FileText } from "lucide-react";
 
 function FileSlot({ label, file, onChange }: { label: string; file: File | null; onChange: (f: File | null) => void }) {
   return (
-    <label className="block cursor-pointer rounded-2xl border-2 border-dashed border-border bg-surface p-6 text-center hover:border-primary transition-colors">
+    <label onDragOver={(e) => e.preventDefault()} onDrop={(e) => { e.preventDefault(); onChange(e.dataTransfer.files[0] ?? null); }} className="block cursor-pointer rounded-2xl border-2 border-dashed border-border bg-surface p-6 text-center hover:border-primary transition-colors">
       <input type="file" accept="application/pdf" className="hidden" onChange={(e) => onChange(e.target.files?.[0] ?? null)} />
       {file ? (
         <div className="flex items-center gap-2 justify-center text-sm">
@@ -29,6 +31,11 @@ function Page() {
   const [error, setError] = useState<string | null>(null);
   const [diff, setDiff] = useState<DiffLine[] | null>(null);
 
+  const pick = (file: File | null, setter: (file: File | null) => void) => {
+    if (busy) return;
+    if (file && (!/\.pdf$/i.test(file.name) || !file.size || file.size > 100 * 1024 * 1024)) { setError("Choose a non-empty PDF up to 100 MB."); return; }
+    setter(file); setDiff(null); setError(null);
+  };
   const run = async () => {
     if (!a || !b) return setError("Choose two PDFs to compare.");
     setBusy(true); setError(null); setDiff(null);
@@ -48,8 +55,8 @@ function Page() {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        <FileSlot label="Original PDF" file={a} onChange={setA} />
-        <FileSlot label="Updated PDF" file={b} onChange={setB} />
+        <FileSlot label="Original PDF" file={a} onChange={(f) => pick(f, setA)} />
+        <FileSlot label="Updated PDF" file={b} onChange={(f) => pick(f, setB)} />
       </div>
 
       {error && (
@@ -59,15 +66,16 @@ function Page() {
       )}
 
       <div className="mt-6 flex justify-end">
-        <button disabled={busy || !a || !b} onClick={run}
+        <Button disabled={busy || !a || !b} onClick={run}
           className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-glow disabled:opacity-40 enabled:hover:scale-[1.03] transition-transform">
           {busy && <Loader2 className="h-4 w-4 animate-spin" />}{busy ? "Comparing..." : "Compare"}
-        </button>
+        </Button>
       </div>
 
       {diff && (
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="mt-8 rounded-2xl border bg-surface overflow-hidden">
           <div className="flex items-center gap-4 border-b px-4 py-3 text-sm">
+            <Button className="ml-auto" variant="outline" onClick={() => void deliverFile(new Blob([diff.map((d) => `${d.type === "add" ? "+" : d.type === "del" ? "-" : " "} ${d.text}`).join("\n")], { type: "text/plain" }), "pdf-comparison.txt")}><Download /> Download report</Button>
             <span className="text-success">+{adds} added</span>
             <span className="text-destructive">−{dels} removed</span>
           </div>

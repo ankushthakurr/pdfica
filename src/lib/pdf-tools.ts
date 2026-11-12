@@ -145,7 +145,8 @@ export async function pdfToImagePages(
     const canvas = document.createElement("canvas");
     canvas.width = viewport.width;
     canvas.height = viewport.height;
-    const ctx = canvas.getContext("2d")!;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("Image rendering is unavailable in this browser.");
     if (format === "image/jpeg") {
       ctx.fillStyle = "#ffffff";
       ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -164,8 +165,10 @@ export async function pdfToImagePages(
       opts.onProgress?.(done, total);
     }
   });
-  await Promise.all(workers);
-  return { blobs, numPages: total };
+  try {
+    await Promise.all(workers);
+    return { blobs, numPages: total };
+  } finally { await pdf.destroy(); }
 }
 
 export const pdfToJpgPages = (
@@ -193,12 +196,23 @@ export async function imagesToPdf(
   for (let i = 0; i < files.length; i++) {
     const f = files[i];
     report?.(i, "Reading", 20);
-    const buf = await readAB(f);
+    let buf = await readAB(f);
+    const isPng = f.type === "image/png" || /\.png$/i.test(f.name);
+    const isJpg = f.type === "image/jpeg" || /\.jpe?g$/i.test(f.name);
+    if (!isPng && !isJpg) {
+      const bitmap = await createImageBitmap(f);
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = bitmap.width; canvas.height = bitmap.height;
+        const ctx = canvas.getContext("2d");
+        if (!ctx) throw new Error("Image conversion is unavailable.");
+        ctx.drawImage(bitmap, 0, 0);
+        const png = await new Promise<Blob>((resolve, reject) => canvas.toBlob((b) => b ? resolve(b) : reject(new Error("Image conversion failed.")), "image/png"));
+        buf = await png.arrayBuffer();
+      } finally { bitmap.close(); }
+    }
     report?.(i, "Embedding", 60);
-    const img =
-      f.type === "image/png"
-        ? await doc.embedPng(buf)
-        : await doc.embedJpg(buf);
+    const img = isJpg ? await doc.embedJpg(buf) : await doc.embedPng(buf);
     let pageW: number, pageH: number, drawW: number, drawH: number, x = 0, y = 0;
     if (pageSize === "a4") {
       pageW = 595.28;
