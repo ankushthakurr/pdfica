@@ -112,7 +112,7 @@ export function PdfEditor() {
     setPast((p) => [...p, edits]); setFuture((f) => f.slice(1)); setEdits(next); setSelected(null); setDownload(null);
   };
 
-  return <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
+  return <section className="mx-auto max-w-7xl px-4 py-10 sm:px-6">
     <header className="mb-8 flex flex-wrap items-end justify-between gap-4">
       <div><h1 className="font-display text-4xl font-bold">Edit PDF</h1><p className="mt-2 text-muted-foreground">Your document. Your words.</p></div>
       {file && <div className="flex min-w-0 items-center gap-2 text-sm text-muted-foreground"><FileText className="size-4 shrink-0" /><span className="max-w-52 truncate">{file.name}</span><Button variant="outline" disabled={!!busy} onClick={() => input.current?.click()}>Change PDF</Button></div>}
@@ -148,5 +148,5 @@ export function PdfEditor() {
         </aside>
       </div>
     </>}
-  </main>;
+  </section>;
 }
